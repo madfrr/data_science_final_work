@@ -45,14 +45,16 @@ def main():
     print()
     print("="*100)
     print()
-    Validations(data_path=data_path).run()
+    Validations(data_path=data_path, skip=True).run()
     print()
     print("="*100)
     print()
     '''
     - [Done] Criar data raw
     - [Done] Criar data com colunas selecionadas -> data_selected_columns
-    - [ ] Validar data_selected_columns
+    - [Done] Validar data_selected_columns
+    - Preciso organizar o código para conseguir exportar um relatório de validação
+    - Também preciso organizar as premissas e explicar por que é okay utilizar o dataset para minha análise
     
     - Criar datasets com as 3 configs
     - Rodar call_mine nos datasets criados - 1h

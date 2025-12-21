@@ -38,7 +38,8 @@ class Validations():
             - Verificar a qtd de endereços na AddrTx_edgelist para aquela transação coincidem com in_txs_degree
             - Verificar a qtd de endereços na TxAddr_edgelist para aquela transação coincidem com out_txs_degree
     """
-    def __init__(self, data_path, data_dir = "data_selected_columns"):
+    def __init__(self, data_path, data_dir = "data_selected_columns", skip=False):
+        self.skip=skip
         self.path = data_path / data_dir
 
     def validate_wallets_features_classes_combined(self):
@@ -217,7 +218,7 @@ class Validations():
             for tx_id in list(txs_sem_addr_ilicito)[:5]:
                 inputs = inputs_tx_ilicitas[inputs_tx_ilicitas['tx_id'] == tx_id]
                 outputs = outputs_tx_ilicitas[outputs_tx_ilicitas['tx_id'] == tx_id]
-                print(f"\n    TxId: {tx_id}")
+                print(f"\n    tx_id: {tx_id}")
                 print(f"      Inputs: {list(inputs['input_addr_class'].unique())}")
                 print(f"      Outputs: {list(outputs['output_addr_class'].unique())}")
         else:
@@ -226,6 +227,12 @@ class Validations():
         return self
     
     def validate_transaction_degrees(self):
+        '''
+        validate_transaction_degrees: 
+        - Teve inconsistencia nos degrees das transações. Falta validar ids duplicados na addr_tx e tx_addr
+        - falta entender se todas as transações que existem na txs_features existem na addr_tx e tx_addr
+        '''
+
         print(f"Validating transaction degrees in {self.path}")
         addr_tx = pd.read_parquet(self.path / "AddrTx_edgelist.parquet", columns=["input_address", "tx_id"])
         tx_addr = pd.read_parquet(self.path / "TxAddr_edgelist.parquet", columns=["tx_id", "output_address"])
@@ -237,7 +244,7 @@ class Validations():
         print("1. INFORMAÇÕES BÁSICAS")
         print(f"Total transações em txs_features: {len(txs_features):,}")
         print(f"Total transações únicas: {txs_features['tx_id'].nunique():,}")
-        print(f"Timesteps: {txs_features['Time step'].min()} a {txs_features['Time step'].max()}")
+        print(f"Timesteps: {txs_features['time_step'].min()} a {txs_features['time_step'].max()}")
 
         print("\n2. EXTRAINDO ÚLTIMO TIMESTEP POR TRANSAÇÃO")
 
@@ -330,7 +337,7 @@ class Validations():
             print(f"  Std: {in_diferencas['in_diff'].std():.2f}")
             
             print(f"\n  Exemplos de diferenças:")
-            exemplos = in_diferencas[['txId', 'Time step', 'in_degree_features', 'in_degree_real', 'in_diff']].head(10)
+            exemplos = in_diferencas[['tx_id', 'time_step', 'in_degree_features', 'in_degree_real', 'in_diff']].head(10)
             print(exemplos.to_string(index=False))
 
         # Out-degree diferenças
@@ -347,7 +354,7 @@ class Validations():
             print(f"  Std: {out_diferencas['out_diff'].std():.2f}")
             
             print(f"\n  Exemplos de diferenças:")
-            exemplos = out_diferencas[['txId', 'Time step', 'out_degree_features', 'out_degree_real', 'out_diff']].head(10)
+            exemplos = out_diferencas[['tx_id', 'time_step', 'out_degree_features', 'out_degree_real', 'out_diff']].head(10)
             print(exemplos.to_string(index=False))
 
         # 8. Estatísticas gerais dos degrees
@@ -370,14 +377,14 @@ class Validations():
             if len(in_grandes_dif) > 0:
                 print(f"\n⚠️  {len(in_grandes_dif):,} transações com diferença > 5 no in_degree")
                 print("   Exemplos:")
-                print(in_grandes_dif[['txId', 'in_degree_features', 'in_degree_real', 'in_diff']].head(5).to_string(index=False))
+                print(in_grandes_dif[['tx_id', 'in_degree_features', 'in_degree_real', 'in_diff']].head(5).to_string(index=False))
 
         if len(out_diferencas) > 0:
             out_grandes_dif = out_diferencas[abs(out_diferencas['out_diff']) > 5]
             if len(out_grandes_dif) > 0:
                 print(f"\n⚠️  {len(out_grandes_dif):,} transações com diferença > 5 no out_degree")
                 print("   Exemplos:")
-                print(out_grandes_dif[['txId', 'out_degree_features', 'out_degree_real', 'out_diff']].head(5).to_string(index=False))
+                print(out_grandes_dif[['tx_id', 'out_degree_features', 'out_degree_real', 'out_diff']].head(5).to_string(index=False))
 
         # 10. RESUMO FINAL
         print("\n" + "="*70)
@@ -425,17 +432,234 @@ class Validations():
             diferencas_completas['out_diff'] = (
                 diferencas_completas['out_degree_features'] - diferencas_completas['out_degree_real']
             )
-            
-            output_path = 'data/analise/diferencas_degrees.parquet'
-            diferencas_completas.to_parquet(output_path, index=False)
-            print(f"✓ Salvo: {output_path} ({len(diferencas_completas):,} registros)")
         
+        return self
+
+    def validate_transaction_coverage(self):
+        print(f"Validating transaction coverage in {self.path}")
+        
+        addr_tx = pd.read_parquet(self.path / "AddrTx_edgelist.parquet", columns=["input_address", "tx_id"])
+        tx_addr = pd.read_parquet(self.path / "TxAddr_edgelist.parquet", columns=["tx_id", "output_address"])
+        txs_features = pd.read_parquet(self.path / "txs_features.parquet", columns=["tx_id", "time_step", "in_txs_degree", "out_txs_degree"])
+
+        print("=== VERIFICAÇÃO DE COBERTURA DE TRANSAÇÕES ===\n")
+
+        # 1. Conjuntos de transações
+        print("1. TRANSAÇÕES ÚNICAS POR DATASET")
+
+        txs_features_set = set(txs_features['tx_id'].unique())
+        txs_addr_tx_set = set(addr_tx['tx_id'].unique())
+        txs_tx_addr_set = set(tx_addr['tx_id'].unique())
+
+        print(f"txs_features: {len(txs_features_set):,} transações únicas")
+        print(f"AddrTx:       {len(txs_addr_tx_set):,} transações únicas")
+        print(f"TxAddr:       {len(txs_tx_addr_set):,} transações únicas")
+
+        # 2. Interseções
+        print("\n2. ANÁLISE DE COBERTURA")
+
+        # Features → AddrTx
+        features_em_addrtx = txs_features_set & txs_addr_tx_set
+        features_nao_em_addrtx = txs_features_set - txs_addr_tx_set
+
+        print(f"\n--- txs_features → AddrTx ---")
+        print(f"Presentes em ambos: {len(features_em_addrtx):,} ({len(features_em_addrtx)/len(txs_features_set)*100:.2f}%)")
+        print(f"Apenas em features: {len(features_nao_em_addrtx):,} ({len(features_nao_em_addrtx)/len(txs_features_set)*100:.2f}%)")
+
+        # Features → TxAddr
+        features_em_txaddr = txs_features_set & txs_tx_addr_set
+        features_nao_em_txaddr = txs_features_set - txs_tx_addr_set
+
+        print(f"\n--- txs_features → TxAddr ---")
+        print(f"Presentes em ambos: {len(features_em_txaddr):,} ({len(features_em_txaddr)/len(txs_features_set)*100:.2f}%)")
+        print(f"Apenas em features: {len(features_nao_em_txaddr):,} ({len(features_nao_em_txaddr)/len(txs_features_set)*100:.2f}%)")
+
+        # Features → AddrTx E TxAddr
+        features_em_ambos_edges = txs_features_set & txs_addr_tx_set & txs_tx_addr_set
+        features_faltando_em_algum = txs_features_set - features_em_ambos_edges
+
+        print(f"\n--- txs_features → AddrTx E TxAddr ---")
+        print(f"Presentes em AMBOS edgelists: {len(features_em_ambos_edges):,} ({len(features_em_ambos_edges)/len(txs_features_set)*100:.2f}%)")
+        print(f"Faltando em ALGUM edgelist: {len(features_faltando_em_algum):,} ({len(features_faltando_em_algum)/len(txs_features_set)*100:.2f}%)")
+
+        # 3. Análise inversa (transações nos edgelists mas não em features)
+        print("\n3. ANÁLISE INVERSA (EDGELISTS → FEATURES)")
+
+        addrtx_nao_em_features = txs_addr_tx_set - txs_features_set
+        txaddr_nao_em_features = txs_tx_addr_set - txs_features_set
+
+        print(f"AddrTx sem features: {len(addrtx_nao_em_features):,} ({len(addrtx_nao_em_features)/len(txs_addr_tx_set)*100:.2f}%)")
+        print(f"TxAddr sem features: {len(txaddr_nao_em_features):,} ({len(txaddr_nao_em_features)/len(txs_tx_addr_set)*100:.2f}%)")
+
+        # 4. Análise de consistência entre AddrTx e TxAddr
+        print("\n4. CONSISTÊNCIA ENTRE ADDRTX E TXADDR")
+
+        addrtx_e_txaddr = txs_addr_tx_set & txs_tx_addr_set
+        apenas_addrtx = txs_addr_tx_set - txs_tx_addr_set
+        apenas_txaddr = txs_tx_addr_set - txs_addr_tx_set
+
+        print(f"Em ambos AddrTx e TxAddr: {len(addrtx_e_txaddr):,}")
+        print(f"Apenas em AddrTx: {len(apenas_addrtx):,}")
+        print(f"Apenas em TxAddr: {len(apenas_txaddr):,}")
+
+        if len(apenas_addrtx) > 0:
+            print(f"\n⚠️  Transações com inputs mas sem outputs:")
+            print(f"   {list(apenas_addrtx)[:10]}")
+
+        if len(apenas_txaddr) > 0:
+            print(f"\n⚠️  Transações com outputs mas sem inputs:")
+            print(f"   {list(apenas_txaddr)[:10]}")
+
+        # 5. Diagrama de Venn (contagens)
+        print("\n5. DIAGRAMA DE VENN")
+
+        todas_txs = txs_features_set | txs_addr_tx_set | txs_tx_addr_set
+        print(f"\nTotal de transações únicas (união): {len(todas_txs):,}")
+
+        # Todas as combinações possíveis
+        apenas_features = txs_features_set - txs_addr_tx_set - txs_tx_addr_set
+        apenas_addrtx = txs_addr_tx_set - txs_features_set - txs_tx_addr_set
+        apenas_txaddr = txs_tx_addr_set - txs_features_set - txs_addr_tx_set
+
+        features_e_addrtx = (txs_features_set & txs_addr_tx_set) - txs_tx_addr_set
+        features_e_txaddr = (txs_features_set & txs_tx_addr_set) - txs_addr_tx_set
+        addrtx_e_txaddr_sem_features = (txs_addr_tx_set & txs_tx_addr_set) - txs_features_set
+
+        nos_tres = txs_features_set & txs_addr_tx_set & txs_tx_addr_set
+
+        print(f"\nApenas em txs_features: {len(apenas_features):,}")
+        print(f"Apenas em AddrTx: {len(apenas_addrtx):,}")
+        print(f"Apenas em TxAddr: {len(apenas_txaddr):,}")
+        print(f"features ∩ AddrTx (sem TxAddr): {len(features_e_addrtx):,}")
+        print(f"features ∩ TxAddr (sem AddrTx): {len(features_e_txaddr):,}")
+        print(f"AddrTx ∩ TxAddr (sem features): {len(addrtx_e_txaddr_sem_features):,}")
+        print(f"Nos três datasets: {len(nos_tres):,}")
+
+        # Verificação
+        total_particionado = (len(apenas_features) + len(apenas_addrtx) + len(apenas_txaddr) +
+                            len(features_e_addrtx) + len(features_e_txaddr) + 
+                            len(addrtx_e_txaddr_sem_features) + len(nos_tres))
+        print(f"\nVerificação: {total_particionado:,} (deve ser igual a {len(todas_txs):,})")
+
+        # 6. Análise temporal (se features faltantes estão em timesteps específicos)
+        print("\n6. ANÁLISE TEMPORAL DAS TRANSAÇÕES FALTANTES")
+
+        if len(features_nao_em_addrtx) > 0 or len(features_nao_em_txaddr) > 0:
+            # Pegar transações faltantes
+            txs_faltantes = features_faltando_em_algum
+            
+            # Ver seus timesteps
+            features_faltantes = txs_features[txs_features['tx_id'].isin(txs_faltantes)]
+            
+            print(f"\nTransações em features mas faltando em edgelists: {len(txs_faltantes):,}")
+            print(f"Distribuição por timestep:")
+            
+            timestep_dist = features_faltantes.groupby('time_step')['tx_id'].nunique().sort_index()
+            print(timestep_dist.to_string())
+            
+            # Última ocorrência das faltantes
+            ultimas_ocorrencias = (features_faltantes
+                .sort_values('time_step')
+                .groupby('tx_id')
+                .last()
+            )
+            
+            print(f"\nÚltimo timestep das transações faltantes:")
+            print(f"  Min: {ultimas_ocorrencias['time_step'].min()}")
+            print(f"  Max: {ultimas_ocorrencias['time_step'].max()}")
+            print(f"  Média: {ultimas_ocorrencias['time_step'].mean():.2f}")
+            print(f"  Mediana: {ultimas_ocorrencias['time_step'].median():.0f}")
+
+        # 7. Exemplos de transações problemáticas
+        print("\n7. EXEMPLOS DE TRANSAÇÕES PROBLEMÁTICAS")
+
+        if len(features_nao_em_addrtx) > 0:
+            print(f"\n--- Transações em features mas NÃO em AddrTx (primeiras 10) ---")
+            exemplos_ids = list(features_nao_em_addrtx)[:10]
+            exemplos = txs_features[txs_features['tx_id'].isin(exemplos_ids)].sort_values(['tx_id', 'time_step'])
+            print(exemplos[['tx_id', 'time_step', 'in_txs_degree', 'out_txs_degree']].to_string(index=False))
+
+        if len(features_nao_em_txaddr) > 0:
+            print(f"\n--- Transações em features mas NÃO em TxAddr (primeiras 10) ---")
+            exemplos_ids = list(features_nao_em_txaddr)[:10]
+            exemplos = txs_features[txs_features['tx_id'].isin(exemplos_ids)].sort_values(['tx_id', 'time_step'])
+            print(exemplos[['tx_id', 'time_step', 'in_txs_degree', 'out_txs_degree']].to_string(index=False))
+
+        if len(addrtx_nao_em_features) > 0:
+            print(f"\n--- Transações em AddrTx mas NÃO em features (primeiras 10) ---")
+            exemplos_ids = list(addrtx_nao_em_features)[:10]
+            print(exemplos_ids)
+
+        # 8. RESUMO FINAL
+        print("\n" + "="*70)
+        print("RESUMO FINAL")
+        print("="*70)
+
+        cobertura_perfeita = (
+            len(features_nao_em_addrtx) == 0 and 
+            len(features_nao_em_txaddr) == 0
+        )
+
+        if cobertura_perfeita:
+            print("✅ COBERTURA PERFEITA")
+            print(f"   Todas as {len(txs_features_set):,} transações em features existem em AddrTx e TxAddr")
+        else:
+            print("❌ COBERTURA INCOMPLETA")
+            
+            if len(features_nao_em_addrtx) > 0:
+                print(f"   • {len(features_nao_em_addrtx):,} transações em features mas NÃO em AddrTx")
+                print(f"     ({len(features_nao_em_addrtx)/len(txs_features_set)*100:.2f}% do total)")
+            
+            if len(features_nao_em_txaddr) > 0:
+                print(f"   • {len(features_nao_em_txaddr):,} transações em features mas NÃO em TxAddr")
+                print(f"     ({len(features_nao_em_txaddr)/len(txs_features_set)*100:.2f}% do total)")
+            
+            print(f"\n   Possíveis causas:")
+            print(f"   - Transações podem ter sido filtradas dos edgelists")
+            print(f"   - Features podem incluir transações de outros períodos")
+            print(f"   - Erro no processamento de algum dataset")
+            print(f"   - Diferentes critérios de inclusão")
+
+        # Análise inversa
+        if len(addrtx_nao_em_features) > 0 or len(txaddr_nao_em_features) > 0:
+            print(f"\n   Transações nos edgelists mas não em features:")
+            if len(addrtx_nao_em_features) > 0:
+                print(f"   • {len(addrtx_nao_em_features):,} em AddrTx ({len(addrtx_nao_em_features)/len(txs_addr_tx_set)*100:.2f}%)")
+            if len(txaddr_nao_em_features) > 0:
+                print(f"   • {len(txaddr_nao_em_features):,} em TxAddr ({len(txaddr_nao_em_features)/len(txs_tx_addr_set)*100:.2f}%)")
+
+        # 9. Salvar transações faltantes para análise
+        if not cobertura_perfeita:
+            print("\n9. SALVANDO TRANSAÇÕES FALTANTES PARA ANÁLISE")
+            
+            # Salvar IDs das transações faltantes
+            faltantes_data = {
+                'tx_id': list(features_faltando_em_algum),
+                'em_features': [tx in txs_features_set for tx in features_faltando_em_algum],
+                'em_addrtx': [tx in txs_addr_tx_set for tx in features_faltando_em_algum],
+                'em_txaddr': [tx in txs_tx_addr_set for tx in features_faltando_em_algum]
+            }
+            
+            df_faltantes = pd.DataFrame(faltantes_data)
+            
+            # Adicionar informações de features se disponíveis
+            df_faltantes = df_faltantes.merge(
+                ultimas_ocorrencias[['time_step', 'in_txs_degree', 'out_txs_degree']].reset_index(),
+                on='tx_id',
+                how='left'
+            )
+            print(df_faltantes.head())
+            print(len(df_faltantes))
         return self
 
     def run(self):
         # Implement validation logic here
+        if self.skip:
+            print(f"⚠ Skipping validations for {self.path} as per configuration.")
+            return self
         print(f"Running validations on data in {self.path}...\n\n")
         self.validate_wallets_features_classes_combined()
         self.validate_addraddr_edgelist()
         self.validate_illicit_transactions_with_addresses()
         self.validate_transaction_degrees()
+        self.validate_transaction_coverage()

@@ -37,6 +37,8 @@ class Validations():
         - Para cada transação no trx_features que tiver in_txs_degree e out_txs_degree maior que 1:
             - Verificar a qtd de endereços na AddrTx_edgelist para aquela transação coincidem com in_txs_degree
             - Verificar a qtd de endereços na TxAddr_edgelist para aquela transação coincidem com out_txs_degree
+    
+    - Verificar a cobertura de transações. Se toda transação que está na txs_features está presente na AddrTx_edgelist e TxAddr_edgelist
     """
     def __init__(self, data_path, data_dir = "data_selected_columns", skip=False):
         self.skip=skip

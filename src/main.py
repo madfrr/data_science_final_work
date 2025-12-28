@@ -1,6 +1,7 @@
 from src.extract import ExtractFromDrive
 from src.selected_columns import SelectColumns
 from src.validations import Validations
+from src.create_configs import CreateConfigs
 from pathlib import Path
 import pandas as pd
 
@@ -49,6 +50,8 @@ def main():
     print()
     print("="*100)
     print()
+    CreateConfigs(data_path=data_path, input_dir="data_selected_columns", output_dir="configs").run()
+    
     '''
     - [Done] Criar data raw
     - [Done] Criar data com colunas selecionadas -> data_selected_columns
@@ -63,4 +66,7 @@ def main():
     # * [ ] computar score por wallet --> tenho que definir com base no que o call_mine retorna e salva no computador
     # * [ ] gerar ranking -> 30 min e já tenho snippet pronto
     # * [ ] avaliar Precision@K -> 30 min mas ia cospe snippet mt rápido
+
+    - tenho que fazer uma análise exploratoria pra complementar essas validações
+    - também preciso extrair as features mais importantes e rodar 2 classificadores
     '''

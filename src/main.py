@@ -5,7 +5,7 @@ from src.create_configs import CreateConfigs
 from callmine.tgraph.static_graph import StaticGraph
 from callmine.tgraph.temporal_graph import TemporalGraph
 from callmine.tgraph.join_feature_files import JoinFeatures
-from callmine.callmine_focus.run_callmine_focus import main
+from callmine.callmine_focus.run_callmine_focus import call_mine_main
 from pathlib import Path
 import pandas as pd
 
@@ -64,7 +64,7 @@ def run_join_feature_files():
     join_features_output_path = data_path / "allFeatures_nodeVectors.csv"
 
     join_features = JoinFeatures(path_temporal=temporal_graph_path, path_static=static_graph_path)
-    join_features.print_to_csv(join_features_output_path, index=False)
+    join_features.print_to_csv(join_features_output_path)
     print(f"Joined features saved to: {join_features_output_path}")
 
     return join_features.df_all
@@ -80,7 +80,7 @@ def run_callmine_focus(setup):
             'num_outliers' : 10,
             'budget' : 5,
             'dimensionality' : 2,
-            'output_path' : Path(__file__).parent.parent / 'callmine' / 'outputs'
+            'output_path' : str(Path(__file__).parent.parent / 'callmine' / 'outputs')
         },
         2: {
             'path_features' : data_path / "allFeatures_nodeVectors.csv",
@@ -88,10 +88,11 @@ def run_callmine_focus(setup):
             'num_outliers' : 10,
             'budget' : 5,
             'dimensionality' : 3,
-            'output_path' : Path(__file__).parent.parent / 'callmine' / 'outputs'
+            'output_path' : str(Path(__file__).parent.parent / 'callmine' / 'outputs')
         }
     }
-    main('dummy', *setup_map[setup].values())
+    print(*setup_map[setup].values())
+    call_mine_main(('dummy', *setup_map[setup].values()))
 
 def main():
     #ExtractFromDrive(data_path=data_path).run()
@@ -107,18 +108,18 @@ def main():
     print()
     print("="*100)
     print()
-    CreateConfigs(data_path=data_path, input_dir="data_selected_columns", output_dir="configs").run()
-    main_config_file_path = data_path / "configs" / "config_2.parquet"
+    #CreateConfigs(data_path=data_path, input_dir="data_selected_columns", output_dir="configs").run()
+    main_config_file_path = data_path / "configs" / "config_2.csv"
     '''
     input_address = source
-    outut_address = target
-    total_btc + fees = measurement
+    outut_address = destination
+    total_btc + fees = measure
     time_step = timestamp
     '''
-    run_static_graph(main_config_file_path)
+    #run_static_graph(main_config_file_path)
     # run_temporal_graph(main_config_file_path)
-    # run_join_feature_files()
-    # run_callmine_focus(1)
+    #run_join_feature_files()
+    run_callmine_focus(1)
     # run_callmine_focus(2)
 
     '''

@@ -55,18 +55,18 @@ class CreateConfigs:
         
         addr_addr_tx = addr_tx.merge(tx_addr, on="tx_id", how="inner")
         addr_addr_tx = addr_addr_tx.merge(tx_features[['tx_id', 'time_step']], on="tx_id", how="inner")
-        addr_addr_tx['measurement'] = 1
+        addr_addr_tx['measure'] = 1
         addr_addr_tx = addr_addr_tx.merge(tx_classes, on="tx_id", how="left", suffixes=('', '_class'))
         print(addr_addr_tx.head())
 
-        config = addr_addr_tx[['input_address', 'output_address', 'measurement', 'time_step']]
+        config = addr_addr_tx[['input_address', 'output_address', 'measure', 'time_step']]
         config = config.rename(columns={
             'input_address': 'source',
             'output_address': 'destination',
             'time_step': 'timestamp'
         })
-        config.to_parquet(self.data_path / self.output_dir / "config_1.parquet", index=False)
-        addr_addr_tx.to_parquet(self.data_path / self.output_dir / "raw_config_1.parquet", index=False)
+        config.to_csv(self.data_path / self.output_dir / "config_1.csv", index=False)
+        addr_addr_tx.to_csv(self.data_path / self.output_dir / "raw_config_1.csv", index=False)
         return self
 
     def create_config_2(self, dataframes):
@@ -74,7 +74,7 @@ class CreateConfigs:
         Reaproveitar a estrutura da primeira config
         pegar total_bdc + fees da txs_features da tx_id_input
         Posso fazer variantes total bdc, fees, total_bdc + fees
-        input_address, outut_address, measurement=total_btc + fees, time_step
+        input_address, outut_address, measure=total_btc + fees, time_step
         '''
         addr_tx = dataframes["AddrTx_edgelist"]
         tx_addr = dataframes["TxAddr_edgelist"]
@@ -83,18 +83,18 @@ class CreateConfigs:
         
         addr_addr_tx = addr_tx.merge(tx_addr, on="tx_id", how="inner")
         addr_addr_tx = addr_addr_tx.merge(tx_features[['tx_id', 'time_step', 'total_btc', 'fees']], on="tx_id", how="inner")
-        addr_addr_tx['measurement'] = addr_addr_tx['total_btc'] + addr_addr_tx['fees']
+        addr_addr_tx['measure'] = addr_addr_tx['total_btc'] + addr_addr_tx['fees']
         addr_addr_tx = addr_addr_tx.merge(tx_classes, on="tx_id", how="left", suffixes=('', '_class'))
         print(addr_addr_tx.head())
 
-        config = addr_addr_tx[['input_address', 'output_address', 'measurement', 'time_step']]
+        config = addr_addr_tx[['input_address', 'output_address', 'measure', 'time_step']]
         config = config.rename(columns={
             'input_address': 'source',
             'output_address': 'destination',
             'time_step': 'timestamp'
         })
-        config.to_parquet(self.data_path / self.output_dir / "config_2.parquet", index=False)
-        addr_addr_tx.to_parquet(self.data_path / self.output_dir / "raw_config_2.parquet", index=False)
+        config.to_csv(self.data_path / self.output_dir / "config_2.csv", index=False)
+        addr_addr_tx.to_csv(self.data_path / self.output_dir / "raw_config_2.csv", index=False)
         return self
 
     def create_config_3(self, dataframes):

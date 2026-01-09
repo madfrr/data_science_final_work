@@ -351,7 +351,7 @@ def plot_parallel_coordinates(df_features,
 # ===================================================================
 # MAIN
 # ===================================================================
-def main(argv):
+def call_mine_main(argv):
     global detection_option, num_outliers, budget, dimensionality, output_path
 
     path_features       = argv[1]
@@ -426,5 +426,5 @@ if __name__ == "__main__":
         print('Usage: <file path> <detection option (1 iForest, 2 gen2Out)> <num_outliers> <budget> <dimensionality> <output_path>')
     else:
         print('Running CallMine\'s attention routing...')
-        main(sys.argv)
+        call_mine_main(sys.argv)
         print('Done.')

@@ -11,14 +11,14 @@ import itertools
 import copy
 import time
 
-from gen2Out.gen2out import gen2Out
-from gen2Out.utils import sythetic_group_anomaly, plot_results
+from callmine.callmine_focus.gen2Out.gen2out import gen2Out
+from callmine.callmine_focus.gen2Out.utils import sythetic_group_anomaly, plot_results
 
-from LookOut.iForest import iForest, forest_outliers
-from LookOut.helper import get_coverage, generate_frequency_list
-from LookOut.LookOut import LookOut
-from LookOut.ranklist import generate_graph
-from LookOut.structures import Graph
+from callmine.callmine_focus.LookOut.iForest import iForest, forest_outliers
+from callmine.callmine_focus.LookOut.helper import get_coverage, generate_frequency_list
+from callmine.callmine_focus.LookOut.LookOut import LookOut
+from callmine.callmine_focus.LookOut.ranklist import generate_graph
+from callmine.callmine_focus.LookOut.structures import Graph
 
 # Global variables
 fs = [6, 5] # Figure size

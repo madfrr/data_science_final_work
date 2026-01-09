@@ -62,7 +62,7 @@ class CreateConfigs:
         config = addr_addr_tx[['input_address', 'output_address', 'measurement', 'time_step']]
         config = config.rename(columns={
             'input_address': 'source',
-            'output_address': 'target',
+            'output_address': 'destination',
             'time_step': 'timestamp'
         })
         config.to_parquet(self.data_path / self.output_dir / "config_1.parquet", index=False)
@@ -90,7 +90,7 @@ class CreateConfigs:
         config = addr_addr_tx[['input_address', 'output_address', 'measurement', 'time_step']]
         config = config.rename(columns={
             'input_address': 'source',
-            'output_address': 'target',
+            'output_address': 'destination',
             'time_step': 'timestamp'
         })
         config.to_parquet(self.data_path / self.output_dir / "config_2.parquet", index=False)

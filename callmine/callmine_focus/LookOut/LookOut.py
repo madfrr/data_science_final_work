@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 import random
-from LookOut.display import *
+from callmine.callmine_focus.LookOut.display import *
 
 """ BASELINES """
 # Baseline 1

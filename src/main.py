@@ -2,10 +2,10 @@ from src.extract import ExtractFromDrive
 from src.selected_columns import SelectColumns
 from src.validations import Validations
 from src.create_configs import CreateConfigs
-from src.callmine.tgraph.static_graph import StaticGraph
-from src.callmine.tgraph.temporal_graph import TemporalGraph
-from src.callmine.tgraph.join_feature_files import JoinFeatures
-from src.callmine.callmine_focus.run_callmine_focus import main
+from callmine.tgraph.static_graph import StaticGraph
+from callmine.tgraph.temporal_graph import TemporalGraph
+from callmine.tgraph.join_feature_files import JoinFeatures
+from callmine.callmine_focus.run_callmine_focus import main
 from pathlib import Path
 import pandas as pd
 
@@ -80,7 +80,7 @@ def run_callmine_focus(setup):
             'num_outliers' : 10,
             'budget' : 5,
             'dimensionality' : 2,
-            'output_path' : Path(__file__).parent / 'callmine' / 'outputs'
+            'output_path' : Path(__file__).parent.parent / 'callmine' / 'outputs'
         },
         2: {
             'path_features' : data_path / "allFeatures_nodeVectors.csv",
@@ -88,7 +88,7 @@ def run_callmine_focus(setup):
             'num_outliers' : 10,
             'budget' : 5,
             'dimensionality' : 3,
-            'output_path' : Path(__file__).parent / 'callmine' / 'outputs'
+            'output_path' : Path(__file__).parent.parent / 'callmine' / 'outputs'
         }
     }
     main('dummy', *setup_map[setup].values())
@@ -115,12 +115,11 @@ def main():
     total_btc + fees = measurement
     time_step = timestamp
     '''
-    
     run_static_graph(main_config_file_path)
-    run_temporal_graph(main_config_file_path)
-    run_join_feature_files()
-    run_callmine_focus(1)
-    run_callmine_focus(2)
+    # run_temporal_graph(main_config_file_path)
+    # run_join_feature_files()
+    # run_callmine_focus(1)
+    # run_callmine_focus(2)
 
     '''
     - [Done] Criar data raw
@@ -128,7 +127,6 @@ def main():
     - [Done] Validar data_selected_columns
     - Preciso organizar o código para conseguir exportar um relatório de validação
     - Também preciso organizar as premissas e explicar por que é okay utilizar o dataset para minha análise
-    
     - [Done] Criar datasets com as 3 configs
     - Rodar call_mine nos datasets criados - 1h
     - Analisar resultados - 1~2h

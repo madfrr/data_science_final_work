@@ -54,7 +54,6 @@ pip --version
 pip install -r requirements.txt
 ```
 
-
 python3 tgraph/static_graph.py -v -v INPUT_DATA/sample_raw_data.csv
 python3 tgraph/temporal_graph.py -v -v INPUT_DATA/sample_raw_data.csv
 python3 tgraph/join_feature_files.py -v nodeVectors.csv t_nodeVectors.csv

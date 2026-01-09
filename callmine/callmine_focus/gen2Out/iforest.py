@@ -29,7 +29,7 @@ from sklearn.base import OutlierMixin
 from scipy.stats import zscore
 from scipy.special import erf
 
-from gen2Out.bagging import BaseBagging
+from callmine.callmine_focus.gen2Out.bagging import BaseBagging
 
 __all__ = ["IsolationForest"]
 

@@ -14,7 +14,7 @@ import time
 from joblib import Parallel, delayed
 from tqdm import tqdm
 
-from gen2Out.iforest import IsolationForest
+from callmine.callmine_focus.gen2Out.iforest import IsolationForest
 
 
 class gen2Out:

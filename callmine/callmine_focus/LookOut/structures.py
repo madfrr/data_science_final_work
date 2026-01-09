@@ -1,7 +1,7 @@
 import sys
 from bisect import bisect_left
 from collections import defaultdict
-from LookOut.display import print_fail
+from callmine.callmine_focus.LookOut.display import print_fail
 
 """ Definition of an Outlier """
 class Outlier:

@@ -64,5 +64,3 @@ Por quê: avaliação sem probabilidade.
 ## Snippets
 
 git -c commit.gpgsign=false commit -m 'nome commit'
-
-

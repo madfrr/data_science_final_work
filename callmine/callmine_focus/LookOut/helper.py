@@ -4,7 +4,7 @@ import numpy as np
 import pandas.core.algorithms as algos
 from numpy import median
 from collections import Counter
-from LookOut.display import *
+from callmine.callmine_focus.LookOut.display import *
 from math import sqrt, log, isnan, pow
 from scipy.interpolate import interp1d
 

@@ -1,0 +1,83 @@
+
+✓ Extracted files:
+- wallets_features.csv
+  ✓ Data types:
+address: object
+Time step: int64
+num_txs_as_sender: float64
+num_txs_as receiver: float64
+total_txs: float64
+btc_transacted_total: float64
+btc_sent_total: float64
+btc_received_total: float64
+fees_total: float64
+fees_as_share_total: float64
+
+
+----------------------------------------
+
+- wallets_classes.csv
+  ✓ Data types:
+address: object
+class: int64
+----------------------------------------
+
+- wallets_features_classes_combined.csv
+  ✓ Data types:
+address: object
+class: int64
+Time step: int64
+num_txs_as_sender: float64
+num_txs_as receiver: float64
+total_txs: float64
+btc_transacted_total: float64
+btc_sent_total: float64
+btc_received_total: float64
+fees_total: float64
+fees_as_share_total: float64
+
+----------------------------------------
+
+- AddrAddr_edgelist.csv
+  ✓ Data types:
+input_address: object
+output_address: object
+----------------------------------------
+
+- AddrTx_edgelist.csv
+  ✓ Data types:
+input_address: object
+txId: int64
+----------------------------------------
+
+- TxAddr_edgelist.csv
+  ✓ Data types:
+txId: int64
+output_address: object
+----------------------------------------
+
+- txs_classes.csv
+  ✓ Data types:
+txId: int64
+class: int64
+----------------------------------------
+
+- txs_edgelist.csv
+  ✓ Data types:
+txId1: int64
+txId2: int64
+
+----------------------------------------
+- txs_features.csv
+  ✓ Data types:
+txId: int64
+Time step: int64
+in_txs_degree: float64
+out_txs_degree: float64
+total_BTC: float64
+fees: float64
+size: float64
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+

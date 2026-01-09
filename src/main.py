@@ -2,6 +2,10 @@ from src.extract import ExtractFromDrive
 from src.selected_columns import SelectColumns
 from src.validations import Validations
 from src.create_configs import CreateConfigs
+from src.callmine.tgraph.static_graph import StaticGraph
+from src.callmine.tgraph.temporal_graph import TemporalGraph
+from src.callmine.tgraph.join_feature_files import JoinFeatures
+from src.callmine.callmine_focus.run_callmine_focus import main
 from pathlib import Path
 import pandas as pd
 
@@ -36,22 +40,88 @@ def print_data_types():
         print("-" * 40)
         print()
 
+def run_static_graph(main_config_file_path: Path):
+    static_graph = StaticGraph(filename=main_config_file_path)
+    static_graph_output_path = data_path / "nodeVectors.csv"
+    static_graph.print_to_csv(static_graph_output_path)
+    static_graph.my_print()
+    print(f"Static graph node vectors saved to: {static_graph_output_path}")
+
+    return static_graph.df_nodes
+
+def run_temporal_graph(main_config_file_path: Path):
+    temporal_graph = TemporalGraph(filename=main_config_file_path)
+    temporal_graph_output_path = data_path / "t_nodeVectors.csv"
+    temporal_graph.print_to_csv(temporal_graph_output_path)
+    temporal_graph.my_print()
+    print(f"Temporal graph node vectors saved to: {temporal_graph_output_path}")
+
+    return temporal_graph.df_nodes
+
+def run_join_feature_files():
+    temporal_graph_path = data_path / "t_nodeVectors.csv"
+    static_graph_path = data_path / "nodeVectors.csv"
+    join_features_output_path = data_path / "allFeatures_nodeVectors.csv"
+
+    join_features = JoinFeatures(path_temporal=temporal_graph_path, path_static=static_graph_path)
+    join_features.print_to_csv(join_features_output_path, index=False)
+    print(f"Joined features saved to: {join_features_output_path}")
+
+    return join_features.df_all
+
+def run_callmine_focus(setup):
+    '''
+    setup must be 1 or 2
+    '''
+    setup_map = {
+        1: {
+            'path_features' : data_path / "allFeatures_nodeVectors.csv",
+            'detection_option' : 1,
+            'num_outliers' : 10,
+            'budget' : 5,
+            'dimensionality' : 2,
+            'output_path' : Path(__file__).parent / 'callmine' / 'outputs'
+        },
+        2: {
+            'path_features' : data_path / "allFeatures_nodeVectors.csv",
+            'detection_option' : 1,
+            'num_outliers' : 10,
+            'budget' : 5,
+            'dimensionality' : 3,
+            'output_path' : Path(__file__).parent / 'callmine' / 'outputs'
+        }
+    }
+    main('dummy', *setup_map[setup].values())
+
 def main():
-    ExtractFromDrive(data_path=data_path).run()
+    #ExtractFromDrive(data_path=data_path).run()
     print()
     print("="*100)
     print()
     # print_data_types()
-    SelectColumns(data_path=data_path).run()
+    #SelectColumns(data_path=data_path).run()
     print()
     print("="*100)
     print()
-    Validations(data_path=data_path, skip=True).run()
+    #Validations(data_path=data_path, skip=True).run()
     print()
     print("="*100)
     print()
     CreateConfigs(data_path=data_path, input_dir="data_selected_columns", output_dir="configs").run()
+    main_config_file_path = data_path / "configs" / "config_2.parquet"
+    '''
+    input_address = source
+    outut_address = target
+    total_btc + fees = measurement
+    time_step = timestamp
+    '''
     
+    run_static_graph(main_config_file_path)
+    run_temporal_graph(main_config_file_path)
+    run_join_feature_files()
+    run_callmine_focus(1)
+    run_callmine_focus(2)
+
     '''
     - [Done] Criar data raw
     - [Done] Criar data com colunas selecionadas -> data_selected_columns
@@ -59,7 +129,7 @@ def main():
     - Preciso organizar o código para conseguir exportar um relatório de validação
     - Também preciso organizar as premissas e explicar por que é okay utilizar o dataset para minha análise
     
-    - Criar datasets com as 3 configs
+    - [Done] Criar datasets com as 3 configs
     - Rodar call_mine nos datasets criados - 1h
     - Analisar resultados - 1~2h
 

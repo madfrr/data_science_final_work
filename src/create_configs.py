@@ -46,6 +46,7 @@ class CreateConfigs:
         df final com colunas
         (source, target, measurement, timestamp, class)
         - exportar como config_1.parquet
+        input_address, outut_address, 1, time_step
         '''
         addr_tx = dataframes["AddrTx_edgelist"]
         tx_addr = dataframes["TxAddr_edgelist"]
@@ -73,6 +74,7 @@ class CreateConfigs:
         Reaproveitar a estrutura da primeira config
         pegar total_bdc + fees da txs_features da tx_id_input
         Posso fazer variantes total bdc, fees, total_bdc + fees
+        input_address, outut_address, measurement=total_btc + fees, time_step
         '''
         addr_tx = dataframes["AddrTx_edgelist"]
         tx_addr = dataframes["TxAddr_edgelist"]

@@ -1,0 +1,223 @@
+
+✓ Extracted files:
+- wallets_features.csv
+  ✓ Data types:
+address: object
+Time step: int64
+num_txs_as_sender: float64
+num_txs_as receiver: float64
+first_block_appeared_in: float64
+last_block_appeared_in: float64
+lifetime_in_blocks: float64
+total_txs: float64
+first_sent_block: float64
+first_received_block: float64
+num_timesteps_appeared_in: float64
+btc_transacted_total: float64
+btc_transacted_min: float64
+btc_transacted_max: float64
+btc_transacted_mean: float64
+btc_transacted_median: float64
+btc_sent_total: float64
+btc_sent_min: float64
+btc_sent_max: float64
+btc_sent_mean: float64
+btc_sent_median: float64
+btc_received_total: float64
+btc_received_min: float64
+btc_received_max: float64
+btc_received_mean: float64
+btc_received_median: float64
+fees_total: float64
+fees_min: float64
+fees_max: float64
+fees_mean: float64
+fees_median: float64
+fees_as_share_total: float64
+fees_as_share_min: float64
+fees_as_share_max: float64
+fees_as_share_mean: float64
+fees_as_share_median: float64
+blocks_btwn_txs_total: float64
+blocks_btwn_txs_min: float64
+blocks_btwn_txs_max: float64
+blocks_btwn_txs_mean: float64
+blocks_btwn_txs_median: float64
+blocks_btwn_input_txs_total: float64
+blocks_btwn_input_txs_min: float64
+blocks_btwn_input_txs_max: float64
+blocks_btwn_input_txs_mean: float64
+blocks_btwn_input_txs_median: float64
+blocks_btwn_output_txs_total: float64
+blocks_btwn_output_txs_min: float64
+blocks_btwn_output_txs_max: float64
+blocks_btwn_output_txs_mean: float64
+blocks_btwn_output_txs_median: float64
+num_addr_transacted_multiple: float64
+transacted_w_address_total: float64
+transacted_w_address_min: float64
+transacted_w_address_max: float64
+transacted_w_address_mean: float64
+transacted_w_address_median: float64
+----------------------------------------
+
+- wallets_classes.csv
+  ✓ Data types:
+address: object
+class: int64
+----------------------------------------
+
+- wallets_features_classes_combined.csv
+  ✓ Data types:
+address: object
+Time step: int64
+class: int64
+num_txs_as_sender: float64
+num_txs_as receiver: float64
+first_block_appeared_in: float64
+last_block_appeared_in: float64
+lifetime_in_blocks: float64
+total_txs: float64
+first_sent_block: float64
+first_received_block: float64
+num_timesteps_appeared_in: float64
+btc_transacted_total: float64
+btc_transacted_min: float64
+btc_transacted_max: float64
+btc_transacted_mean: float64
+btc_transacted_median: float64
+btc_sent_total: float64
+btc_sent_min: float64
+btc_sent_max: float64
+btc_sent_mean: float64
+btc_sent_median: float64
+btc_received_total: float64
+btc_received_min: float64
+btc_received_max: float64
+btc_received_mean: float64
+btc_received_median: float64
+fees_total: float64
+fees_min: float64
+fees_max: float64
+fees_mean: float64
+fees_median: float64
+fees_as_share_total: float64
+fees_as_share_min: float64
+fees_as_share_max: float64
+fees_as_share_mean: float64
+fees_as_share_median: float64
+blocks_btwn_txs_total: float64
+blocks_btwn_txs_min: float64
+blocks_btwn_txs_max: float64
+blocks_btwn_txs_mean: float64
+blocks_btwn_txs_median: float64
+blocks_btwn_input_txs_total: float64
+blocks_btwn_input_txs_min: float64
+blocks_btwn_input_txs_max: float64
+blocks_btwn_input_txs_mean: float64
+blocks_btwn_input_txs_median: float64
+blocks_btwn_output_txs_total: float64
+blocks_btwn_output_txs_min: float64
+blocks_btwn_output_txs_max: float64
+blocks_btwn_output_txs_mean: float64
+blocks_btwn_output_txs_median: float64
+num_addr_transacted_multiple: float64
+transacted_w_address_total: float64
+transacted_w_address_min: float64
+transacted_w_address_max: float64
+transacted_w_address_mean: float64
+transacted_w_address_median: float64
+----------------------------------------
+
+- AddrAddr_edgelist.csv
+  ✓ Data types:
+input_address: object
+output_address: object
+----------------------------------------
+
+- AddrTx_edgelist.csv
+  ✓ Data types:
+input_address: object
+txId: int64
+----------------------------------------
+
+- TxAddr_edgelist.csv
+  ✓ Data types:
+txId: int64
+output_address: object
+----------------------------------------
+
+- txs_classes.csv
+  ✓ Data types:
+txId: int64
+class: int64
+----------------------------------------
+
+- txs_edgelist.csv
+  ✓ Data types:
+txId1: int64
+txId2: int64
+
+----------------------------------------
+
+- txs_features.csv
+  ✓ Data types:
+txId: int64
+Time step: int64
+in_txs_degree: float64
+out_txs_degree: float64
+total_BTC: float64
+fees: float64
+size: float64
+num_input_addresses: float64
+num_output_addresses: float64
+in_BTC_min: float64
+in_BTC_max: float64
+in_BTC_mean: float64
+in_BTC_median: float64
+in_BTC_total: float64
+out_BTC_min: float64
+out_BTC_max: float64
+out_BTC_mean: float64
+out_BTC_median: float64
+out_BTC_total: float64
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+- txs_classes.csv
+  ✓ Data types:
+txId: int64
+class: int64
+
+- txs_features.csv
+  ✓ Data types:
+txId: int64
+Time step: int64
+in_txs_degree: float64
+out_txs_degree: float64
+total_BTC: float64
+fees: float64
+size: float64
+
+Para validar:
+- AddrAddr_edgelist.csv
+  ✓ Data types:
+input_address: object
+output_address: object
+----------------------------------------
+
+- AddrTx_edgelist.csv
+  ✓ Data types:
+input_address: object
+txId: int64
+----------------------------------------
+
+- TxAddr_edgelist.csv
+  ✓ Data types:
+txId: int64
+output_address: object
+
+Posso pegar o timestep da wallet ou das transações

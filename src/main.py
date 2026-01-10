@@ -2,6 +2,7 @@ from src.extract import ExtractFromDrive
 from src.selected_columns import SelectColumns
 from src.validations import Validations
 from src.create_configs import CreateConfigs
+from src.metrics import Metrics
 from callmine.tgraph.static_graph import StaticGraph
 from callmine.tgraph.temporal_graph import TemporalGraph
 from callmine.tgraph.join_feature_files import JoinFeatures
@@ -23,6 +24,11 @@ file_names = [
         "txs_features.csv"
     ]
 data_path = Path(__file__).parent / "data"
+
+CLASSE_ILICITA = 1
+CLASSE_LICITA = 2
+CLASSE_UNKNOWN = 3
+
 
 def print_data_types():
     print("\n✓ Extracted files:")
@@ -94,8 +100,43 @@ def run_callmine_focus(setup):
         }
     }
     print(*setup_map[setup].values())
-    scores = call_mine_main(('dummy', *setup_map[setup].values()))
+    call_mine_main(('dummy', *setup_map[setup].values()))
+
+def sorted_gen2out_scores(read_if_cached=False, is_to_save=False):
+    '''
+    Posso transformar isso daqui em uma classe para testar diferentes chaves em diferentes algoritmos de detecção de anomalia
+    '''
+    scores_path = data_path / "gen2out_scores_sorted.csv"
+    if scores_path.exists() and read_if_cached:
+        print(f"Reading cached Gen2Out scores from: {scores_path}")
+        df_scores = pd.read_csv(scores_path)
+        return list(zip(df_scores['node_ID'], df_scores['anomaly_score']))
+
+
+    df_features = pd.read_csv(data_path / "allFeatures_nodeVectors.csv")
+    keys = ['out_degree', 'in_degree',
+        'core', 'weighted_out_degree',
+        'weighted_in_degree', 'in_median_iat',
+        'in_call_count', 'in_median_measure',
+        'out_median_iat', 'out_call_count',
+        'out_median_measure']
+    scores = runGen2Out(ids = df_features['node_ID'],
+                            features = np.asarray(df_features[keys], dtype = float),
+                            option=1)
+    #scores = sorted(scores, key=lambda x: x[1], reverse=False)
+    scores = [(node_id, 1- score) for node_id, score in scores] #invertendo valores de score
+
+    if is_to_save:
+        df_scores = pd.DataFrame(scores, columns=["node_ID", "anomaly_score"])
+        df_scores.to_csv(scores_path, index=False)
+        print(f"Gen2Out sorted scores saved to: {scores_path}")
+
     return scores
+
+def get_address_class_lookup():
+    path = data_path / 'data_selected_columns' / "wallets_classes.parquet"
+    df = pd.read_parquet(path, columns=["address", "class"])
+    return dict(zip(df["address"], df["class"]))
 
 def main():
     #ExtractFromDrive(data_path=data_path).run()
@@ -112,7 +153,7 @@ def main():
     print("="*100)
     print()
     #CreateConfigs(data_path=data_path, input_dir="data_selected_columns", output_dir="configs").run()
-    main_config_file_path = data_path / "configs" / "config_2.csv"
+    # main_config_file_path = data_path / "configs" / "config_2.csv"
     '''
     input_address = source
     outut_address = destination
@@ -120,36 +161,36 @@ def main():
     time_step = timestamp
     '''
     #run_static_graph(main_config_file_path)
-    # run_temporal_graph(main_config_file_path)
+    #run_temporal_graph(main_config_file_path)
     #run_join_feature_files()
-    #scores = run_callmine_focus(1)
-    #scores = run_callmine_focus(2)
-    
-    df_features = pd.read_csv(data_path / "allFeatures_nodeVectors.csv")
-    keys = ['out_degree', 'in_degree',
-        'core', 'weighted_out_degree',
-        'weighted_in_degree', 'in_median_iat',
-        'in_call_count', 'in_median_measure',
-        'out_median_iat', 'out_call_count',
-        'out_median_measure']
-    scores = runGen2Out(ids = df_features['node_ID'],
-                            features = np.asarray(df_features[keys], dtype = float),
-                            option=1)
-    
-    print('len scores ', len(scores))
-    print('len df ', len(df_features))
-    print('-' * 40)
+    #run_callmine_focus(1)
+    #run_callmine_focus(2)
 
-    print('Scores:')
-    for i in range(10):
-        print(f'ID: {df_features["node_ID"][i]}, Score: {scores[i]}')
+    from collections import Counter
 
-    print(df_features.head())
+    print("Calculating scores...")
+    scores_sorted = sorted_gen2out_scores(read_if_cached=False, is_to_save=True)
+    print("Scores calculated")
+    # print(scores_sorted[:100])
+    address_to_class = get_address_class_lookup()
+    value_counts = Counter(address_to_class.values())
+    print("Class distribution in address_to_class:", value_counts)
+    print("len() address_to_class:", len(address_to_class))
 
-    print('='*40)
-    path = data_path / 'data_selected_columns' / "wallets_classes.parquet"
-    scores_sorted = sorted(scores, key=lambda x: x[1], reverse=True)
-    wallets_classes = pd.read_parquet(path, columns=["address", "class"])
+    print("Calculating metrics...")
+    metrics = Metrics(scores_sorted=scores_sorted, address_to_class=address_to_class)
+    metrics.print_metrics()
+    print('==='*40)
+    print('==='*40)
+    print('==='*40)
+    metrics.scores_profile_from_positive_class()
+    metrics.plot_all_graphs()
+    print("Metrics calculated.")
+    # p_at_10 = precision_at_k(scores_sorted, address_to_class, k=10)
+    # p_at_50 = precision_at_k(scores_sorted, address_to_class, k=50)
+
+    # print("Precision@10:", p_at_10)
+    # print("Precision@50:", p_at_50)
 
     '''
     - [Done] Criar data raw

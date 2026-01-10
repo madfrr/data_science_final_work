@@ -5,7 +5,9 @@ from src.create_configs import CreateConfigs
 from callmine.tgraph.static_graph import StaticGraph
 from callmine.tgraph.temporal_graph import TemporalGraph
 from callmine.tgraph.join_feature_files import JoinFeatures
-from callmine.callmine_focus.run_callmine_focus import call_mine_main
+from callmine.callmine_focus.run_callmine_focus import call_mine_main, runGen2Out
+#from callmine.callmine_focus.gen2Out.gen2out import gen2Out
+import numpy as np
 from pathlib import Path
 import pandas as pd
 
@@ -92,7 +94,8 @@ def run_callmine_focus(setup):
         }
     }
     print(*setup_map[setup].values())
-    call_mine_main(('dummy', *setup_map[setup].values()))
+    scores = call_mine_main(('dummy', *setup_map[setup].values()))
+    return scores
 
 def main():
     #ExtractFromDrive(data_path=data_path).run()
@@ -119,8 +122,34 @@ def main():
     #run_static_graph(main_config_file_path)
     # run_temporal_graph(main_config_file_path)
     #run_join_feature_files()
-    run_callmine_focus(1)
-    # run_callmine_focus(2)
+    #scores = run_callmine_focus(1)
+    #scores = run_callmine_focus(2)
+    
+    df_features = pd.read_csv(data_path / "allFeatures_nodeVectors.csv")
+    keys = ['out_degree', 'in_degree',
+        'core', 'weighted_out_degree',
+        'weighted_in_degree', 'in_median_iat',
+        'in_call_count', 'in_median_measure',
+        'out_median_iat', 'out_call_count',
+        'out_median_measure']
+    scores = runGen2Out(ids = df_features['node_ID'],
+                            features = np.asarray(df_features[keys], dtype = float),
+                            option=1)
+    
+    print('len scores ', len(scores))
+    print('len df ', len(df_features))
+    print('-' * 40)
+
+    print('Scores:')
+    for i in range(10):
+        print(f'ID: {df_features["node_ID"][i]}, Score: {scores[i]}')
+
+    print(df_features.head())
+
+    print('='*40)
+    path = data_path / 'data_selected_columns' / "wallets_classes.parquet"
+    scores_sorted = sorted(scores, key=lambda x: x[1], reverse=True)
+    wallets_classes = pd.read_parquet(path, columns=["address", "class"])
 
     '''
     - [Done] Criar data raw
@@ -129,8 +158,8 @@ def main():
     - Preciso organizar o código para conseguir exportar um relatório de validação
     - Também preciso organizar as premissas e explicar por que é okay utilizar o dataset para minha análise
     - [Done] Criar datasets com as 3 configs
-    - Rodar call_mine nos datasets criados - 1h
-    - Analisar resultados - 1~2h
+    - [Done] Rodar call_mine nos datasets criados - 1h
+    - Analisar resultados - 1~2h --> entendi nada
 
     # * [ ] computar score por wallet --> tenho que definir com base no que o call_mine retorna e salva no computador
     # * [ ] gerar ranking -> 30 min e já tenho snippet pronto

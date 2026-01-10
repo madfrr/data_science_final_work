@@ -62,5 +62,6 @@ Por quê: avaliação sem probabilidade.
 
 
 ## Snippets
+conda activate myenv
 
 git -c commit.gpgsign=false commit -m 'nome commit'

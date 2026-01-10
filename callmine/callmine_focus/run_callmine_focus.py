@@ -366,11 +366,6 @@ def call_mine_main(argv):
 
     df_features = pd.read_csv(path_features, nrows=200)
 
-    print('--------------------------------')
-    print(df_features.head())
-    print(len(df_features))
-    print('--------------------------------')
-
     print("Normalize features")
 
     df_features = min_max_scaler.fit_transform(df_features[keys].values)
@@ -423,8 +418,6 @@ def call_mine_main(argv):
                         rank_matrix=rank_matrix,
                         plot_combinations=plot_dict,
                         outlier_ids=outliers)
-    
-    return scores
 
 
 if __name__ == "__main__":

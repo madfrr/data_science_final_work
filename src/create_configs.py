@@ -79,7 +79,7 @@ from pathlib import Path
 
 class FeatureEngineering:
     def __init__(self):
-        pass        
+        CreateConfigs(data_path=Config.data_path, input_dir="data_selected_columns", output_dir="configs").run()
 
     def run_static_graph(self, config_path: Path, output_path: Path):
         print("Running callmine static_graph...")
@@ -113,6 +113,23 @@ class FeatureEngineering:
         self.run_join_feature_files(static_graph_path, temporal_graph_path, join_features_output_path)
 
     def create_first_dataset(self):
+        '''
+        keys = [
+            'out_degree', 
+            'in_degree',
+            'core', 
+            'weighted_out_degree',
+            'weighted_in_degree', 
+            'in_median_iat',
+            'in_call_count', 
+            'in_median_measure',
+            'out_median_iat', 
+            'out_call_count',
+            'out_median_measure'
+        ]
+        call_count é o group.size onde o grupo é agrupamento do node direction com timestamp??
+        como se fosse qtd de valores que tem no grupo
+        '''
         config_path = Config.data_path / "configs" / "config.csv"
         static_graph_path = Config.data_path / "nodeVectors.csv"
         temporal_graph_path = Config.data_path / "t_nodeVectors.csv"
@@ -125,9 +142,72 @@ class FeatureEngineering:
         print(temporal_graph_path)
         print(join_features_output_path)
         print()
-        CreateConfigs(data_path=Config.data_path, input_dir="data_selected_columns", output_dir="configs").run()
         self.run_tgraph_features(config_path, static_graph_path, temporal_graph_path, join_features_output_path)
         print(f"Files created for first dataset!! Check {join_features_output_path}")
     
-    def create_second_dataset():
+    def create_second_dataset(self):
+        '''
+        Mesmas features do dataset 1 só que com as duas métricas de IAT + call_count considerando os blocos
+        Como fazer:
+        - criar a msm config que a anterior
+        - rodar o static_graph --> pegar todas as métricas de static graph
+        - Fazer mapeamento:
+            'in_median_iat' - blocks_btwn_input_txs_median
+            'in_call_count', - num_txs_as receiver --> talvez trocar [TODO] validar com alguem
+            'in_median_measure', - btc_received_median
+            'out_median_iat', - blocks_btwn_output_txs_median
+            'out_call_count', - num_txs_as_sender --> talvez trocar [TODO] validar com alguem
+            'out_median_measure' - btc_sent_median
+        
+        - O in_degree é quantas wallets incidentes
+        - O in_call_count é quantas transações que chegam --> isso que tenho pensado [TODO] validar com alguem
+        '''
+        config_path = Config.data_path / "configs" / "config.csv"
+        static_graph_path = Config.data_path / "nodeVectors2.csv"
+        static_graph_df = self.run_static_graph(config_path, static_graph_path)
+
+        FEATURE_MAPPING = {
+            "in_median_iat": "blocks_btwn_input_txs_median",
+            "in_call_count": "num_txs_as_receiver",
+            "in_median_measure": "btc_received_median",
+            "out_median_iat": "blocks_btwn_output_txs_median",
+            "out_call_count": "num_txs_as_sender",
+            "out_median_measure": "btc_sent_median",
+        }
+        wallets_columns = ["address"] + list(FEATURE_MAPPING.values())
+        
+        wallet_path = Config.data_path / "data_selected_columns" / "wallets_features.parquet"
+        #pegar ultima wallet por timestep e definir as colunas
+        wallets_features = pd.read_parquet(wallet_path).sort_values('time_step').groupby('address', as_index=False).last()
+        wallets_features = wallets_features[wallets_columns].rename(columns={"address":"node_ID"})
+
+        static_graph_df = static_graph_df.merge(
+            wallets_features,
+            left_on="node_ID",
+            right_on="node_ID",
+            how="left"
+        )
+
+        static_graph_df = static_graph_df.rename(
+            columns={v: k for k, v in FEATURE_MAPPING.items()}
+        )
+
+        #Sanity check:
+        missing_wallets = (
+            static_graph_df["node_ID"]
+            .loc[~static_graph_df["node_ID"].isin(wallets_features["node_ID"])]
+            .nunique()
+        )
+
+        print(f"[ALERTA!!] Wallets sem feature: {missing_wallets}")
+        #End sanity check
+
+        static_graph_df.to_csv(Config.data_path / "config_features_2.csv", index=False) 
+        return static_graph_df # [TODO] conferir se esse csv ta certinho
+
+    def create_third_dataset():
+        '''
+        Repassar com o Robson pra entender quais são as features que ele usou no fraudguess ou que acha que seria interessante
+        Fazer isso segunda-feira depois que as análises já estiverem prontas
+        '''
         pass

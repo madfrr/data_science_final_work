@@ -41,10 +41,8 @@ class Validations():
             - Verificar a qtd de endereços na TxAddr_edgelist para aquela transação coincidem com out_txs_degree
     
     - Verificar a cobertura de transações. Se toda transação que está na txs_features está presente na AddrTx_edgelist e TxAddr_edgelist
-
-    - [TODO] Verificar btc_sent_median e btc_received_median com base nas transações das wallets
     
-    - [TODO] Verificar se num_txs_as_sender num_txs_as receiver bate com a qtd de transações que sai e volta da carteira
+    - Verificar se num_txs_as_sender num_txs_as_receiver bate com a qtd de transações que sai e volta da carteira
 
     - [TODO] Padronizar prints desse arquivo pra virar um relatório!!
     """
@@ -661,6 +659,82 @@ class Validations():
             print(df_faltantes.head())
             print(len(df_faltantes))
         return self
+    
+    def validate_wallets_num_txs_attributes(self):
+        """
+        - Verificar se num_txs_as_sender num_txs_as_receiver bate com a qtd de transações que sai e volta da carteira
+            Verifica se:
+            - num_txs_as_sender bate com a quantidade de txs onde a wallet aparece como input_address
+            - num_txs_as_receiver bate com a quantidade de txs onde a wallet aparece como output_address
+        """
+        wallets = self.data_path / self.input_dir / "wallets_features.parquet"
+        addr_tx = self.data_path / self.input_dir / "AddrTx_edgelist.parquet"
+        tx_addr = self.data_path / self.input_dir / "TxAddr_edgelist.parquet"
+        
+        wallets = pd.read_parquet(wallets)
+        addr_tx = pd.read_parquet(addr_tx)
+        tx_addr = pd.read_parquet(tx_addr)
+        
+        wallets_latest = (
+            wallets
+            .sort_values("time_step")
+            .groupby("address", as_index=False)
+            .tail(1)
+            .copy()
+        )
+        sender_counts = (
+            addr_tx
+            .groupby("input_address")["txId"]
+            .nunique()
+            .rename("num_txs_as_sender_real")
+            .reset_index()
+            .rename(columns={"input_address": "address"})
+        )
+
+        receiver_counts = (
+            tx_addr
+            .groupby("output_address")["txId"]
+            .nunique()
+            .rename("num_txs_as_receiver_real")
+            .reset_index()
+            .rename(columns={"output_address": "address"})
+        )
+
+        validation_df = (
+            wallets_latest
+            .merge(sender_counts, on="address", how="left")
+            .merge(receiver_counts, on="address", how="left")
+        )
+
+        # Preencher NaN com 0 (wallet nunca enviou / recebeu)
+        validation_df[[
+            "num_txs_as_sender_real",
+            "num_txs_as_receiver_real"
+        ]] = validation_df[[
+            "num_txs_as_sender_real",
+            "num_txs_as_receiver_real"
+        ]].fillna(0)
+
+        sender_mismatch = validation_df[
+            validation_df["num_txs_as_sender"] != validation_df["num_txs_as_sender_real"]
+        ]
+
+        receiver_mismatch = validation_df[
+            validation_df["num_txs_as_receiver"] != validation_df["num_txs_as_receiver_real"]
+        ]
+
+        if sender_mismatch.empty and receiver_mismatch.empty:
+            print("✅ Validação OK: num_txs_as_sender e num_txs_as_receiver batem com os edgelists.")
+        else:
+            print("❌ Inconsistências encontradas:")
+            print(f"- Sender mismatch: {len(sender_mismatch)} wallets")
+            print(f"- Receiver mismatch: {len(receiver_mismatch)} wallets")
+
+        return {
+            "sender_mismatch": sender_mismatch,
+            "receiver_mismatch": receiver_mismatch,
+            "validation_df": validation_df
+        }
 
     def run(self):
         # Implement validation logic here

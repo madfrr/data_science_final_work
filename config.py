@@ -26,7 +26,7 @@ class Config:
     class CallMine:
         setups = [
             {
-                'path_features' : Path(__file__).parent/ "src" / "data" / "allFeatures_nodeVectors.csv",
+                'path_features' : Path(__file__).parent/ "src" / "data" / "config_features_1.csv",
                 'detection_option' : 1,
                 'num_outliers' : 10,
                 'budget' : 5,
@@ -34,7 +34,7 @@ class Config:
                 'output_path' : str(Path(__file__).parent / 'callmine' / 'outputs')
             },
             {
-                'path_features' : Path(__file__).parent/ "src" / "data" / "allFeatures_nodeVectors.csv",
+                'path_features' : Path(__file__).parent/ "src" / "data" / "config_features_1.csv",
                 'detection_option' : 1,
                 'num_outliers' : 10,
                 'budget' : 5,

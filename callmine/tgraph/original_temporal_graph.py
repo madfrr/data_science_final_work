@@ -7,7 +7,6 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import entropy
-from typing import Literal
 
 np.seterr(divide='ignore', invalid='ignore')
 
@@ -48,12 +47,11 @@ SUM_MEASURE="sum_measure"
 
 
 class TemporalGraph():
-    def __init__(self, filename, time_step_format:Literal['timestamp', 'number'] = 'timestamp'):
+    def __init__(self, filename):
         """
         extract temporal features from nodes: inter-arrival time (iat)
         and duration wrt the 'measure' attribute
         """
-        self.time_step_format: Literal['timestamp', 'number'] = time_step_format
         self.filename = filename
         self.read_input_data()
         
@@ -88,9 +86,7 @@ class TemporalGraph():
         self.df = self.df[self.df[SOURCE] != self.df[DESTINATION]]
         self.df = self.df[self.df[MEASURE] > 0]
         
-        if self.time_step_format == "timestamp":
-            self.df[TIMESTAMP] = self.df[TIMESTAMP].astype('datetime64[s]')
-
+        self.df[TIMESTAMP] = self.df[TIMESTAMP].astype('datetime64[s]')
         
     def get_node_set(self):
         """
@@ -119,10 +115,7 @@ class TemporalGraph():
         df_aux = self.df.sort_values(by=[node_direction, TIMESTAMP]).reset_index(drop=True)
 
         # Group by source, get the difference (iat) between ts of every hash, convert it to timedelta
-        df_aux['diff_ts'] = df_aux.groupby(by=[node_direction])[TIMESTAMP].diff()
-        
-        if self.time_step_format == "timestamp":
-            df_aux['diff_ts'] = df_aux['diff_ts'].astype("timedelta64[s]")
+        df_aux['diff_ts'] = df_aux.groupby(by=[node_direction])[TIMESTAMP].diff().astype("timedelta64[s]")
 
         # Creates groups by ahash values, get the iat for every row
         group = df_aux.groupby(by=[node_direction], axis=0)['diff_ts']
@@ -138,7 +131,7 @@ class TemporalGraph():
         df_iat_measure[prefix+QUANT25_IAT] = group.quantile(q=0.25)
         df_iat_measure[prefix+QUANT50_IAT] = group.quantile(q=0.5)
         df_iat_measure[prefix+QUANT75_IAT] = group.quantile(q=0.75)
-        df_iat_measure[prefix+ENTROPY_IAT] = group.apply(lambda x : entropy(x.dropna().values))
+        df_iat_measure[prefix+ENTROPY_IAT]     = group.apply(lambda x : entropy(x.dropna().values))
         df_iat_measure[prefix+CALL_COUNT]  = group.size()
         
         # Creates groups by ahash values, get the duration of every row

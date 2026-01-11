@@ -62,6 +62,8 @@ def main():
     '''
     Extract(data_path=Config.data_path, folder_id=Config.google_drive_folder_id).run(must_subset_columns=True)
     Validations(data_path=Config.data_path, skip=True).run()
+    # -- Tratamento de dados
+    # -- análise exploratória tem que ser aqui
     CreateConfigs(data_path=Config.data_path, input_dir="data_selected_columns", output_dir="configs").run()
     run_callmine_steps(Config.call_mine_setup[0], generate_features=Config.CallMine.generate_features)
     run_callmine_steps(Config.call_mine_setup[1], generate_features=False)

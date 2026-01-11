@@ -19,6 +19,8 @@ CLASSE_UNKNOWN = 3
 
 class Validations():
     """
+    Essa parte de validation acaba entrando na etapa de entendimento de negócio
+
     - Verificar se a wallets_features_classes_combined.csv está consistente com a wallets_features.csv e wallets_classes.csv
         - Verificar conjunto de colunas
         - Verificar conjunto de carteiras com count se ta tudo igual
@@ -39,6 +41,12 @@ class Validations():
             - Verificar a qtd de endereços na TxAddr_edgelist para aquela transação coincidem com out_txs_degree
     
     - Verificar a cobertura de transações. Se toda transação que está na txs_features está presente na AddrTx_edgelist e TxAddr_edgelist
+
+    - [TODO] Verificar btc_sent_median e btc_received_median com base nas transações das wallets
+    
+    - [TODO] Verificar se num_txs_as_sender num_txs_as receiver bate com a qtd de transações que sai e volta da carteira
+
+    - [TODO] Padronizar prints desse arquivo pra virar um relatório!!
     """
     def __init__(self, data_path, data_dir = "data_selected_columns", skip=False):
         self.skip=skip

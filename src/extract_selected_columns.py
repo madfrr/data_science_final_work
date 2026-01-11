@@ -22,8 +22,8 @@ class SelectColumns():
                 "fees_as_share_total",
                 "btc_sent_median"
 			    "btc_received_median",
-                "blocks_btwn_input_txs_median",
-			    "blocks_btwn_output_txs_median"
+                "blocks_btwn_input_txs_median", #in_median_iat
+			    "blocks_btwn_output_txs_median" #out_median_iat
             ],
             "wallets_classes.csv": [
                 "address",

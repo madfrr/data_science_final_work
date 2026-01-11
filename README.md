@@ -64,4 +64,19 @@ Por quê: avaliação sem probabilidade.
 ## Snippets
 conda activate myenv
 
-git -c commit.gpgsign=false commit -m 'nome commit'
+git -c commit.gpgsign=false commit -m 'metricas base'
+
+main
+ExtractFromDrive
+SelectColumns
+Validations
+-- Tratamento de dados
+-- análise exploratória tem que ser aqui
+CreateConfigs
+run_call_mine
+run_gen2out
+-- run_outros modelos/algoritmos de anomalia
+Metrics
+
+config.py
+env

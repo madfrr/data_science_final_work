@@ -66,7 +66,7 @@ class SelectColumns():
         if not os.path.exists(self.input_path) or not os.listdir(self.input_path):
             raise FileNotFoundError(f"\n✗ Folder '{self.input_path}' does not exist or is empty. Please run the extraction step first.")
         if os.path.exists(self.output_path) and os.listdir(self.output_path):
-            print(f"\n✓ Folder '{self.output_path}' already exists and is not empty. Skipping download.")
+            print(f"\n✓ Folder '{self.output_path}' already exists and is not empty. Skipping download.\n")
             return True
         return False
     
@@ -88,7 +88,7 @@ class SelectColumns():
             df = self.rename_columns(df)
             output_file = file.replace(".csv", ".parquet")
             df.to_parquet(self.output_path / output_file, index=False)
-            print(f"✓ Processed and saved: {file} with columns: {list(df.columns)}")
+            print(f"✓ Processed and saved: {file} with columns: {list(df.columns)}\n")
 
     def run(self):
         if self.check_if_folder_already_exists():

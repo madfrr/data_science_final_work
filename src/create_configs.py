@@ -79,10 +79,13 @@ from pathlib import Path
 
 class FeatureEngineering:
     def __init__(self):
+        pass
+
+    def create_base_config(self):
         CreateConfigs(data_path=Config.data_path, input_dir="data_selected_columns", output_dir="configs").run()
 
     def run_static_graph(self, config_path: Path, output_path: Path):
-        print("Running callmine static_graph...")
+        print("Running tgraph static_graph...")
         static_graph = StaticGraph(filename=config_path)
         static_graph.print_to_csv(output_path)
         static_graph.my_print()
@@ -91,7 +94,7 @@ class FeatureEngineering:
         return static_graph.df_nodes
 
     def run_temporal_graph(self, config_path: Path, output_path: Path, time_step_format:Literal['timestamp', 'number'] = 'number'):
-        print("Running callmine temporal_graph...")
+        print("Running tgraph temporal_graph...")
         temporal_graph = TemporalGraph(filename=config_path, time_step_format=time_step_format)
         temporal_graph.print_to_csv(output_path)
         temporal_graph.my_print()
@@ -100,7 +103,7 @@ class FeatureEngineering:
         return temporal_graph.df_nodes
 
     def run_join_feature_files(self, static_graph_path: Path, temporal_graph_path: Path, join_features_output_path: Path):
-        print("Running callmine join_features...")
+        print("Running tgraph join_features...")
         join_features = JoinFeatures(path_static=static_graph_path, path_temporal=temporal_graph_path)
         join_features.print_to_csv(join_features_output_path)
         print(f"Joined features saved to: {join_features_output_path}")
@@ -198,8 +201,8 @@ class FeatureEngineering:
             .loc[~static_graph_df["node_ID"].isin(wallets_features["node_ID"])]
             .nunique()
         )
-
-        print(f"[ALERTA!!] Wallets sem feature: {missing_wallets}")
+        if missing_wallets > 0:
+            print(f"[ALERTA!!] Wallets sem feature: {missing_wallets}")
         #End sanity check
 
         static_graph_df.to_csv(Config.data_path / "config_features_2.csv", index=False) 

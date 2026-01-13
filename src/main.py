@@ -1,7 +1,7 @@
 from src.extract import Extract
 from src.validations import Validations
 from src.metrics import Metrics
-from src.create_configs import CreateConfigs
+from src.create_configs import CreateConfigs, FeatureEngineering
 from callmine.callmine_focus.run_callmine_focus import runGen2Out
 from src.callmine_runner import run_callmine_steps
 import numpy as np
@@ -62,11 +62,14 @@ def main():
     '''
     Extract(data_path=Config.data_path, folder_id=Config.google_drive_folder_id).run(must_subset_columns=True)
     Validations(data_path=Config.data_path, skip=True).run()
-    # -- Tratamento de dados
-    # -- análise exploratória tem que ser aqui
-    CreateConfigs(data_path=Config.data_path, input_dir="data_selected_columns", output_dir="configs").run()
-    run_callmine_steps(Config.call_mine_setup[0], generate_features=Config.CallMine.generate_features)
-    run_callmine_steps(Config.call_mine_setup[1], generate_features=False)
-    scores_sorted = sorted_gen2out_scores(read_if_cached=False, is_to_save=True)
-    address_to_class = get_address_class_lookup()
-    run_metrics(scores_sorted, address_to_class)
+    # # -- Tratamento de dados
+    # # -- análise exploratória tem que ser aqui
+    feature_engineering = FeatureEngineering()
+    feature_engineering.create_base_config()
+    feature_engineering.create_first_dataset()
+    second_dataset = feature_engineering.create_second_dataset()
+    # run_callmine_steps(Config.call_mine_setup[0], generate_features=Config.CallMine.generate_features)
+    # run_callmine_steps(Config.call_mine_setup[1], generate_features=False)
+    # scores_sorted = sorted_gen2out_scores(read_if_cached=False, is_to_save=True)
+    # address_to_class = get_address_class_lookup()
+    # run_metrics(scores_sorted, address_to_class)

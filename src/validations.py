@@ -122,7 +122,8 @@ class Validations():
         print(f"Edges em ambos: {len(edges_original & edges_reconstruido):,}")
 
         consistente_estrutura = len(apenas_original) == 0 and len(apenas_reconstruido) == 0
-        print(f"{'✅' if consistente_estrutura else '❌'} Estrutura consistente? {consistente_estrutura}")
+        print(f"Estrutura consistente? {consistente_estrutura}. Ou seja, o arquivo AddrAddr_edgelist possui as ligações feitas por AddrTx_edgelist e TxAddr_edgelist")
+        print("É como se cada TX fosse uma aresta que liga os dois endereços (ou wallets)")
         return self
     
     def validate_illicit_transactions_with_addresses(self):
@@ -224,7 +225,7 @@ class Validations():
         txs_sem_addr_ilicito = txs_ilicitas_set - txs_com_algum_addr_ilicito
         
         if len(txs_sem_addr_ilicito) > 0:
-            print(f"\n⚠️  INCONSISTÊNCIA DETECTADA!")
+            print(f"\nINCONSISTÊNCIA DETECTADA!")
             print(f"    {len(txs_sem_addr_ilicito)} transações ilícitas não têm nenhum endereço ilícito")
             print(f"    Isso representa {len(txs_sem_addr_ilicito)/len(txs_ilicitas)*100:.1f}% das transações ilícitas")
             
@@ -237,11 +238,11 @@ class Validations():
                 print(f"      Inputs: {list(inputs['input_addr_class'].unique())}")
                 print(f"      Outputs: {list(outputs['output_addr_class'].unique())}")
         else:
-            print(f"\n✅ CONSISTENTE: Todas as transações ilícitas têm pelo menos um endereço ilícito")
+            print(f"\nCONSISTENTE: Todas as transações ilícitas têm pelo menos um endereço ilícito. Ou seja, as classes das carteiras estão coerentes com as classes das transações.")
 
         return self
     
-    def validate_transaction_degrees(self):
+    def validate_transaction_degrees(self, should_save_inconsistencies=False):
         '''
         Não sei se esse teste faz sentido
         Eu tentei agrupar as transactions por endereço (meio que invertendo os papeis)
@@ -396,42 +397,43 @@ class Validations():
         if len(in_diferencas) > 0:
             in_grandes_dif = in_diferencas[abs(in_diferencas['in_diff']) > 5]
             if len(in_grandes_dif) > 0:
-                print(f"\n⚠️  {len(in_grandes_dif):,} transações com diferença > 5 no in_degree")
+                print(f"\n{len(in_grandes_dif):,} transações com diferença > 5 no in_degree")
                 print("   Exemplos:")
                 print(in_grandes_dif[['tx_id', 'in_degree_features', 'in_degree_real', 'in_diff']].head(5).to_string(index=False))
 
         if len(out_diferencas) > 0:
             out_grandes_dif = out_diferencas[abs(out_diferencas['out_diff']) > 5]
             if len(out_grandes_dif) > 0:
-                print(f"\n⚠️  {len(out_grandes_dif):,} transações com diferença > 5 no out_degree")
+                print(f"\n{len(out_grandes_dif):,} transações com diferença > 5 no out_degree")
                 print("   Exemplos:")
                 print(out_grandes_dif[['tx_id', 'out_degree_features', 'out_degree_real', 'out_diff']].head(5).to_string(index=False))
 
         # 10. RESUMO FINAL
-        print("\n" + "="*70)
+        print()
         print("RESUMO FINAL")
-        print("="*70)
+        print("-"*40)
 
         in_consistente = in_matches == total_validas
         out_consistente = out_matches == total_validas
         totalmente_consistente = in_consistente and out_consistente
 
         if totalmente_consistente:
-            print("✅ TOTALMENTE CONSISTENTE")
+            print("TOTALMENTE CONSISTENTE")
             print(f"   Todos os {total_validas:,} in_degrees e out_degrees batem perfeitamente!")
         else:
-            print("❌ INCONSISTÊNCIAS DETECTADAS")
+            print("INCONSISTÊNCIAS DETECTADAS")
             
             if not in_consistente:
-                print(f"   • IN-DEGREE: {total_validas - in_matches:,} diferenças ({(total_validas - in_matches)/total_validas*100:.2f}%)")
+                print(f"   IN-DEGREE: {total_validas - in_matches:,} diferenças ({(total_validas - in_matches)/total_validas*100:.2f}%)")
             else:
-                print(f"   ✅ IN-DEGREE: Todos consistentes")
+                print(f"   IN-DEGREE: Todos consistentes")
             
             if not out_consistente:
-                print(f"   • OUT-DEGREE: {total_validas - out_matches:,} diferenças ({(total_validas - out_matches)/total_validas*100:.2f}%)")
+                print(f"   OUT-DEGREE: {total_validas - out_matches:,} diferenças ({(total_validas - out_matches)/total_validas*100:.2f}%)")
             else:
-                print(f"   ✅ OUT-DEGREE: Todos consistentes")
-            
+                print(f"   OUT-DEGREE: Todos consistentes")
+
+            print("Basicamente, o txs_features tem 2 atributos de degree: in_txs_degree e out_txs_degree. Ele não bate com addr_tx e tx_addr agrupados por tx.")
             print(f"\n   Possíveis causas:")
             print(f"   - Timestep usado pode não ser o correto")
             print(f"   - Features podem incluir edges temporários/removidos")
@@ -439,7 +441,7 @@ class Validations():
             print(f"   - Cálculo de features pode usar critério diferente")
 
         # 11. Salvar diferenças para análise
-        if not totalmente_consistente:
+        if not totalmente_consistente and should_save_inconsistencies:
             print("\n11. SALVANDO DIFERENÇAS PARA ANÁLISE")
             
             diferencas_completas = comparacao_valida[
@@ -453,10 +455,11 @@ class Validations():
             diferencas_completas['out_diff'] = (
                 diferencas_completas['out_degree_features'] - diferencas_completas['out_degree_real']
             )
+            diferencas_completas.to_csv("transaction_degrees_inconsistencies.csv")
         
         return self
 
-    def validate_transaction_coverage(self):
+    def validate_transaction_coverage(self, should_save_inconsistencies=False):
         self._print_init_validation(f"transaction coverage in {self.path}")
         
         addr_tx = pd.read_parquet(self.path / "AddrTx_edgelist.parquet", columns=["input_address", "tx_id"])
@@ -524,11 +527,11 @@ class Validations():
         print(f"Apenas em TxAddr: {len(apenas_txaddr):,}")
 
         if len(apenas_addrtx) > 0:
-            print(f"\n⚠️  Transações com inputs mas sem outputs:")
+            print(f"\n  Transações com inputs mas sem outputs:")
             print(f"   {list(apenas_addrtx)[:10]}")
 
         if len(apenas_txaddr) > 0:
-            print(f"\n⚠️  Transações com outputs mas sem inputs:")
+            print(f"\n  Transações com outputs mas sem inputs:")
             print(f"   {list(apenas_txaddr)[:10]}")
 
         # 5. Diagrama de Venn (contagens)
@@ -612,9 +615,9 @@ class Validations():
             print(exemplos_ids)
 
         # 8. RESUMO FINAL
-        print("\n" + "="*70)
+        print()
         print("RESUMO FINAL")
-        print("="*70)
+        print("-"*40)
 
         cobertura_perfeita = (
             len(features_nao_em_addrtx) == 0 and 
@@ -622,11 +625,11 @@ class Validations():
         )
 
         if cobertura_perfeita:
-            print("✅ COBERTURA PERFEITA")
+            print(" COBERTURA PERFEITA")
             print(f"   Todas as {len(txs_features_set):,} transações em features existem em AddrTx e TxAddr")
         else:
-            print("❌ COBERTURA INCOMPLETA")
-            
+            print(" COBERTURA INCOMPLETA")
+
             if len(features_nao_em_addrtx) > 0:
                 print(f"   • {len(features_nao_em_addrtx):,} transações em features mas NÃO em AddrTx")
                 print(f"     ({len(features_nao_em_addrtx)/len(txs_features_set)*100:.2f}% do total)")
@@ -640,6 +643,7 @@ class Validations():
             print(f"   - Features podem incluir transações de outros períodos")
             print(f"   - Erro no processamento de algum dataset")
             print(f"   - Diferentes critérios de inclusão")
+            print(F"Existem {len(features_nao_em_addrtx)} transações que tem features mas não estão linkadas a algum endereço.")
 
         # Análise inversa
         if len(addrtx_nao_em_features) > 0 or len(txaddr_nao_em_features) > 0:
@@ -650,7 +654,7 @@ class Validations():
                 print(f"   • {len(txaddr_nao_em_features):,} em TxAddr ({len(txaddr_nao_em_features)/len(txs_tx_addr_set)*100:.2f}%)")
 
         # 9. Salvar transações faltantes para análise
-        if not cobertura_perfeita:
+        if not cobertura_perfeita and should_save_inconsistencies:
             print("\n9. SALVANDO TRANSAÇÕES FALTANTES PARA ANÁLISE")
             
             # Salvar IDs das transações faltantes
@@ -671,6 +675,7 @@ class Validations():
             )
             print(df_faltantes.head())
             print(len(df_faltantes))
+            df_faltantes.to_csv('transaction_coverage_inconsistencies.csv')
         return self
     
     def validate_wallets_num_txs_attributes(self):
@@ -743,6 +748,7 @@ class Validations():
             print("Inconsistências encontradas:")
             print(f"- Sender mismatch: {len(sender_mismatch)} wallets")
             print(f"- Receiver mismatch: {len(receiver_mismatch)} wallets")
+            print("Os atributos 'num_txs_as_sender' e 'num_txs_as_receiver' não estão consistentes com as tabelas addr_tx e tx_addr (com a qtd de transações que sai entra na carteira)")
 
         return {
             "sender_mismatch": sender_mismatch,

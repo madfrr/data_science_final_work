@@ -2,7 +2,7 @@ from sklearn.metrics import roc_auc_score, average_precision_score, precision_re
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-
+import os
 
 CLASSE_ILICITA = 1
 CLASSE_LICITA = 2
@@ -10,11 +10,14 @@ CLASSE_UNKNOWN = 3
 
 
 class Metrics():
-    def __init__(self, scores_sorted, address_to_class):
+    def __init__(self, scores_sorted, address_to_class, figures_path, setup_name):
         self.scores = scores_sorted
         self.address_to_class = address_to_class
         self.df_scores = self._define_df_scores()
         self.y_true, self.y_scores = self._prepare_for_sklearn(exclude_unknown=True)
+        self.figures_path = figures_path
+        self.setup_name=setup_name
+        os.makedirs(self.figures_path, exist_ok=True)
 
     def _define_df_scores(self):
         rows = []
@@ -51,7 +54,8 @@ class Metrics():
         plt.ylabel("True Positive Rate")
         plt.title("ROC Curve")
         plt.legend()
-        plt.show()
+        
+        plt.savefig(self.figures_path / f"{self.setup_name}_roc_curve.png", format="png")
 
 
     def plot_precision_recall_curve(self):
@@ -70,7 +74,8 @@ class Metrics():
         plt.ylabel("Precision")
         plt.title("Precision–Recall Curve")
         plt.legend()
-        plt.show()
+        
+        plt.savefig(self.figures_path / f"{self.setup_name}_precision_recall_curve.png", format="png")
 
     def plot_precision_at_k_curve(self):
         '''
@@ -93,7 +98,8 @@ class Metrics():
         plt.xlabel("K")
         plt.ylabel("Precision@K")
         plt.title("Precision@K vs K")
-        plt.show()
+        
+        plt.savefig(self.figures_path / f"{self.setup_name}_precision_k.png", format="png")
 
     def plot_recall_at_k_curve(self):
         '''
@@ -117,7 +123,8 @@ class Metrics():
         plt.xlabel("K")
         plt.ylabel("Recall@K")
         plt.title("Recall@K vs K")
-        plt.show()
+        
+        plt.savefig(self.figures_path / f"{self.setup_name}_recall_k.png", format="png")
 
     def plot_scores_distribution(self):
         plt.figure()
@@ -129,7 +136,8 @@ class Metrics():
         plt.ylabel("Density")
         plt.title("Score Distribution by Class")
         plt.legend()
-        plt.show()
+        
+        plt.savefig(self.figures_path / f"{self.setup_name}_score_distribution.png", format="png")
 
     def plot_all_graphs(self):
         self.plot_roc_curve()

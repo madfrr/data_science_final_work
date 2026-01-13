@@ -20,7 +20,7 @@ class SelectColumns():
                 "btc_received_total",
                 "fees_total",
                 "fees_as_share_total",
-                "btc_sent_median"
+                "btc_sent_median",
 			    "btc_received_median",
                 "blocks_btwn_input_txs_median", #in_median_iat
 			    "blocks_btwn_output_txs_median" #out_median_iat
@@ -41,7 +41,7 @@ class SelectColumns():
                 "btc_received_total",
                 "fees_total",
                 "fees_as_share_total",
-                "btc_sent_median"
+                "btc_sent_median",
 			    "btc_received_median",
                 "blocks_btwn_input_txs_median",
 			    "blocks_btwn_output_txs_median"
@@ -70,9 +70,22 @@ class SelectColumns():
             return True
         return False
     
+    def rename_columns(self, df):
+        #[TODO] Repassar isso para alguma etapa de transformação
+        columns_to_rename = {
+            "Time step": "time_step",
+            "txId": "tx_id",
+            "txId1": "tx_id_1",
+            "txId2": "tx_id_2",
+            "total_BTC": "total_btc",
+            "num_txs_as receiver": "num_txs_as_receiver"
+        }
+        return df.rename(columns=columns_to_rename)
+
     def format_columns(self):
         for file, columns in self.file_columns_mapping.items():
             df = pd.read_csv(self.input_path / file, usecols=columns)
+            df = self.rename_columns(df)
             output_file = file.replace(".csv", ".parquet")
             df.to_parquet(self.output_path / output_file, index=False)
             print(f"✓ Processed and saved: {file} with columns: {list(df.columns)}")

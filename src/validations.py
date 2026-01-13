@@ -50,8 +50,14 @@ class Validations():
         self.skip=skip
         self.path = data_path / data_dir
 
+    def _print_init_validation(self, title:str):
+        print()
+        print("="*40)
+        print("Iniciando validação: ", title.upper())
+        print("="*40)
+
     def validate_wallets_features_classes_combined(self):
-        print(f"Validating wallets_features_classes_combined in {self.path}")
+        self._print_init_validation(f"wallets_features_classes_combined in {self.path}")
         wallets_features = pd.read_parquet(self.path / "wallets_features.parquet", columns=["address"])
         wallets_classes = pd.read_parquet(self.path / "wallets_classes.parquet", columns=["address", "class"])
         wallets_features_classes_combined = pd.read_parquet(self.path / "wallets_features_classes_combined.parquet", columns=["address", "class", "time_step"])
@@ -76,6 +82,7 @@ class Validations():
         return self
 
     def validate_addraddr_edgelist(self):
+        self._print_init_validation(f"AddrAddr_edgelist in {self.path}")
         print(f"Validating AddrAddr_edgelist in {self.path}")
 
         addr_addr = pd.read_parquet(self.path / "AddrAddr_edgelist.parquet", columns=["input_address", "output_address"])
@@ -119,7 +126,7 @@ class Validations():
         return self
     
     def validate_illicit_transactions_with_addresses(self):
-        print(f"Validating illicit transactions with addresses in {self.path}")
+        self._print_init_validation(f"Validating illicit transactions with addresses in {self.path}")
         
         addr_tx = pd.read_parquet(self.path / "AddrTx_edgelist.parquet", columns=["input_address", "tx_id"])
         tx_addr = pd.read_parquet(self.path / "TxAddr_edgelist.parquet", columns=["tx_id", "output_address"])
@@ -236,11 +243,17 @@ class Validations():
     
     def validate_transaction_degrees(self):
         '''
+        Não sei se esse teste faz sentido
+        Eu tentei agrupar as transactions por endereço (meio que invertendo os papeis)
+        mas não consegui encontrar um significado para:
+        in_txs_degree e out_txs_degree que fica no arquivo txs_features
+        
         validate_transaction_degrees: 
         - Teve inconsistencia nos degrees das transações. Falta validar ids duplicados na addr_tx e tx_addr
         - falta entender se todas as transações que existem na txs_features existem na addr_tx e tx_addr
+        
         '''
-
+        self._print_init_validation(f"transaction degrees in {self.path}")
         print(f"Validating transaction degrees in {self.path}")
         addr_tx = pd.read_parquet(self.path / "AddrTx_edgelist.parquet", columns=["input_address", "tx_id"])
         tx_addr = pd.read_parquet(self.path / "TxAddr_edgelist.parquet", columns=["tx_id", "output_address"])
@@ -444,7 +457,7 @@ class Validations():
         return self
 
     def validate_transaction_coverage(self):
-        print(f"Validating transaction coverage in {self.path}")
+        self._print_init_validation(f"transaction coverage in {self.path}")
         
         addr_tx = pd.read_parquet(self.path / "AddrTx_edgelist.parquet", columns=["input_address", "tx_id"])
         tx_addr = pd.read_parquet(self.path / "TxAddr_edgelist.parquet", columns=["tx_id", "output_address"])
@@ -667,9 +680,10 @@ class Validations():
             - num_txs_as_sender bate com a quantidade de txs onde a wallet aparece como input_address
             - num_txs_as_receiver bate com a quantidade de txs onde a wallet aparece como output_address
         """
-        wallets = self.data_path / self.input_dir / "wallets_features.parquet"
-        addr_tx = self.data_path / self.input_dir / "AddrTx_edgelist.parquet"
-        tx_addr = self.data_path / self.input_dir / "TxAddr_edgelist.parquet"
+        self._print_init_validation(f"validate_wallets_num_txs_attributes")
+        wallets = self.path / "wallets_features.parquet"
+        addr_tx = self.path / "AddrTx_edgelist.parquet"
+        tx_addr = self.path / "TxAddr_edgelist.parquet"
         
         wallets = pd.read_parquet(wallets)
         addr_tx = pd.read_parquet(addr_tx)
@@ -684,7 +698,7 @@ class Validations():
         )
         sender_counts = (
             addr_tx
-            .groupby("input_address")["txId"]
+            .groupby("input_address")["tx_id"]
             .nunique()
             .rename("num_txs_as_sender_real")
             .reset_index()
@@ -693,7 +707,7 @@ class Validations():
 
         receiver_counts = (
             tx_addr
-            .groupby("output_address")["txId"]
+            .groupby("output_address")["tx_id"]
             .nunique()
             .rename("num_txs_as_receiver_real")
             .reset_index()
@@ -724,9 +738,9 @@ class Validations():
         ]
 
         if sender_mismatch.empty and receiver_mismatch.empty:
-            print("✅ Validação OK: num_txs_as_sender e num_txs_as_receiver batem com os edgelists.")
+            print("Validação OK: num_txs_as_sender e num_txs_as_receiver batem com os edgelists.")
         else:
-            print("❌ Inconsistências encontradas:")
+            print("Inconsistências encontradas:")
             print(f"- Sender mismatch: {len(sender_mismatch)} wallets")
             print(f"- Receiver mismatch: {len(receiver_mismatch)} wallets")
 
@@ -735,7 +749,36 @@ class Validations():
             "receiver_mismatch": receiver_mismatch,
             "validation_df": validation_df
         }
+    
+    def check_duplicates(self):
+        self._print_init_validation(f"check_duplicates")
+        addr_tx = self.path / "AddrTx_edgelist.parquet"
+        tx_addr = self.path / "TxAddr_edgelist.parquet"
+        wallets = self.path / "wallets_features.parquet"
+        txs_features = self.path / "txs_features.parquet"
+        
+        addr_tx = pd.read_parquet(addr_tx)
+        tx_addr = pd.read_parquet(tx_addr)
+        wallets = pd.read_parquet(wallets)
+        txs_features = pd.read_parquet(txs_features)
 
+        wallets = (wallets
+            .sort_values('time_step')
+            .groupby('address', as_index=False)
+            .last()
+        )
+
+        txs_features = (txs_features
+            .sort_values('time_step')
+            .groupby('tx_id', as_index=False)
+            .last()
+        )
+
+        print(f"Addr -> tx duplicadas: {addr_tx.duplicated().sum()}")
+        print(f"Addr -> tx duplicadas: {tx_addr.duplicated().sum()}")
+        print(f"wallets duplicadas: {wallets.duplicated().sum()}")
+        print(f"txs_features duplicadas: {txs_features.duplicated().sum()}")
+        
     def run(self):
         # Implement validation logic here
         if self.skip:
@@ -745,5 +788,10 @@ class Validations():
         self.validate_wallets_features_classes_combined()
         self.validate_addraddr_edgelist()
         self.validate_illicit_transactions_with_addresses()
-        self.validate_transaction_degrees()
-        self.validate_transaction_coverage()
+        self.validate_transaction_degrees() # existem inconsistencias nos in_txs_degree e out_txs_degree
+        self.validate_transaction_coverage() # existem inconsistencias nos num_txs_as_sender e num_txs_as_receiver
+        self.validate_wallets_num_txs_attributes()
+        self.check_duplicates()
+        print("FINISHED VALIDATIONS!!!")
+        print('*'*40)
+        print()

@@ -1,4 +1,4 @@
-from extract_selected_columns import SelectColumns
+from src.extract_selected_columns import SelectColumns
 from pathlib import Path
 import os
 import gdown
@@ -31,7 +31,7 @@ class Extract():
         
         try:
             url = f"https://drive.google.com/drive/folders/{self.folder_id}"
-            gdown.download_folder(url, output=self.path, quiet=False, use_cookies=False)
+            gdown.download_folder(url, output=str(self.path), quiet=False, use_cookies=False)
             print("\n✓ All files downloaded successfully!")
         except Exception as e:
             print(f"\n✗ Error downloading files: {e}")
@@ -40,7 +40,7 @@ class Extract():
             print("2. Try downloading individual files")
             print("3. Use a browser to download if permissions are required")
 
-        print(f"\nFiles are located in: {os.path.abspath(self.output_dir)}")
+        print(f"\nFiles are located in: {str(self.path)}")
 
     def set_subset_columns(self):
         SelectColumns(data_path=self.data_path).run()

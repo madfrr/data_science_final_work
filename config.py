@@ -15,8 +15,10 @@ class Config:
     ]
     google_drive_folder_id = "1MRPXz79Lu_JGLlJ21MDfML44dKN9R08l"
     
-    src_dir = Path(__file__).parent / "src"
-    data_path = src_dir / "data"
+    src_path = Path(__file__).parent / "src"
+    data_path = src_path / "data"
+
+    figures_path = data_path / "figures"
 
     class Classes:
         ILICITA = 1

@@ -3,10 +3,24 @@ from src.validations import Validations
 from src.metrics import Metrics
 from src.create_configs import CreateConfigs, FeatureEngineering
 from callmine.callmine_focus.run_callmine_focus import runGen2Out
-from src.callmine_runner import run_callmine_steps
+from callmine.callmine_focus.run_callmine_focus import call_mine_main
 import numpy as np
 import pandas as pd
 from config import Config
+
+
+def run_callmine_focus(setup):
+    print("Running callmine with the following setup:")
+    print(setup)
+    print()
+    call_mine_main(('dummy', *setup.values()))
+    print("Callmine ended.")
+    print("="*40)
+
+def run_callmine_setups(setups:dict):
+    for setup_name, setup in setups.items():
+        print(f'Running setup: {setup_name}')
+        run_callmine_focus(setup)
 
 def sorted_gen2out_scores(read_if_cached=False, is_to_save=False):
     '''
@@ -64,12 +78,13 @@ def main():
     Validations(data_path=Config.data_path, skip=True).run()
     # # -- Tratamento de dados
     # # -- análise exploratória tem que ser aqui
-    feature_engineering = FeatureEngineering()
-    feature_engineering.create_base_config()
-    feature_engineering.create_first_dataset()
-    second_dataset = feature_engineering.create_second_dataset()
-    # run_callmine_steps(Config.call_mine_setup[0], generate_features=Config.CallMine.generate_features)
-    # run_callmine_steps(Config.call_mine_setup[1], generate_features=False)
+    # feature_engineering = FeatureEngineering()
+    # feature_engineering.create_base_config()
+    # feature_engineering.create_first_dataset()
+    # feature_engineering.create_second_dataset()
+
+    run_callmine_setups(Config.CallMine.setups)
+
     # scores_sorted = sorted_gen2out_scores(read_if_cached=False, is_to_save=True)
     # address_to_class = get_address_class_lookup()
     # run_metrics(scores_sorted, address_to_class)

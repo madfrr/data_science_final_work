@@ -24,8 +24,8 @@ class Config:
         UNKNOWN = 3
     
     class CallMine:
-        setups = [
-            {
+        setups = {
+            'c1_d2': {
                 'path_features' : Path(__file__).parent/ "src" / "data" / "config_features_1.csv",
                 'detection_option' : 1,
                 'num_outliers' : 10,
@@ -33,13 +33,28 @@ class Config:
                 'dimensionality' : 2,
                 'output_path' : str(Path(__file__).parent / 'callmine' / 'outputs')
             },
-            {
+            'c1_d3': {
                 'path_features' : Path(__file__).parent/ "src" / "data" / "config_features_1.csv",
                 'detection_option' : 1,
                 'num_outliers' : 10,
                 'budget' : 5,
                 'dimensionality' : 3, # <<- the only difference
                 'output_path' : str(Path(__file__).parent / 'callmine' / 'outputs')
+            },
+            'c2_d2': {
+                'path_features' : Path(__file__).parent/ "src" / "data" / "config_features_2.csv",
+                'detection_option' : 1,
+                'num_outliers' : 10,
+                'budget' : 5,
+                'dimensionality' : 2,
+                'output_path' : str(Path(__file__).parent / 'callmine' / 'outputs')
+            },
+            'c2_d3': {
+                'path_features' : Path(__file__).parent/ "src" / "data" / "config_features_2.csv",
+                'detection_option' : 1,
+                'num_outliers' : 10,
+                'budget' : 5,
+                'dimensionality' : 3,
+                'output_path' : str(Path(__file__).parent / 'callmine' / 'outputs')
             }
-        ]
-        generate_features = True
+        }

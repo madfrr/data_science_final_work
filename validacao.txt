@@ -1,0 +1,359 @@
+
+Starting download of files to '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/raw'...
+
+✓ Folder '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/raw' already exists and is not empty. Skipping download.
+
+✓ Folder '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/data_selected_columns' already exists and is not empty. Skipping download.
+
+Running validations on data in /Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/data_selected_columns...
+
+
+
+========================================
+Iniciando validação:  WALLETS_FEATURES_CLASSES_COMBINED IN /USERS/GABRIEL.SERGIO/DEV/MBA/DATA_SCIENCE_FINAL_WORK/SRC/DATA/DATA_SELECTED_COLUMNS
+========================================
+  ✓ wallets_features, wallets_classes and wallets_features_classes_combined have the same addresses
+  ✓ wallets_features_classes_combined classes match wallets_classes
+
+========================================
+Iniciando validação:  ADDRADDR_EDGELIST IN /USERS/GABRIEL.SERGIO/DEV/MBA/DATA_SCIENCE_FINAL_WORK/SRC/DATA/DATA_SELECTED_COLUMNS
+========================================
+Validating AddrAddr_edgelist in /Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/data_selected_columns
+=== VERIFICAÇÃO DE CONSISTÊNCIA ===
+
+1. TAMANHOS DOS DATASETS
+AddrAddr: 2,868,964 edges
+AddrTx:   477,117 edges
+TxAddr:   837,124 edges
+
+2. VERIFICAÇÃO: AddrAddr = AddrTx JOIN TxAddr
+AddrAddr reconstruído: 2,868,964 edges
+Edges apenas no original: 0
+Edges apenas no reconstruído: 0
+Edges em ambos: 2,784,344
+Estrutura consistente? True. Ou seja, o arquivo AddrAddr_edgelist possui as ligações feitas por AddrTx_edgelist e TxAddr_edgelist
+É como se cada TX fosse uma aresta que liga os dois endereços (ou wallets)
+
+========================================
+Iniciando validação:  VALIDATING ILLICIT TRANSACTIONS WITH ADDRESSES IN /USERS/GABRIEL.SERGIO/DEV/MBA/DATA_SCIENCE_FINAL_WORK/SRC/DATA/DATA_SELECTED_COLUMNS
+========================================
+1. DISTRIBUIÇÃO DE CLASSES
+
+Wallets:
+1     14266 --> 1.7%
+2    251088 --> 30%
+3    557588 --> não classificado --> 67%
+Name: class, dtype: int64
+Total wallets: 822,942
+
+Transações:
+1      4545
+2     42019
+3    157205
+Name: class, dtype: int64
+Total transações: 203,769
+
+2. ENRIQUECENDO EDGES COM CLASSES
+✓ AddrTx enriquecido: 477,117 edges
+✓ TxAddr enriquecido: 837,124 edges
+Distribuição de classes:
+   class   count
+0      3  157205
+1      2   42019
+2      1    4545
+
+
+Total de transações ilícitas: 4,545
+
+--- INPUTS de transações ilícitas ---
+Ilícitos: 12,498 (100.0%)
+Lícitos: 0 (0.0%)
+Sem classe: 0 (0.0%)
+
+--- OUTPUTS de transações ilícitas ---
+Ilícitos: 6,148 (100.0%)
+Lícitos: 0 (0.0%)
+Sem classe: 0 (0.0%)
+
+--- ANÁLISE POR TRANSAÇÃO ---
+
+CONSISTENTE: Todas as transações ilícitas têm pelo menos um endereço ilícito. Ou seja, as classes das carteiras estão coerentes com as classes das transações.
+
+========================================
+Iniciando validação:  TRANSACTION DEGREES IN /USERS/GABRIEL.SERGIO/DEV/MBA/DATA_SCIENCE_FINAL_WORK/SRC/DATA/DATA_SELECTED_COLUMNS
+========================================
+Validating transaction degrees in /Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/data_selected_columns
+=== VALIDAÇÃO DE IN/OUT DEGREES ===
+
+1. INFORMAÇÕES BÁSICAS
+Total transações em txs_features: 203,769
+Total transações únicas: 203,769
+Timesteps: 1 a 49
+
+2. EXTRAINDO ÚLTIMO TIMESTEP POR TRANSAÇÃO
+Transações após filtrar último timestep: 203,769
+
+3. CALCULANDO DEGREES REAIS DAS EDGELISTS
+Transações com in_degree calculado: 202,804
+Transações com out_degree calculado: 202,804
+
+4. COMPARANDO COM TXS_FEATURES
+
+5. COMPARAÇÃO DE VALORES
+Transações com ambos os valores: 202,804
+
+--- IN-DEGREE ---
+Matches: 129,749 (63.98%)
+Diferenças: 73,055 (36.02%)
+
+--- OUT-DEGREE ---
+Matches: 41,349 (20.39%)
+Diferenças: 161,455 (79.61%)
+
+7. ANÁLISE DAS DIFERENÇAS
+
+IN-DEGREE - Estatísticas das diferenças:
+  Média: -3.33
+  Mediana: -1.00
+  Mín: -651, Máx: 124
+  Std: 17.16
+
+  Exemplos de diferenças:
+ tx_id  time_step  in_degree_features  in_degree_real  in_diff
+  1076         48                 1.0             2.0     -1.0
+  2534          6                 0.0             3.0     -3.0
+  3889         48                 0.0             1.0     -1.0
+  6418         48                97.0            93.0      4.0
+  7954         48                 0.0             1.0     -1.0
+  9466         48                82.0           100.0    -18.0
+  9551         48                 1.0             2.0     -1.0
+ 10254         48                31.0            89.0    -58.0
+ 10280         48                 6.0            12.0     -6.0
+ 12051         48                 3.0             4.0     -1.0
+
+OUT-DEGREE - Estatísticas das diferenças:
+  Média: -3.74
+  Mediana: -1.00
+  Mín: -12819, Máx: 10
+  Std: 54.06
+
+  Exemplos de diferenças:
+ tx_id  time_step  out_degree_features  out_degree_real  out_diff
+  1076         48                  1.0              2.0      -1.0
+  2534          6                  3.0              7.0      -4.0
+  3181         34                112.0           4906.0   -4794.0
+  3321          1                  0.0              2.0      -2.0
+  3889         48                 50.0            863.0    -813.0
+  5473         48                 28.0            598.0    -570.0
+  6415         48                  1.0              2.0      -1.0
+  6418         48                  2.0              9.0      -7.0
+  7952         48                 99.0           4667.0   -4568.0
+  7954         48                  1.0             11.0     -10.0
+
+8. ESTATÍSTICAS GERAIS DOS DEGREES
+
+IN-DEGREE:
+  Features - Média: 1.15, Mediana: 1
+  Real     - Média: 2.35, Mediana: 1
+
+OUT-DEGREE:
+  Features - Média: 1.15, Mediana: 1
+  Real     - Média: 4.13, Mediana: 2
+
+9. TRANSAÇÕES PROBLEMÁTICAS
+
+6,014 transações com diferença > 5 no in_degree
+   Exemplos:
+ tx_id  in_degree_features  in_degree_real  in_diff
+  9466                82.0           100.0    -18.0
+ 10254                31.0            89.0    -58.0
+ 10280                 6.0            12.0     -6.0
+ 13646                50.0            96.0    -46.0
+ 39994                 0.0             6.0     -6.0
+
+10,501 transações com diferença > 5 no out_degree
+   Exemplos:
+ tx_id  out_degree_features  out_degree_real  out_diff
+  3181                112.0           4906.0   -4794.0
+  3889                 50.0            863.0    -813.0
+  5473                 28.0            598.0    -570.0
+  6418                  2.0              9.0      -7.0
+  7952                 99.0           4667.0   -4568.0
+
+RESUMO FINAL
+----------------------------------------
+INCONSISTÊNCIAS DETECTADAS
+   IN-DEGREE: 73,055 diferenças (36.02%)
+   OUT-DEGREE: 161,455 diferenças (79.61%)
+Basicamente, o txs_features tem 2 atributos de degree: in_txs_degree e out_txs_degree. Ele não bate com addr_tx e tx_addr agrupados por tx.
+
+   Possíveis causas:
+   - Timestep usado pode não ser o correto
+   - Features podem incluir edges temporários/removidos
+   - Edges duplicadas nas edgelists
+   - Cálculo de features pode usar critério diferente
+
+========================================
+Iniciando validação:  TRANSACTION COVERAGE IN /USERS/GABRIEL.SERGIO/DEV/MBA/DATA_SCIENCE_FINAL_WORK/SRC/DATA/DATA_SELECTED_COLUMNS
+========================================
+=== VERIFICAÇÃO DE COBERTURA DE TRANSAÇÕES ===
+
+1. TRANSAÇÕES ÚNICAS POR DATASET
+txs_features: 203,769 transações únicas
+AddrTx:       202,804 transações únicas
+TxAddr:       202,804 transações únicas
+
+2. ANÁLISE DE COBERTURA
+
+--- txs_features → AddrTx ---
+Presentes em ambos: 202,804 (99.53%)
+Apenas em features: 965 (0.47%)
+
+--- txs_features → TxAddr ---
+Presentes em ambos: 202,804 (99.53%)
+Apenas em features: 965 (0.47%)
+
+--- txs_features → AddrTx E TxAddr ---
+Presentes em AMBOS edgelists: 202,804 (99.53%)
+Faltando em ALGUM edgelist: 965 (0.47%)
+
+3. ANÁLISE INVERSA (EDGELISTS → FEATURES)
+AddrTx sem features: 0 (0.00%)
+TxAddr sem features: 0 (0.00%)
+
+4. CONSISTÊNCIA ENTRE ADDRTX E TXADDR
+Em ambos AddrTx e TxAddr: 202,804
+Apenas em AddrTx: 0
+Apenas em TxAddr: 0
+
+5. DIAGRAMA DE VENN
+
+Total de transações únicas (união): 203,769
+
+Apenas em txs_features: 965
+Apenas em AddrTx: 0
+Apenas em TxAddr: 0
+features ∩ AddrTx (sem TxAddr): 0
+features ∩ TxAddr (sem AddrTx): 0
+AddrTx ∩ TxAddr (sem features): 0
+Nos três datasets: 202,804
+
+Verificação: 203,769 (deve ser igual a 203,769)
+
+6. ANÁLISE TEMPORAL DAS TRANSAÇÕES FALTANTES
+
+Transações em features mas faltando em edgelists: 965
+Distribuição por timestep:
+time_step
+1      36
+2      15
+4       4
+5       2
+7      22
+8      26
+9       5
+11      7
+12      8
+13     12
+14      2
+15     16
+16     12
+17     12
+18      7
+20      4
+21      3
+22     16
+23     33
+24     12
+25      7
+26      4
+27     12
+28      1
+29      9
+30      8
+31     41
+32     12
+33      3
+34     50
+35     21
+36    117
+37     62
+38     17
+39     43
+40     23
+41     30
+42     15
+43    144
+44     23
+45     40
+46      7
+47     16
+49      6
+
+Último timestep das transações faltantes:
+  Min: 1
+  Max: 49
+  Média: 31.57
+  Mediana: 36
+
+7. EXEMPLOS DE TRANSAÇÕES PROBLEMÁTICAS
+
+--- Transações em features mas NÃO em AddrTx (primeiras 10) ---
+    tx_id  time_step  in_txs_degree  out_txs_degree
+ 13258763         41            NaN             NaN
+ 25444355         38            NaN             NaN
+ 29237265         37            NaN             NaN
+ 29259799         37            NaN             NaN
+ 30089221         37            NaN             NaN
+ 39454741         40            NaN             NaN
+ 64186383         35            NaN             NaN
+105508872         13            NaN             NaN
+153370646         39            NaN             NaN
+200982528         36            NaN             NaN
+
+--- Transações em features mas NÃO em TxAddr (primeiras 10) ---
+    tx_id  time_step  in_txs_degree  out_txs_degree
+ 13258763         41            NaN             NaN
+ 25444355         38            NaN             NaN
+ 29237265         37            NaN             NaN
+ 29259799         37            NaN             NaN
+ 30089221         37            NaN             NaN
+ 39454741         40            NaN             NaN
+ 64186383         35            NaN             NaN
+105508872         13            NaN             NaN
+153370646         39            NaN             NaN
+200982528         36            NaN             NaN
+
+RESUMO FINAL
+----------------------------------------
+ COBERTURA INCOMPLETA
+   • 965 transações em features mas NÃO em AddrTx
+     (0.47% do total)
+   • 965 transações em features mas NÃO em TxAddr
+     (0.47% do total)
+
+   Possíveis causas:
+   - Transações podem ter sido filtradas dos edgelists
+   - Features podem incluir transações de outros períodos
+   - Erro no processamento de algum dataset
+   - Diferentes critérios de inclusão
+Existem 965 transações que tem features mas não estão linkadas a algum endereço.
+
+========================================
+Iniciando validação:  VALIDATE_WALLETS_NUM_TXS_ATTRIBUTES
+========================================
+Inconsistências encontradas:
+- Sender mismatch: 252 wallets
+- Receiver mismatch: 8574 wallets
+Os atributos 'num_txs_as_sender' e 'num_txs_as_receiver' não estão consistentes com as tabelas addr_tx e tx_addr (com a qtd de transações que sai entra na carteira)
+
+========================================
+Iniciando validação:  CHECK_DUPLICATES
+========================================
+Addr -> tx duplicadas: 0
+Addr -> tx duplicadas: 0
+wallets duplicadas: 0
+txs_features duplicadas: 0
+FINISHED VALIDATIONS!!!
+****************************************
+

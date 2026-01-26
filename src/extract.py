@@ -1,5 +1,3 @@
-from src.extract_selected_columns import SelectColumns
-from pathlib import Path
 import os
 import gdown
 
@@ -7,6 +5,7 @@ class Extract():
     '''
     https://github.com/git-disl/EllipticPlusPlus
     https://drive.google.com/drive/folders/1MRPXz79Lu_JGLlJ21MDfML44dKN9R08l?usp=sharing
+    Class responsible for downloading raw data from Google Drive and saving it locally.
     '''
 
     def __init__(self, data_path, folder_id, output_dir="raw"):
@@ -16,7 +15,6 @@ class Extract():
         
         os.makedirs(data_path, exist_ok=True)
         os.makedirs(output_dir, exist_ok=True)
-
 
     def check_if_folder_already_exists(self):
         if os.path.exists(self.path) and os.listdir(self.path):
@@ -42,11 +40,6 @@ class Extract():
 
         print(f"\nFiles are located in: {str(self.path)}")
 
-    def set_subset_columns(self):
-        SelectColumns(data_path=self.data_path).run()
-
-    def run(self, must_subset_columns=False):
+    def run(self):
         self.extract_raw_data()
-        if must_subset_columns:
-            self.set_subset_columns()
         

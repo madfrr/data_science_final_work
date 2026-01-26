@@ -1,8 +1,9 @@
 from src.extract import Extract
 from src.validations import Validations
 from src.metrics import Metrics
-from src.create_configs import CreateConfigs, FeatureEngineering
 from src.models import gen2out_scores_from_setups, run_callmine_setups
+from src.extract_selected_columns import Standardization
+from src.transform import run_transformation
 from callmine.callmine_focus.run_callmine_focus import runGen2Out
 from callmine.callmine_focus.run_callmine_focus import call_mine_main
 import numpy as np
@@ -24,27 +25,29 @@ def run_metrics(setup_name, scores_sorted, address_to_class):
     metrics.plot_all_graphs()
     print("Metrics calculated.")
 
-def main():
+
+
+def main(config: Config):
     '''
     input_address = source
     outut_address = destination
     total_btc + fees = measure
     time_step = timestamp
     '''
-    Extract(data_path=Config.data_path, folder_id=Config.google_drive_folder_id).run(must_subset_columns=True)
-    Validations(data_path=Config.data_path, skip=True).run()
-    # # -- Tratamento de dados
-    # # -- análise exploratória tem que ser aqui
-    # feature_engineering = FeatureEngineering()
-    # feature_engineering.create_base_config()
-    # feature_engineering.create_first_dataset()
-    # feature_engineering.create_second_dataset()
+    Extract(data_path=Config.data_path, folder_id=Config.google_drive_folder_id, output_dir="raw").run()
 
-    # run_callmine_setups(Config.CallMine.setups)
-
-    scores_sorted = gen2out_scores_from_setups(read_if_cached=True, is_to_save=False, inverted=False)
-    address_to_class = get_address_class_lookup()
+    Standardization(data_path=Config.data_path, input_dir="raw", output_dir="data_selected_columns").run()
     
+    Validations(data_path=Config.data_path, skip=True).run()
+    
+    run_transformation()
+    # # -- análise exploratória tem que ser aqui
+    
+    run_callmine_setups(Config.CallMine.setups)
+    
+    scores_sorted = gen2out_scores_from_setups(read_if_cached=False, is_to_save=False, inverted=True)
+    address_to_class = get_address_class_lookup()
+    print()
     for setup, scores in scores_sorted.items():
         print('='*40)
         print(f"Running metrics for {setup} scores")

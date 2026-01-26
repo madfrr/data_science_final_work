@@ -21,8 +21,6 @@ def run_callmine_setups(setups:dict):
         print(f'Running setup: {setup_name}')
         run_callmine_focus(setup)
 
-
-
 """
 GEN2OUT
 """
@@ -33,12 +31,25 @@ def gen2out_scores(scores_path: Path, path_features:Path, read_if_cached=False):
         return list(zip(df_scores['node_ID'], df_scores['anomaly_score']))
 
     df_features = pd.read_csv(path_features)
-    keys = ['out_degree', 'in_degree',
-        'core', 'weighted_out_degree',
-        'weighted_in_degree', 'in_median_iat',
-        'in_call_count', 'in_median_measure',
-        'out_median_iat', 'out_call_count',
-        'out_median_measure']
+    if Config.remove_unknown_from_config:
+        df_features = df_features[df_features['class'] != 3]
+        
+    keys = [
+        'out_degree', 
+        'in_degree',
+        'core', 
+        'weighted_out_degree',
+        'weighted_in_degree', 
+        
+        'in_median_iat',
+        'in_call_count', 
+        'in_median_measure',
+        
+        'out_median_iat', 
+        'out_call_count',
+        'out_median_measure'
+        ]
+    df_features = df_features[['node_ID'] + keys].set_index('node_ID').reset_index()
     
     return runGen2Out(ids = df_features['node_ID'],
                             features = np.asarray(df_features[keys], dtype = float),
@@ -61,17 +72,17 @@ def gen2out_setup_scores(scores_path: Path, path_features:Path, read_if_cached=F
 
     return scores
 
-def gen2out_scores_from_setups(setups=Config.CallMine.setups, read_if_cached=False, is_to_save=False, inverted=False):
+def gen2out_scores_from_setups(configs=Config.path_configs, read_if_cached=False, is_to_save=False, inverted=False):
     scores = {}
-    for setup_name, setup in setups.items():
-        print(f"Running gen2out scores for setup {setup_name}...")
-        score_path_to_save = Config.data_path / f"{setup_name}_gen2out_sorted.csv"
+    for name, path in configs.items():
+        print(f"Running gen2out scores for setup {name}...")
+        score_path_to_save = Config.data_path / f"{name}_gen2out_sorted.csv"
         score = gen2out_setup_scores(
             scores_path=score_path_to_save,
-            path_features=setup['path_features'],
+            path_features=path,
             read_if_cached=read_if_cached,
             is_to_save=is_to_save,
             inverted=inverted
         )
-        scores[setup_name] = score
+        scores[name] = score
     return scores

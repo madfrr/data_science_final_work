@@ -20,6 +20,17 @@ class Config:
 
     figures_path = data_path / "figures"
 
+    config_1 = "config_features_1.csv"
+    config_2 = "config_features_2.csv"
+
+    path_config_1 = Path(__file__).parent/ "src" / "data" / config_1
+    path_config_2 = Path(__file__).parent/ "src" / "data" / config_2
+
+    path_configs = {
+        "config_1": path_config_1,
+        "config_2": path_config_2
+    }
+    remove_unknown_from_config = True
     class Classes:
         ILICITA = 1
         LICITA = 2

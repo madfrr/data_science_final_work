@@ -2,7 +2,11 @@ from pathlib import Path
 import pandas as pd
 import os
 
-class SelectColumns():
+class Standardization():
+    '''
+    Class responsible for selecting specific columns from the raw CSV files
+    renameming them, and saving the processed data in Parquet format.
+    '''
     def __init__(self, data_path, input_dir = "raw", output_dir="data_selected_columns"):
         self.output_path = data_path / output_dir
         self.input_path = data_path / input_dir
@@ -71,7 +75,6 @@ class SelectColumns():
         return False
     
     def rename_columns(self, df):
-        #[TODO] Repassar isso para alguma etapa de transformação
         columns_to_rename = {
             "Time step": "time_step",
             "txId": "tx_id",

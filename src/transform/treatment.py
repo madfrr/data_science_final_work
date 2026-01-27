@@ -9,34 +9,41 @@ pra mostrar
 '''
 import pandas as pd
 
+from config import Config
+
 class Treatment():
 
-    def __init__(self, dataset_path):
-        self.dataset_path = dataset_path
+    def __init__(self, df: pd.DataFrame):
+        self.df = df
 
-    def remove_duplicates(self, df, subset_columns=None):
-        initial_count = len(df)
-        df_cleaned = df.drop_duplicates(subset=subset_columns)
+    def remove_duplicates(self, subset_columns=None):
+        initial_count = len(self.df)
+        df_cleaned = self.df.drop_duplicates(subset=subset_columns)
         final_count = len(df_cleaned)
         print(f"Removed {initial_count - final_count} duplicate rows based on columns: {subset_columns}")
-        return df_cleaned
-    
-    def remove_nulls(self, df:pd.DataFrame, subset_columns=None):
-        initial_count = len(df)
-        df_cleaned = df.dropna(subset=subset_columns)
+        self.df = df_cleaned
+        return self
+
+    def remove_nulls(self, subset_columns=None):
+        initial_count = len(self.df)
+        df_cleaned = self.df.dropna(subset=subset_columns)
         final_count = len(df_cleaned)
         print(f"Removed {initial_count - final_count} rows with nulls in columns: {subset_columns}")
-        return df_cleaned
+        self.df = df_cleaned
+        return self
     
     def min_max_normalize(self, df):
         #TODO usar sklearn
         pass
     
     def remove_unknown_class(self):
-        pass
+        initial_count = len(self.df)
+        df_cleaned = self.df[self.df['class'] != Config.Classes.UNKNOWN]
+        final_count = len(df_cleaned)
+        print(f"Removed {initial_count - final_count} rows with UNKNOWN class.")
+        self.df = df_cleaned
 
-    def run(self):
-        print("Running data treatment...")
-        
-        df = pd.read_csv(self.dataset_path)
-        print("Data treatment completed.") 
+        return self
+
+    def get_df(self):
+        return self.df

@@ -3,15 +3,27 @@ from src.validations import Validations
 from src.metrics import Metrics
 from src.models import gen2out_scores_from_setups, run_callmine_setups
 from src.extract_selected_columns import Standardization
-from src.transform import run_transformation
 from callmine.callmine_focus.run_callmine_focus import runGen2Out
 from callmine.callmine_focus.run_callmine_focus import call_mine_main
+from src.transform import CreateConfigs, FeatureEngineering
 import numpy as np
 import pandas as pd
 from config import Config
 from pathlib import Path
 
 
+def run_transformation():
+    '''
+    Aqui com o config_features.csv posso fazer toda análise exploratória
+    Para novos conjuntos de features para rodar os modelos, posso exportar csvs diferentes... (config_features_1.csv, config_features_2.csv, etc)
+    '''
+    CreateConfigs(data_path=Config.data_path, input_dir="data_selected_columns", output_dir="configs").run()
+    FeatureEngineering().base_config()
+    FeatureEngineering().generate_first_config()
+    FeatureEngineering().generate_second_config()
+    FeatureEngineering().generate_third_config()
+    FeatureEngineering().generate_fourth_config()
+    
 def get_address_class_lookup():
     path = Config.data_path / 'data_selected_columns' / "wallets_classes.parquet"
     df = pd.read_parquet(path, columns=["address", "class"])
@@ -24,8 +36,6 @@ def run_metrics(setup_name, scores_sorted, address_to_class):
     metrics.scores_profile_from_positive_class()
     metrics.plot_all_graphs()
     print("Metrics calculated.")
-
-
 
 def main(config: Config):
     '''
@@ -41,7 +51,7 @@ def main(config: Config):
     Validations(data_path=Config.data_path, skip=True).run()
     
     run_transformation()
-    # # -- análise exploratória tem que ser aqui
+    # -- análise exploratória tem que ser aqui
     
     run_callmine_setups(Config.CallMine.setups)
     

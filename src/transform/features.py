@@ -1,3 +1,4 @@
+from src.transform.treatment import Treatment
 from callmine.tgraph.static_graph import StaticGraph
 from callmine.tgraph.temporal_graph import TemporalGraph
 from callmine.tgraph.join_feature_files import JoinFeatures
@@ -7,10 +8,11 @@ from config import Config
 import pandas as pd
 
 
+
 class FeatureEngineering:
     def __init__(self):
         self.features_path = Config.data_path / "configs" / "config_features.csv"
-        self.wallet_path = Config.data_path / "data_selected_columns" / "wallets_features.parquet"
+        self.wallet_path = Config.data_path / "data_selected_columns" / "wallets_features_classes_combined.parquet"
 
     def _run_static_graph(self, config_path: Path, output_path: Path):
         print("Running tgraph static_graph...")
@@ -86,7 +88,7 @@ class FeatureEngineering:
 
         df.to_csv(self.features_path, index=False)
 
-    def get_first_config(self):
+    def generate_first_config(self):
         columns = [
             'node_ID',
             'out_degree', 
@@ -102,9 +104,13 @@ class FeatureEngineering:
             'out_median_measure',
             'class'
         ]
-        return pd.read_csv(self.features_path, usecols=columns) # Config.data_path / "config_features_1.csv"
+        df = pd.read_csv(self.features_path, usecols=columns)
+        df = Treatment(df).remove_duplicates().remove_nulls().get_df()
+        
+        df.to_csv(Config.path_config_1, index=False)
+        return self
 
-    def get_second_config(self):
+    def generate_second_config(self):
         '''
          Mesmas features do dataset 1 só que com as duas métricas de IAT + call_count considerando os blocos
         - mapeamento:
@@ -143,4 +149,60 @@ class FeatureEngineering:
             "num_txs_as_sender": "out_call_count",
             "btc_sent_median": "out_median_measure"
         }
-        return df.rename(columns=columns_to_rename)
+        df = df.rename(columns=columns_to_rename)
+        df = Treatment(df).remove_duplicates().remove_nulls().get_df()
+        df.to_csv(Config.path_config_2, index=False)
+        return self
+    
+    def generate_third_config(self):
+        columns = [
+            'node_ID',
+            'out_degree', 
+            'in_degree',
+            'core', 
+            'weighted_out_degree',
+            'weighted_in_degree', 
+            'in_median_iat',
+            'in_call_count', 
+            'in_median_measure',
+            'out_median_iat', 
+            'out_call_count',
+            'out_median_measure',
+            'class'
+        ]
+        df = pd.read_csv(self.features_path, usecols=columns)
+        df = Treatment(df).remove_duplicates().remove_nulls().remove_unknown_class().get_df()
+        
+        df.to_csv(Config.path_config_3, index=False)
+        return self
+
+    def generate_fourth_config(self):
+        columns = [
+            'node_ID',
+            'out_degree', 
+            'in_degree',
+            'core', 
+            'weighted_out_degree',
+            'weighted_in_degree', 
+            "blocks_btwn_input_txs_median",
+            "num_txs_as_receiver",
+            "btc_received_median",
+            "blocks_btwn_output_txs_median",
+            "num_txs_as_sender",
+            "btc_sent_median",
+            'class'
+        ]
+        df = pd.read_csv(self.features_path, usecols=columns)
+
+        columns_to_rename = {
+            "blocks_btwn_input_txs_median": "in_median_iat",
+            "num_txs_as_receiver": "in_call_count",
+            "btc_received_median": "in_median_measure",
+            "blocks_btwn_output_txs_median": "out_median_iat",
+            "num_txs_as_sender": "out_call_count",
+            "btc_sent_median": "out_median_measure"
+        }
+        df = df.rename(columns=columns_to_rename)
+        df = Treatment(df).remove_duplicates().remove_nulls().remove_unknown_class().get_df()
+        df.to_csv(Config.path_config_4, index=False)
+        return self

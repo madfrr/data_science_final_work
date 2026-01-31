@@ -19,12 +19,13 @@ class Config:
     data_path = src_path / "data"
 
     figures_path = data_path / "figures"
-    config_path = Path(__file__).parent/ "src" / "data" / "configs"
-
-    path_config_1 = config_path / "config_features_1.csv"
-    path_config_2 = config_path / "config_features_2.csv"
-    path_config_3 = config_path / "config_features_3.csv"
-    path_config_4 = config_path / "config_features_4.csv"
+    configs_path = Path(__file__).parent/ "src" / "data" / "configs"
+    
+    path_config = configs_path / "config_features.csv"
+    path_config_1 = configs_path / "config_features_1.csv"
+    path_config_2 = configs_path / "config_features_2.csv"
+    path_config_3 = configs_path / "config_features_3.csv"
+    path_config_4 = configs_path / "config_features_4.csv"
 
     path_configs = {
         "config_1": path_config_1,
@@ -34,8 +35,8 @@ class Config:
     }
     remove_unknown_from_config = True
     class Classes:
-        ILICITA = 1
-        LICITA = 2
+        LICIT = 1
+        ILLICIT = 2
         UNKNOWN = 3
     
     class CallMine:

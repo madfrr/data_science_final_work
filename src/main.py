@@ -3,6 +3,7 @@ from src.validations import Validations
 from src.metrics import Metrics
 from src.algorithms import gen2out_scores_from_setups, run_callmine_setups
 from src.extract_selected_columns import Standardization
+from src.analysis import SimpleCharts
 from callmine.callmine_focus.run_callmine_focus import runGen2Out
 from callmine.callmine_focus.run_callmine_focus import call_mine_main
 from src.transform import CreateConfigs, FeatureEngineering
@@ -71,8 +72,9 @@ def main(config: Config):
     
     run_transformation()
     # -- análise exploratória tem que ser aqui
+    os.makedirs(Config.figures_path, exist_ok=True)
     
-
+    SimpleCharts(config_features_path=Config.path_config, figures_path=Config.figures_path).run()
 
     # run_callmine_setups(Config.CallMine.setups)
     

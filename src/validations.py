@@ -126,6 +126,66 @@ class Validations():
         print("É como se cada TX fosse uma aresta que liga os dois endereços (ou wallets)")
         return self
     
+    def validate_addresses_in_wallets(self):
+        self._print_init_validation(f"addresses in edgelists exist in {self.path}")
+
+        wallets = pd.read_parquet(self.path / "wallets_features.parquet", columns=["address"])['address']
+        wallets_set = set(wallets.unique())
+
+        addr_addr = pd.read_parquet(self.path / "AddrAddr_edgelist.parquet", columns=["input_address", "output_address"]) 
+        addr_tx = pd.read_parquet(self.path / "AddrTx_edgelist.parquet", columns=["input_address", "tx_id"]) 
+        tx_addr = pd.read_parquet(self.path / "TxAddr_edgelist.parquet", columns=["tx_id", "output_address"]) 
+
+        # Collect all addresses present in the three edgelists
+        addrs = set(addr_addr['input_address'].dropna().unique()) | set(addr_addr['output_address'].dropna().unique())
+        addrs |= set(addr_tx['input_address'].dropna().unique())
+        addrs |= set(tx_addr['output_address'].dropna().unique())
+
+        missing = addrs - wallets_set
+
+        print(f"Total unique addresses in edgelists: {len(addrs):,}")
+        print(f"Total wallets in wallets_features: {len(wallets_set):,}")
+        print(f"Addresses missing in wallets_features: {len(missing):,}")
+
+        if len(missing) > 0:
+            pct = len(missing) / len(addrs) * 100 if len(addrs) > 0 else 0.0
+            print(f"Missing represent {pct:.2f}% of addresses from edgelists")
+            print("Examples of missing addresses (up to 10):")
+            print(list(missing)[:10])
+        else:
+            print("✓ All addresses from AddrAddr/AddrTx/TxAddr are present in wallets_features.parquet")
+
+        # 1) Check every wallet has at least one transaction (appears in AddrTx or TxAddr)
+        addresses_with_tx = set(addr_tx['input_address'].dropna().unique()) | set(tx_addr['output_address'].dropna().unique())
+        wallets_without_tx = wallets_set - addresses_with_tx
+
+        print(f"\nAddresses with at least one transaction: {len(addresses_with_tx):,}")
+        print(f"Wallets without any transaction: {len(wallets_without_tx):,}")
+        if len(wallets_without_tx) > 0:
+            pct2 = len(wallets_without_tx) / len(wallets_set) * 100 if len(wallets_set) > 0 else 0.0
+            print(f"These represent {pct2:.2f}% of wallets. Examples (up to 10):")
+            print(list(wallets_without_tx)[:10])
+        else:
+            print("✓ All wallets have at least one transaction (appear in AddrTx or TxAddr)")
+
+        # 2) Check every transaction has at least one address (appears in AddrTx or TxAddr)
+        txs_features = pd.read_parquet(self.path / "txs_features.parquet", columns=["tx_id"])['tx_id']
+        txs_set = set(txs_features.unique())
+        txs_with_addr = set(addr_tx['tx_id'].dropna().unique()) | set(tx_addr['tx_id'].dropna().unique())
+        txs_without_addr = txs_set - txs_with_addr
+
+        print(f"\nTotal transactions in txs_features: {len(txs_set):,}")
+        print(f"Transactions with at least one address: {len(txs_with_addr):,}")
+        print(f"Transactions without any address: {len(txs_without_addr):,}")
+        if len(txs_without_addr) > 0:
+            pct3 = len(txs_without_addr) / len(txs_set) * 100 if len(txs_set) > 0 else 0.0
+            print(f"These represent {pct3:.2f}% of transactions. Examples (up to 10):")
+            print(list(txs_without_addr)[:10])
+        else:
+            print("✓ All transactions have at least one address (appear in AddrTx or TxAddr)")
+
+        return self
+    
     def validate_illicit_transactions_with_addresses(self):
         self._print_init_validation(f"Validating illicit transactions with addresses in {self.path}")
         
@@ -793,11 +853,12 @@ class Validations():
         print(f"Running validations on data in {self.path}...\n\n")
         self.validate_wallets_features_classes_combined()
         self.validate_addraddr_edgelist()
+        self.validate_addresses_in_wallets()
         self.validate_illicit_transactions_with_addresses()
         self.validate_transaction_degrees() # existem inconsistencias nos in_txs_degree e out_txs_degree
         self.validate_transaction_coverage() # existem inconsistencias nos num_txs_as_sender e num_txs_as_receiver
         self.validate_wallets_num_txs_attributes()
-        self.check_duplicates()
+        # self.check_duplicates()
         print("FINISHED VALIDATIONS!!!")
         print('*'*40)
         print()

@@ -57,6 +57,15 @@ def run_metrics(setup_name, scores_sorted, address_to_class):
     metrics.plot_all_graphs()
     print("Metrics calculated.")
 
+def validacao_weighted_degrees():
+    df = pd.read_csv(Config.path_config)
+    df = df[['node_ID', 'weighted_out_degree', 'weighted_in_degree', 'class']]
+    in_zerados = df[df['weighted_in_degree'] == 0]
+    out_zerados = df[df['weighted_out_degree'] == 0]
+    print(in_zerados)
+    print(out_zerados)
+    print(df.groupby('class').count())
+
 def main(config: Config):
     '''
     input_address = source
@@ -72,11 +81,12 @@ def main(config: Config):
     
     run_transformation()
     # -- análise exploratória tem que ser aqui
+
     os.makedirs(Config.figures_path, exist_ok=True)
     
-    SimpleCharts(config_features_path=Config.path_config, figures_path=Config.figures_path).run()
+    #SimpleCharts(config_features_path=Config.path_config, figures_path=Config.figures_path).run()
 
-    # run_callmine_setups(Config.CallMine.setups)
+    run_callmine_setups(Config.CallMine.setups)
     
     # scores_sorted = gen2out_scores_from_setups(read_if_cached=False, is_to_save=False, inverted=True)
     # address_to_class = get_address_class_lookup()

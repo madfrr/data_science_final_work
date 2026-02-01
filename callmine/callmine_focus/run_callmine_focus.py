@@ -91,7 +91,7 @@ def runGen2Out(ids, features, option=1):
     return scores
     
 
-def run(N_val, B_val, P_val, features, rank_matrix, plot_combinations, outlier_ids):
+def run(N_val, B_val, P_val, df_features, features, rank_matrix, plot_combinations, outlier_ids):
     """
     Run CallMine-Focus
     
@@ -102,6 +102,8 @@ def run(N_val, B_val, P_val, features, rank_matrix, plot_combinations, outlier_i
     B_val: int
         budget, i.e., the number of plots to show
     P_val: int
+    df_features: pandas DataFrame
+        dataframe with features, node_ID
     features: array of str
         feature keys to consider
     rank_matrix: nd-array of float
@@ -145,9 +147,10 @@ def run(N_val, B_val, P_val, features, rank_matrix, plot_combinations, outlier_i
         print( "\t-> Coverage = ", end='' ); print("{0:.3f} / {1:.3f}".format(coverage, max_coverage))
 
         # Inverse norm (for plotting)
-        features = min_max_scaler.inverse_transform(features)
-        df_features = pd.DataFrame(data=features, columns=keys)
-        df_features = df_features.rename_axis('node_ID').reset_index()
+        df_features[keys] = min_max_scaler.inverse_transform(df_features[keys])
+        # features = min_max_scaler.inverse_transform(features)
+        # df_features = pd.DataFrame(data=features, columns=keys)
+        # df_features = df_features.rename_axis('node_ID').reset_index()
 
         # Save selected plots as png images
         for i, plot in enumerate(plots):
@@ -176,13 +179,18 @@ def run(N_val, B_val, P_val, features, rank_matrix, plot_combinations, outlier_i
                     print(str(p), end=' ')
                 print()
                 
-                plotScatterPlot(df=df_features,
+                # plotScatterPlot
+                # plotScatterPlot2
+                # plotScatterPlot3
+                # plotScatterPlot4
+
+                plotScatterPlot3(df=df_features,
                             c1=pair[0],
                             c2=pair[1],
                             frequencies=frequencies,
                             plot_number=plot,
                             figname=imgname+'.png',
-                            show_plots=True)
+                            show_plots=False)
 
             elif dimensionality > 2:
                 imgname = str(i) + '_' + str(plot) + '_parallel_coordinates'
@@ -294,6 +302,181 @@ def plotScatterPlot(df, c1, c2, frequencies, plot_number, figname='pair_plot.png
     if show_plots:
         plt.show()
 
+def plotScatterPlot2(df, c1, c2, frequencies, plot_number, figname='pair_plot.png', 
+                    show_plots=True, with_category=True, class_col='class'):
+    """
+    Plot 2-d histogram with outlier detection
+    
+    Parameters
+    ----------
+    df: pandas DataFrame
+        features
+    c1: string
+        first feature to plot
+    c2: string
+        second feature to plot
+    frequencies: nd-array
+        frequency of outliers
+    plot_number: int
+        number of plot to show
+    figname: str
+        name of figure to save
+    show_plots: boolean
+        option to show plot
+    with_category: boolean
+        if True, plot categories in separate subplot
+    class_col: string
+        name of column containing class labels (1=lícito, 2=ilícito, 3=desconhecido)
+    """
+    
+    if with_category and class_col is None:
+        raise ValueError("class_col must be provided when with_category=True")
+    
+    # Configurar figura
+    if with_category:
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
+    else:
+        fig, ax1 = plt.subplots(1, 1, figsize=fs)
+    
+    # Plot 1: Hexbin com outliers (comportamento original)
+    hb = ax1.hexbin(np.log10(df[c1]+1), np.log10(df[c2]+1), mincnt=1, cmap='jet', bins='log', gridsize=50)
+    ax1.set_xlabel(c1.replace('_', ' ') + ' - log10(x+1)')
+    ax1.set_ylabel(c2.replace('_', ' ') + ' - log10(x+1)')
+    plt.colorbar(hb, ax=ax1)
+    
+    for outlier in frequencies.keys():
+        size = frequencies[outlier][0]*10
+        
+        if plot_number == frequencies[outlier][1]:
+            ax1.scatter(np.log10(df.iloc[outlier][c1]+1), np.log10(df.iloc[outlier][c2]+1),
+                    facecolors='none', edgecolor='red', linewidth=2, s=int(size), 
+                    label='Outlier principal' if outlier == list(frequencies.keys())[0] else '')
+        else:
+            ax1.scatter(np.log10(df.iloc[outlier][c1]+1), np.log10(df.iloc[outlier][c2]+1),
+                    facecolors='none', edgecolor='blue', linewidth=1, s=int(size),
+                    label='Outros outliers' if outlier == list(frequencies.keys())[0] else '')
+    
+    ax1.grid(alpha=0.3)
+    ax1.set_title('Distribuição com Outliers Destacados', fontweight='bold')
+    
+    # Plot 2: Scatter por categoria (se solicitado)
+    if with_category:
+        colors = {1: 'red', 2: 'green', 3: 'gray'}
+        labels = {1: 'Ilícito', 2: 'Lícito', 3: 'Desconhecido'}
+        
+        for category in [1, 2, 3]:
+            mask = df[class_col] == category
+            ax2.scatter(np.log10(df[mask][c1]+1), np.log10(df[mask][c2]+1),
+                       c=colors[category], alpha=0.5, s=20, label=labels[category],
+                       edgecolors='black', linewidths=0.5)
+        
+        # Destacar outliers com borda preta grossa
+        for outlier in frequencies.keys():
+            size = frequencies[outlier][0]*10
+            ax2.scatter(np.log10(df.iloc[outlier][c1]+1), np.log10(df.iloc[outlier][c2]+1),
+                       facecolors='none', edgecolor='black', linewidth=2, s=int(size))
+        
+        ax2.set_xlabel(c1.replace('_', ' ') + ' - log10(x+1)')
+        ax2.set_ylabel(c2.replace('_', ' ') + ' - log10(x+1)')
+        ax2.grid(alpha=0.3)
+        ax2.legend(loc='best')
+        ax2.set_title('Distribuição por Categoria', fontweight='bold')
+    
+    plt.tight_layout()
+    plt.savefig(output_path + figname, dpi=100, bbox_inches='tight')
+    
+    if show_plots:
+        plt.show()
+    
+    plt.close()
+
+def plotScatterPlot3(df, c1, c2, frequencies, plot_number, figname='pair_plot.png', 
+                    show_plots=True, with_category=True, class_col='class'):
+    """
+    Plot 2-d histogram with outlier detection
+    
+    Parameters
+    ----------
+    df: pandas DataFrame
+        features
+    c1: string
+        first feature to plot
+    c2: string
+        second feature to plot
+    frequencies: nd-array
+        frequency of outliers
+    plot_number: int
+        number of plot to show
+    figname: str
+        name of figure to save
+    show_plots: boolean
+        option to show plot
+    with_category: boolean
+        if True, plot categories in separate subplot
+    class_col: string
+        name of column containing class labels (1=lícito, 2=ilícito, 3=desconhecido)
+    """
+    
+    if with_category and class_col is None:
+        raise ValueError("class_col must be provided when with_category=True")
+    
+    # Configurar figura
+    if with_category:
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
+    else:
+        fig, ax1 = plt.subplots(1, 1, figsize=fs)
+    
+    # Plot 1: Hexbin com outliers (comportamento original)
+    # gridsize controla o tamanho dos hexágonos (menor = maior)
+    hb = ax1.hexbin(np.log10(df[c1]+1), np.log10(df[c2]+1), 
+                    mincnt=1, cmap='jet', bins='log', gridsize=80)  # Era padrão 100
+    ax1.set_xlabel(c1.replace('_', ' ') + ' - log10(x+1)')
+    ax1.set_ylabel(c2.replace('_', ' ') + ' - log10(x+1)')
+    plt.colorbar(hb, ax=ax1)
+    
+    for outlier in frequencies.keys():
+        size = frequencies[outlier][0]*10
+        
+        if plot_number == frequencies[outlier][1]:
+            ax1.scatter(np.log10(df.iloc[outlier][c1]+1), np.log10(df.iloc[outlier][c2]+1),
+                    facecolors='none', edgecolor='red', linewidth=2, s=int(size))
+        else:
+            ax1.scatter(np.log10(df.iloc[outlier][c1]+1), np.log10(df.iloc[outlier][c2]+1),
+                    facecolors='none', edgecolor='blue', linewidth=1, s=int(size))
+    
+    ax1.grid(alpha=0.3)
+    ax1.set_title('Distribuição com Outliers Destacados', fontweight='bold')
+    
+    # Plot 2: Scatter por categoria (se solicitado)
+    if with_category:
+        colors = {1: 'red', 2: 'green', 3: 'gray'}
+        labels = {1: 'Ilícito', 2: 'Lícito', 3: 'Desconhecido'}
+        
+        for category in [1, 2, 3]:
+            mask = df[class_col] == category
+            ax2.scatter(np.log10(df[mask][c1]+1), np.log10(df[mask][c2]+1),
+                       c=colors[category], alpha=1, s=20, label=labels[category],
+                       edgecolors='black', linewidths=0.5)
+        
+        # Destacar outliers com borda preta grossa
+        for outlier in frequencies.keys():
+            size = frequencies[outlier][0]*10
+            ax2.scatter(np.log10(df.iloc[outlier][c1]+1), np.log10(df.iloc[outlier][c2]+1),
+                       facecolors='none', edgecolor='black', linewidth=2, s=int(size))
+        
+        ax2.set_xlabel(c1.replace('_', ' ') + ' - log10(x+1)')
+        ax2.set_ylabel(c2.replace('_', ' ') + ' - log10(x+1)')
+        ax2.grid(alpha=0.3)
+        ax2.legend(loc='best')
+        ax2.set_title('Distribuição por Categoria', fontweight='bold')
+    
+    plt.tight_layout()
+    plt.savefig(output_path + figname, dpi=100, bbox_inches='tight')
+    
+    if show_plots:
+        plt.show()
+    
+    plt.close()
 
 def plot_parallel_coordinates(df_features,
                               columns, 
@@ -347,6 +530,16 @@ def plot_parallel_coordinates(df_features,
     if show_plots:
         fig_parallel_coordinates.show()
     
+def define_node_mapping(df):
+    # ids únicos e ordenados
+    unique_nodes = sorted(df['node_ID'].unique())
+
+    # string -> int
+    node_to_int = {node: i for i, node in enumerate(unique_nodes)}
+
+    # int -> string (reverso)
+    int_to_node = {i: node for node, i in node_to_int.items()}
+    return node_to_int, int_to_node
 
 # ===================================================================
 # MAIN
@@ -364,13 +557,21 @@ def call_mine_main(argv):
     print("Running CallMine-Focus")
     print("Reading input file")
 
-    df_features = pd.read_csv(path_features, nrows=200)
+    df_raw = pd.read_csv(path_features)#, nrows=200)
+    node_to_int, int_to_node = define_node_mapping(df_raw)
 
     print("Normalize features")
+    df_features = df_raw.copy()
+    df_features = df_features[['node_ID'] + keys]
+    df_features[keys] = min_max_scaler.fit_transform(df_features[keys])
+    df_features['node_ID'] = df_features['node_ID'].map(node_to_int)
+    df_features = df_features.sort_values(by='node_ID').reset_index(drop=True)
 
-    df_features = min_max_scaler.fit_transform(df_features[keys].values)
-    df_features = pd.DataFrame(data=df_features, columns=keys)
-    df_features = df_features.rename_axis('node_ID').reset_index()
+    # df_features = min_max_scaler.fit_transform(df_features[keys].values)
+    # df_features = pd.DataFrame(data=df_features, columns=keys)
+    # df_features = df_features.rename_axis('node_ID').reset_index()
+
+    print(df_features.head())
 
     print("Generate feature combinations")
     combinations, plot_dict = generate_feature_combinations(key_features=keys,
@@ -410,10 +611,22 @@ def call_mine_main(argv):
     print('#df_features:', len(df_features))
     print('outliers:', outliers)
     outlier_circle_size = 40
+    print('banana')
+    print(df_features.head())
+    df_features['node_ID'] = df_features['node_ID'].map(int_to_node)
+    df_features = df_features.merge(
+        df_raw[['node_ID', 'class']],
+        on='node_ID',
+        how='left'
+    )
+
+    print(df_features.head())
+    print(df_features['class'].value_counts())
 
     resulting_plots = run(N_val=num_outliers,
                         B_val=min(budget, len(combinations)),
                         P_val=1.0,
+                        df_features=df_features,
                         features=np.asarray(df_features[keys], dtype = float),
                         rank_matrix=rank_matrix,
                         plot_combinations=plot_dict,

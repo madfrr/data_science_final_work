@@ -64,7 +64,7 @@ def validacao_weighted_degrees():
     out_zerados = df[df['weighted_out_degree'] == 0]
     print(in_zerados)
     print(out_zerados)
-    print(df.groupby('class').count())
+    print(df['class'].value_counts())
 
 def main(config: Config):
     '''
@@ -85,7 +85,7 @@ def main(config: Config):
     os.makedirs(Config.figures_path, exist_ok=True)
     
     #SimpleCharts(config_features_path=Config.path_config, figures_path=Config.figures_path).run()
-
+    validacao_weighted_degrees()
     run_callmine_setups(Config.CallMine.setups)
     
     # scores_sorted = gen2out_scores_from_setups(read_if_cached=False, is_to_save=False, inverted=True)

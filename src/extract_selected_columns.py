@@ -76,12 +76,12 @@ class Standardization():
     
     def rename_columns(self, df):
         columns_to_rename = {
-            "Time step": "time_step",
-            "txId": "tx_id",
-            "txId1": "tx_id_1",
-            "txId2": "tx_id_2",
-            "total_BTC": "total_btc",
-            "num_txs_as receiver": "num_txs_as_receiver"
+            "Time step": "time_step", # --> txs_features.csv e wallets_features.csv
+            "txId": "tx_id", #--> todos datasets que referenciam transações
+            "txId1": "tx_id_1", # --> txs_edgelist.csv
+            "txId2": "tx_id_2", # --> txs_edgelist.csv
+            "total_BTC": "total_btc", # --> txs_features.csv
+            "num_txs_as receiver": "num_txs_as_receiver" # --> wallets_features.csv e wallets_features_classes_combined.csv
         }
         return df.rename(columns=columns_to_rename)
 
@@ -97,4 +97,3 @@ class Standardization():
         if self.check_if_folder_already_exists():
             return
         self.format_columns()
-                     

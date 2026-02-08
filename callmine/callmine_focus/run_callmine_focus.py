@@ -391,7 +391,7 @@ def plotScatterPlot2(df, c1, c2, frequencies, plot_number, figname='pair_plot.pn
     plt.close()
 
 def plotScatterPlot3(df, c1, c2, frequencies, plot_number, figname='pair_plot.png', 
-                    show_plots=True, with_category=True, class_col='class'):
+                    show_plots=True, with_category=True, class_col='class', exclude_unknown=True):
     """
     Plot 2-d histogram with outlier detection
     
@@ -451,8 +451,11 @@ def plotScatterPlot3(df, c1, c2, frequencies, plot_number, figname='pair_plot.pn
     if with_category:
         colors = {1: 'red', 2: 'green', 3: 'gray'}
         labels = {1: 'Ilícito', 2: 'Lícito', 3: 'Desconhecido'}
-        
-        for category in [1, 2, 3]:
+        categories = [1, 2]
+        if exclude_unknown == False:
+            categories.append(3)
+
+        for category in categories:
             mask = df[class_col] == category
             ax2.scatter(np.log10(df[mask][c1]+1), np.log10(df[mask][c2]+1),
                        c=colors[category], alpha=1, s=20, label=labels[category],
@@ -611,7 +614,7 @@ def call_mine_main(argv):
     print('#df_features:', len(df_features))
     print('outliers:', outliers)
     outlier_circle_size = 40
-    print('banana')
+
     print(df_features.head())
     df_features['node_ID'] = df_features['node_ID'].map(int_to_node)
     df_features = df_features.merge(

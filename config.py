@@ -30,8 +30,8 @@ class Config:
     path_configs = {
         "config_1": path_config_1,
         "config_2": path_config_2,
-        "config_3": path_config_3,
-        "config_4": path_config_4
+        # "config_3": path_config_3,
+        # "config_4": path_config_4
     }
     remove_unknown_from_config = True
     class Classes:
@@ -41,14 +41,24 @@ class Config:
     
     class CallMine:
         setups = {
-            'c1_d2': {
-                'path_features' : Path(__file__).parent/ "src" / "data" / "configs" / "config_features_1.csv",
+            # 'c1_d2': {
+            #     'path_features' : Path(__file__).parent/ "src" / "data" / "configs" / "config_features_1.csv",
+            #     'detection_option' : 1,
+            #     'num_outliers' : 30,
+            #     'budget' : 10,
+            #     'dimensionality' : 2,
+            #     'output_path' : str(Path(__file__).parent / 'callmine' / 'outputs')
+            # },
+
+            'c2_d2': {
+                'path_features' : Path(__file__).parent/ "src" / "data" / "configs" / "config_features_2.csv",
                 'detection_option' : 1,
-                'num_outliers' : 50, #mudar para 20
-                'budget' : 10,#mudar para 10
+                'num_outliers' : 30,
+                'budget' : 10,
                 'dimensionality' : 2,
                 'output_path' : str(Path(__file__).parent / 'callmine' / 'outputs')
             },
+
             # 'c1_d3': {
             #     'path_features' : Path(__file__).parent/ "src" / "data" / "configs" / "config_features_1.csv",
             #     'detection_option' : 1,
@@ -57,14 +67,6 @@ class Config:
             #     'dimensionality' : 3, # <<- the only difference
             #     'output_path' : str(Path(__file__).parent / 'callmine' / 'outputs')
             # },
-            'c2_d2': {
-                'path_features' : Path(__file__).parent/ "src" / "data" / "configs" / "config_features_2.csv",
-                'detection_option' : 1,
-                'num_outliers' : 50,
-                'budget' : 10,
-                'dimensionality' : 2,
-                'output_path' : str(Path(__file__).parent / 'callmine' / 'outputs')
-            },
             # 'c2_d3': {
             #     'path_features' : Path(__file__).parent/ "src" / "data" / "configs" / "config_features_2.csv",
             #     'detection_option' : 1,

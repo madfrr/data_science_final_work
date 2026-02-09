@@ -1,0 +1,82 @@
+
+Starting download of files to '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/raw'...
+
+✓ Folder '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/raw' already exists and is not empty. Skipping download.
+
+✓ Folder '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/data_selected_columns' already exists and is not empty. Skipping download.
+
+⚠ Skipping validations for /Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/data_selected_columns as per configuration.
+
+✓ Folder '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/configs' already exists and is not empty. Skipping download.
+Running setup: c2_d2
+Running callmine with the following setup:
+{'path_features': PosixPath('/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/configs/config_features_2.csv'), 'detection_option': 1, 'num_outliers': 30, 'budget': 10, 'dimensionality': 2, 'output_path': '/Users/gabriel.sergio/dev/MBA/data_science_final_work/callmine/outputs'}
+
+Running CallMine-Focus
+Reading input file
+Normalize features
+   node_ID  out_degree  ...  out_call_count  out_median_measure
+0        0    0.000000  ...        0.000000        0.000000e+00
+1        1    0.000000  ...        0.000000        0.000000e+00
+2        2    0.000000  ...        0.000000        0.000000e+00
+3        3    0.000087  ...        0.000688        5.485414e-07
+4        4    0.000000  ...        0.000000        0.000000e+00
+
+[5 rows x 12 columns]
+Generate feature combinations
+Rank outliers with feature combinations
+Run Isolation Forest / gen2Out and get Scores (every pair of features) 1 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 2 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 3 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 4 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 5 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 6 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 7 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 8 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 9 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 10 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 11 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 12 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 13 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 14 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 15 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 16 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 17 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 18 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 19 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 20 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 21 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 22 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 23 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 24 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 25 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 26 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 27 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 28 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 29 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 30 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 31 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 32 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 33 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 34 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 35 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 36 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 37 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 38 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 39 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 40 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 41 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 42 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 43 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 44 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 45 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 46 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 47 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 48 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 49 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 50 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 51 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 52 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 53 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 54 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 55 / 55Run Isolation Forest / gen2Out and get Scores (all features)
+Get top outliers
+#scores: 822942
+#df_features: 822942
+outliers: [617245, 21370, 61300, 160734, 592587, 240110, 408074, 448979, 92730, 447855, 581477, 161831, 689956, 161154, 552329, 592125, 669564, 30310, 541135, 547106, 490714, 319412, 757707, 550392, 571177, 341951, 191894, 445725, 679039, 795769]
+   node_ID  out_degree  ...  out_call_count  out_median_measure
+0        0    0.000000  ...        0.000000        0.000000e+00
+1        1    0.000000  ...        0.000000        0.000000e+00
+2        2    0.000000  ...        0.000000        0.000000e+00
+3        3    0.000087  ...        0.000688        5.485414e-07
+4        4    0.000000  ...        0.000000        0.000000e+00
+
+[5 rows x 12 columns]
+                              node_ID  out_degree  ...  out_median_measure  class
+0   111112TykSw72ztDN2WJger4cynzWYC5w    0.000000  ...        0.000000e+00      2
+1   1111DAYXhoxZx2tsRnzimfozo783x1yC2    0.000000  ...        0.000000e+00      3
+2    1111VHuXEzHaRCgXbVwojtaP7Co3QABb    0.000000  ...        0.000000e+00      2
+3  111218KKkh1JJFRHbwM16AwCiVCc4m7he1    0.000087  ...        5.485414e-07      3
+4   1115LWW3xsD9jT9VRY7viCN9S34RVAAuA    0.000000  ...        0.000000e+00      2
+
+[5 rows x 13 columns]
+3    557588
+2    251088
+1     14266
+Name: class, dtype: int64
+Generating Bipartite Graph
+	-> Standardising Outlier Weights
+	-> Constructing Graph
+	-> Constructing Plot Table
+Graph Generated Successfully
+
+Iteration LookOut
+N_val =  30  Budget =  10
+Running LookOut Algorithm
+	-> Choosing best plots
+	-> Choosen Plots are [94m[35, 27, 11, 50, 36, 48, 29, 14, 15, 22]
+[0;0mfrequencies: {617245: [40, 27], 448979: [36, 27], 160734: [36, 27], 21370: [36, 27], 161154: [32, 27], 408074: [34, 11], 689956: [33, 11], 61300: [36, 50], 547106: [32, 27], 592587: [34, 27], 341951: [31, 11], 795769: [30, 48], 490714: [31, 11], 319412: [31, 27], 571177: [30, 27], 679039: [30, 11], 191894: [30, 29], 240110: [34, 35], 447855: [32, 35], 581477: [32, 35], 592125: [32, 35], 161831: [32, 35], 552329: [32, 48], 445725: [30, 27], 92730: [33, 35], 669564: [32, 35], 30310: [32, 35], 541135: [32, 35], 757707: [30, 50], 550392: [30, 36]}
+LookOut Complete
+Saving Plots
+	-> Total Plots Generated = 55
+	-> Total Plots Chosen = 10
+	-> Coverage = 0.862 / 0.862
+35 weighted_in_degree in_call_count 
+27 weighted_out_degree weighted_in_degree 
+11 in_degree weighted_out_degree 
+50 in_median_measure out_call_count 
+36 weighted_in_degree in_median_measure 
+48 in_call_count out_median_measure 
+29 weighted_out_degree in_call_count 
+14 in_degree in_call_count 
+15 in_degree in_median_measure 
+22 core in_call_count 
+Finished
+Callmine ended.
+========================================

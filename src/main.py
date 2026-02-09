@@ -68,10 +68,14 @@ def validacao_weighted_degrees():
 
 def main(config: Config):
     '''
-    input_address = source
-    outut_address = destination
-    total_btc + fees = measure
-    time_step = timestamp
+    Ordem para rodar para pegar os resultados de forma parcial, para não precisar rodar tudo de novo caso queira pegar só um gráfico específico, por exemplo:
+
+    1. [Done] Rodar Extract, Standardization e Validations --> pegar o output de validations. Rodar colocando resultado em um arquivo validations.txt
+    2. [Done] Colocar skip true em validations, descomentar run_transformation e SimpleCharts e rodar;
+    3. [Done] Comentar SimpleCharts, descomentar run_callmine_setups e rodar;
+        - [Done] c1_d2 --> pegar os gráficos e guardar em uma pasta. Remover do repo raiz do callmine
+        - [Done] c2_d2 --> pegar os gráficos e guardar em uma pasta. Remover do repo raiz do callmine
+    4. [Done] Comentar run_callmine_setups, descomentar gen2out_scores_from_setups e rodar colocando resultado em um arquivo gen2out_scores.txt
     '''
     Extract(data_path=Config.data_path, folder_id=Config.google_drive_folder_id, output_dir="raw").run()
 
@@ -80,19 +84,20 @@ def main(config: Config):
     Validations(data_path=Config.data_path, skip=True).run()
     
     run_transformation()
-    # -- análise exploratória tem que ser aqui
 
     os.makedirs(Config.figures_path, exist_ok=True)
     
-    #SimpleCharts(config_features_path=Config.path_config, figures_path=Config.figures_path).run()
-    validacao_weighted_degrees()
+    SimpleCharts(config_features_path=Config.path_config, figures_path=Config.figures_path).run()
+    
+    # validacao_weighted_degrees()
+
     run_callmine_setups(Config.CallMine.setups)
     
-    # scores_sorted = gen2out_scores_from_setups(read_if_cached=False, is_to_save=False, inverted=True)
-    # address_to_class = get_address_class_lookup()
-    # print()
-    # for setup, scores in scores_sorted.items():
-    #     print('='*40)
-    #     print(f"Running metrics for {setup} scores")
-    #     print('='*40)
-    #     run_metrics(setup, scores, address_to_class)
+    scores_sorted = gen2out_scores_from_setups(read_if_cached=False, is_to_save=False, inverted=True)
+    address_to_class = get_address_class_lookup()
+    print()
+    for setup, scores in scores_sorted.items():
+        print('='*40)
+        print(f"Running metrics for {setup} scores")
+        print('='*40)
+        run_metrics(setup, scores, address_to_class)

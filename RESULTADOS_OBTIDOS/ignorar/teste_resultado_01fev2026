@@ -35,6 +35,24 @@ Estrutura consistente? True. Ou seja, o arquivo AddrAddr_edgelist possui as liga
 É como se cada TX fosse uma aresta que liga os dois endereços (ou wallets)
 
 ========================================
+Iniciando validação:  ADDRESSES IN EDGELISTS EXIST IN /USERS/GABRIEL.SERGIO/DEV/MBA/DATA_SCIENCE_FINAL_WORK/SRC/DATA/DATA_SELECTED_COLUMNS
+========================================
+Total unique addresses in edgelists: 822,942
+Total wallets in wallets_features: 822,942
+Addresses missing in wallets_features: 0
+✓ All addresses from AddrAddr/AddrTx/TxAddr are present in wallets_features.parquet
+
+Addresses with at least one transaction: 822,942
+Wallets without any transaction: 0
+✓ All wallets have at least one transaction (appear in AddrTx or TxAddr)
+
+Total transactions in txs_features: 203,769
+Transactions with at least one address: 202,804
+Transactions without any address: 965
+These represent 0.47% of transactions. Examples (up to 10):
+[200982528, 25444355, 30089221, 105508872, 13258763, 64186383, 29237265, 39454741, 153370646, 29259799]
+
+========================================
 Iniciando validação:  VALIDATING ILLICIT TRANSACTIONS WITH ADDRESSES IN /USERS/GABRIEL.SERGIO/DEV/MBA/DATA_SCIENCE_FINAL_WORK/SRC/DATA/DATA_SELECTED_COLUMNS
 ========================================
 1. DISTRIBUIÇÃO DE CLASSES
@@ -346,251 +364,121 @@ Inconsistências encontradas:
 - Sender mismatch: 252 wallets
 - Receiver mismatch: 8574 wallets
 Os atributos 'num_txs_as_sender' e 'num_txs_as_receiver' não estão consistentes com as tabelas addr_tx e tx_addr (com a qtd de transações que sai entra na carteira)
-
-========================================
-Iniciando validação:  CHECK_DUPLICATES
-========================================
-Addr -> tx duplicadas: 0
-Addr -> tx duplicadas: 0
-wallets duplicadas: 0
-txs_features duplicadas: 0
 FINISHED VALIDATIONS!!!
 ****************************************
 
-Running gen2out scores for setup c1_d2...
-Reading cached Gen2Out scores from: /Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/c1_d2_gen2out_sorted.csv
-Running gen2out scores for setup c1_d3...
-Reading cached Gen2Out scores from: /Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/c1_d3_gen2out_sorted.csv
-Running gen2out scores for setup c2_d2...
-Reading cached Gen2Out scores from: /Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/c2_d2_gen2out_sorted.csv
-Running gen2out scores for setup c2_d3...
-Reading cached Gen2Out scores from: /Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/c2_d3_gen2out_sorted.csv
+
+✓ Folder '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/configs' already exists and is not empty. Skipping download.
+Running gen2out scores for setup config_1...
+Running gen2out scores for setup config_2...
 
 ========================================
-Running metrics for c1_d2 scores
+Running metrics for config_1 scores
 ========================================
 Calculating metrics...
-AUC-ROC: 0.7234
-Average Precision: 0.1636
-Max F1: 0.1930
-Best Threshold: 0.5718
+AUC-ROC: 0.6801
+Average Precision: 0.0769
+Max F1: 0.1744
+Best Threshold: 0.5745
 Precision@10: 0.0000
 Precision@50: 0.0000
-Precision@100: 0.0000
-Precision@200: 0.0000
-Precision@300: 0.0033
-Precision@400: 0.0025
-Precision@500: 0.0020
+Precision@100: 0.0300
+Precision@200: 0.0250
+Precision@300: 0.0267
+Precision@400: 0.0275
+Precision@500: 0.0260
 Scores profile:
           count      mean       std  ...       50%       75%       max
 class                                ...                              
-1       14266.0  0.571501  0.002494  ...  0.572190  0.572333  0.572495
-2      251088.0  0.566650  0.009727  ...  0.570241  0.572232  0.572495
-3      557588.0  0.569067  0.007200  ...  0.572077  0.572333  0.572495
+1       14266.0  0.574480  0.002793  ...  0.575016  0.575768  0.575998
+2      251088.0  0.569654  0.010520  ...  0.573502  0.575363  0.575998
 
-[3 rows x 8 columns]
+[2 rows x 8 columns]
 ----------------------------------------
 Scores profile (excluding UNKNOWN):
           count      mean       std  ...       50%       75%       max
 class                                ...                              
-1       14266.0  0.571501  0.002494  ...  0.572190  0.572333  0.572495
-2      251088.0  0.566650  0.009727  ...  0.570241  0.572232  0.572495
+1       14266.0  0.574480  0.002793  ...  0.575016  0.575768  0.575998
+2      251088.0  0.569654  0.010520  ...  0.573502  0.575363  0.575998
 
 [2 rows x 8 columns]
 ----------------------------------------
 Ilicita score quantiles:
-0.50    0.572190
-0.75    0.572333
-0.90    0.572416
-0.95    0.572487
-0.99    0.572495
+0.50    0.575016
+0.75    0.575768
+0.90    0.575922
+0.95    0.575997
+0.99    0.575998
 Name: score, dtype: float64
 ----------------------------------------
 Top 1000 score class distribution:
-3    0.787
-1    0.194
-2    0.019
+2    0.961
+1    0.039
 Name: class, dtype: float64
 ----------------------------------------
-max_ilicita: 0.572495023759795, min_licita: 0.1996077343662207
+max_ilicita: 0.5759979646164362, min_licita: 0.1845402793035027
 ----------------------------------------
 Inverting scores:
-AUC inverted: 0.2766406665763847
-AP inverted: 0.03492520271157797
+AUC inverted: 0.31993247386532647
+AP inverted: 0.03636006593702187
 ----------------------------------------
 Negative scores:
-AUC from neg scores: 0.2766406665763847
-AP from neg scores: 0.03492520271157797
+AUC from neg scores: 0.31993247386532647
+AP from neg scores: 0.03636006593702187
 ----------------------------------------
 Metrics calculated.
 ========================================
-Running metrics for c1_d3 scores
+Running metrics for config_2 scores
 ========================================
 Calculating metrics...
-AUC-ROC: 0.7234
-Average Precision: 0.1636
-Max F1: 0.1930
-Best Threshold: 0.5718
+AUC-ROC: 0.6606
+Average Precision: 0.0800
+Max F1: 0.1716
+Best Threshold: 0.5798
 Precision@10: 0.0000
 Precision@50: 0.0000
 Precision@100: 0.0000
-Precision@200: 0.0000
-Precision@300: 0.0033
-Precision@400: 0.0025
-Precision@500: 0.0020
+Precision@200: 0.0050
+Precision@300: 0.0067
+Precision@400: 0.0075
+Precision@500: 0.0080
 Scores profile:
           count      mean       std  ...       50%       75%       max
 class                                ...                              
-1       14266.0  0.571501  0.002494  ...  0.572190  0.572333  0.572495
-2      251088.0  0.566650  0.009727  ...  0.570241  0.572232  0.572495
-3      557588.0  0.569067  0.007200  ...  0.572077  0.572333  0.572495
+1       14266.0  0.579286  0.003470  ...  0.579887  0.580186  0.580391
+2      251088.0  0.576186  0.009082  ...  0.579418  0.579966  0.580391
 
-[3 rows x 8 columns]
+[2 rows x 8 columns]
 ----------------------------------------
 Scores profile (excluding UNKNOWN):
           count      mean       std  ...       50%       75%       max
 class                                ...                              
-1       14266.0  0.571501  0.002494  ...  0.572190  0.572333  0.572495
-2      251088.0  0.566650  0.009727  ...  0.570241  0.572232  0.572495
+1       14266.0  0.579286  0.003470  ...  0.579887  0.580186  0.580391
+2      251088.0  0.576186  0.009082  ...  0.579418  0.579966  0.580391
 
 [2 rows x 8 columns]
 ----------------------------------------
 Ilicita score quantiles:
-0.50    0.572190
-0.75    0.572333
-0.90    0.572416
-0.95    0.572487
-0.99    0.572495
+0.50    0.579887
+0.75    0.580186
+0.90    0.580207
+0.95    0.580265
+0.99    0.580271
 Name: score, dtype: float64
 ----------------------------------------
 Top 1000 score class distribution:
-3    0.787
-1    0.194
-2    0.019
+2    0.989
+1    0.011
 Name: class, dtype: float64
 ----------------------------------------
-max_ilicita: 0.572495023759795, min_licita: 0.1996077343662207
+max_ilicita: 0.5803909789122229, min_licita: 0.2397181146384797
 ----------------------------------------
 Inverting scores:
-AUC inverted: 0.2766406665763847
-AP inverted: 0.03492520271157797
+AUC inverted: 0.33944535208093324
+AP inverted: 0.038993874201324066
 ----------------------------------------
 Negative scores:
-AUC from neg scores: 0.2766406665763847
-AP from neg scores: 0.03492520271157797
-----------------------------------------
-Metrics calculated.
-========================================
-Running metrics for c2_d2 scores
-========================================
-Calculating metrics...
-AUC-ROC: 0.6604
-Average Precision: 0.0799
-Max F1: 0.1904
-Best Threshold: 0.5685
-Precision@10: 0.0000
-Precision@50: 0.0000
-Precision@100: 0.0000
-Precision@200: 0.0000
-Precision@300: 0.0000
-Precision@400: 0.0000
-Precision@500: 0.0000
-Scores profile:
-          count      mean       std  ...       50%       75%       max
-class                                ...                              
-1       14266.0  0.567741  0.003078  ...  0.568381  0.568549  0.568863
-2      251088.0  0.564714  0.008517  ...  0.568053  0.568381  0.568863
-3      557588.0  0.565414  0.007921  ...  0.568381  0.568853  0.568863
-
-[3 rows x 8 columns]
-----------------------------------------
-Scores profile (excluding UNKNOWN):
-          count      mean       std  ...       50%       75%       max
-class                                ...                              
-1       14266.0  0.567741  0.003078  ...  0.568381  0.568549  0.568863
-2      251088.0  0.564714  0.008517  ...  0.568053  0.568381  0.568863
-
-[2 rows x 8 columns]
-----------------------------------------
-Ilicita score quantiles:
-0.50    0.568381
-0.75    0.568549
-0.90    0.568679
-0.95    0.568853
-0.99    0.568863
-Name: score, dtype: float64
-----------------------------------------
-Top 1000 score class distribution:
-3    0.644
-2    0.354
-1    0.002
-Name: class, dtype: float64
-----------------------------------------
-max_ilicita: 0.5688633982985123, min_licita: 0.2437637952500395
-----------------------------------------
-Inverting scores:
-AUC inverted: 0.339640698624211
-AP inverted: 0.038799608460215095
-----------------------------------------
-Negative scores:
-AUC from neg scores: 0.339640698624211
-AP from neg scores: 0.038799608460215095
-----------------------------------------
-Metrics calculated.
-========================================
-Running metrics for c2_d3 scores
-========================================
-Calculating metrics...
-AUC-ROC: 0.6604
-Average Precision: 0.0799
-Max F1: 0.1904
-Best Threshold: 0.5684
-Precision@10: 0.0000
-Precision@50: 0.0000
-Precision@100: 0.0000
-Precision@200: 0.0000
-Precision@300: 0.0000
-Precision@400: 0.0000
-Precision@500: 0.0000
-Scores profile:
-          count      mean       std  ...       50%       75%       max
-class                                ...                              
-1       14266.0  0.567609  0.003079  ...  0.568249  0.568416  0.568731
-2      251088.0  0.564581  0.008520  ...  0.567921  0.568249  0.568731
-3      557588.0  0.565281  0.007924  ...  0.568249  0.568721  0.568731
-
-[3 rows x 8 columns]
-----------------------------------------
-Scores profile (excluding UNKNOWN):
-          count      mean       std  ...       50%       75%       max
-class                                ...                              
-1       14266.0  0.567609  0.003079  ...  0.568249  0.568416  0.568731
-2      251088.0  0.564581  0.008520  ...  0.567921  0.568249  0.568731
-
-[2 rows x 8 columns]
-----------------------------------------
-Ilicita score quantiles:
-0.50    0.568249
-0.75    0.568416
-0.90    0.568547
-0.95    0.568721
-0.99    0.568731
-Name: score, dtype: float64
-----------------------------------------
-Top 1000 score class distribution:
-3    0.644
-2    0.354
-1    0.002
-Name: class, dtype: float64
-----------------------------------------
-max_ilicita: 0.5687313703504631, min_licita: 0.2435921358569098
-----------------------------------------
-Inverting scores:
-AUC inverted: 0.339640698345039
-AP inverted: 0.038799608442824464
-----------------------------------------
-Negative scores:
-AUC from neg scores: 0.339640698345039
-AP from neg scores: 0.038799608442824464
+AUC from neg scores: 0.33944535208093324
+AP from neg scores: 0.038993874201324066
 ----------------------------------------
 Metrics calculated.

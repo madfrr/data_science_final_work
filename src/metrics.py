@@ -15,7 +15,7 @@ class Metrics():
         self.address_to_class = address_to_class
         self.df_scores = self._define_df_scores()
         self.y_true, self.y_scores = self._prepare_for_sklearn(exclude_unknown=True)
-        self.figures_path = figures_path
+        self.figures_path = figures_path / 'metrics'
         self.setup_name=setup_name
         os.makedirs(self.figures_path, exist_ok=True)
 

@@ -1,0 +1,126 @@
+
+Starting download of files to '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/raw'...
+
+✓ Folder '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/raw' already exists and is not empty. Skipping download.
+
+✓ Folder '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/data_selected_columns' already exists and is not empty. Skipping download.
+
+⚠ Skipping validations for /Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/data_selected_columns as per configuration.
+
+✓ Folder '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/configs' already exists and is not empty. Skipping download.
+Running gen2out scores for setup config_1...
+Running gen2out scores for setup config_2...
+
+========================================
+Running metrics for config_1 scores
+========================================
+Calculating metrics...
+AUC-ROC: 0.6801
+Average Precision: 0.0769
+Max F1: 0.1744
+Best Threshold: 0.5730
+Precision@10: 0.0000
+Precision@50: 0.0000
+Precision@100: 0.0300
+Precision@200: 0.0250
+Precision@300: 0.0267
+Precision@400: 0.0275
+Precision@500: 0.0260
+Scores profile:
+          count      mean       std  ...       50%       75%       max
+class                                ...                              
+1       14266.0  0.572969  0.002803  ...  0.573507  0.574263  0.574492
+2      251088.0  0.568127  0.010556  ...  0.571988  0.573855  0.574492
+
+[2 rows x 8 columns]
+----------------------------------------
+Scores profile (excluding UNKNOWN):
+          count      mean       std  ...       50%       75%       max
+class                                ...                              
+1       14266.0  0.572969  0.002803  ...  0.573507  0.574263  0.574492
+2      251088.0  0.568127  0.010556  ...  0.571988  0.573855  0.574492
+
+[2 rows x 8 columns]
+----------------------------------------
+Ilicita score quantiles:
+0.50    0.573507
+0.75    0.574263
+0.90    0.574416
+0.95    0.574491
+0.99    0.574492
+Name: score, dtype: float64
+----------------------------------------
+Top 1000 score class distribution:
+2    0.961
+1    0.039
+Name: class, dtype: float64
+----------------------------------------
+max_ilicita: 0.574492228943817, min_licita: 0.18282006620506364
+----------------------------------------
+Inverting scores:
+AUC inverted: 0.3199370810404716
+AP inverted: 0.03636020915154781
+----------------------------------------
+Negative scores:
+AUC from neg scores: 0.3199370810404716
+AP from neg scores: 0.03636020915154781
+----------------------------------------
+Metrics calculated.
+
+
+
+========================================
+Running metrics for config_2 scores
+========================================
+Calculating metrics...
+AUC-ROC: 0.6614
+Average Precision: 0.0802
+Max F1: 0.1716
+Best Threshold: 0.5722
+Precision@10: 0.0000
+Precision@50: 0.0000
+Precision@100: 0.0000
+Precision@200: 0.0050
+Precision@300: 0.0067
+Precision@400: 0.0075
+Precision@500: 0.0080
+Scores profile:
+          count      mean       std  ...       50%       75%       max
+class                                ...                              
+1       14266.0  0.571744  0.003532  ...  0.572361  0.572658  0.572867
+2      251088.0  0.568589  0.009242  ...  0.571877  0.572434  0.572867
+
+[2 rows x 8 columns]
+----------------------------------------
+Scores profile (excluding UNKNOWN):
+          count      mean       std  ...       50%       75%       max
+class                                ...                              
+1       14266.0  0.571744  0.003532  ...  0.572361  0.572658  0.572867
+2      251088.0  0.568589  0.009242  ...  0.571877  0.572434  0.572867
+
+[2 rows x 8 columns]
+----------------------------------------
+Ilicita score quantiles:
+0.50    0.572361
+0.75    0.572658
+0.90    0.572681
+0.95    0.572740
+0.99    0.572746
+Name: score, dtype: float64
+----------------------------------------
+Top 1000 score class distribution:
+2    0.989
+1    0.011
+Name: class, dtype: float64
+----------------------------------------
+max_ilicita: 0.5728673455750237, min_licita: 0.23050517478460975
+----------------------------------------
+Inverting scores:
+AUC inverted: 0.3385520003570007
+AP inverted: 0.03894033595978201
+----------------------------------------
+Negative scores:
+AUC from neg scores: 0.3385520003570007
+AP from neg scores: 0.03894033595978201
+----------------------------------------
+Metrics calculated.

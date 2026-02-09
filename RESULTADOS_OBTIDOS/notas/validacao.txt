@@ -35,6 +35,24 @@ Estrutura consistente? True. Ou seja, o arquivo AddrAddr_edgelist possui as liga
 É como se cada TX fosse uma aresta que liga os dois endereços (ou wallets)
 
 ========================================
+Iniciando validação:  ADDRESSES IN EDGELISTS EXIST IN /USERS/GABRIEL.SERGIO/DEV/MBA/DATA_SCIENCE_FINAL_WORK/SRC/DATA/DATA_SELECTED_COLUMNS
+========================================
+Total unique addresses in edgelists: 822,942
+Total wallets in wallets_features: 822,942
+Addresses missing in wallets_features: 0
+✓ All addresses from AddrAddr/AddrTx/TxAddr are present in wallets_features.parquet
+
+Addresses with at least one transaction: 822,942
+Wallets without any transaction: 0
+✓ All wallets have at least one transaction (appear in AddrTx or TxAddr)
+
+Total transactions in txs_features: 203,769
+Transactions with at least one address: 202,804
+Transactions without any address: 965
+These represent 0.47% of transactions. Examples (up to 10):
+[200982528, 25444355, 30089221, 105508872, 13258763, 64186383, 29237265, 39454741, 153370646, 29259799]
+
+========================================
 Iniciando validação:  VALIDATING ILLICIT TRANSACTIONS WITH ADDRESSES IN /USERS/GABRIEL.SERGIO/DEV/MBA/DATA_SCIENCE_FINAL_WORK/SRC/DATA/DATA_SELECTED_COLUMNS
 ========================================
 1. DISTRIBUIÇÃO DE CLASSES

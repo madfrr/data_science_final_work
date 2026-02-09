@@ -155,6 +155,9 @@ class FeatureEngineering:
         return self
     
     def generate_third_config(self):
+        '''
+        Mesma que a primeira config só que removendo as linhas com classe unknown
+        '''
         columns = [
             'node_ID',
             'out_degree', 
@@ -177,6 +180,9 @@ class FeatureEngineering:
         return self
 
     def generate_fourth_config(self):
+        """
+        Mesma que a segunda config só que removendo as linhas com classe unknown
+        """
         columns = [
             'node_ID',
             'out_degree', 

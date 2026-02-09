@@ -1,0 +1,389 @@
+
+Starting download of files to '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/raw'...
+
+✓ Folder '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/raw' already exists and is not empty. Skipping download.
+
+✓ Folder '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/data_selected_columns' already exists and is not empty. Skipping download.
+
+⚠ Skipping validations for /Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/data_selected_columns as per configuration.
+Running setup: c1_d2
+Running callmine with the following setup:
+{'path_features': PosixPath('/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/configs/config_features_1.csv'), 'detection_option': 1, 'num_outliers': 10, 'budget': 5, 'dimensionality': 2, 'output_path': '/Users/gabriel.sergio/dev/MBA/data_science_final_work/callmine/outputs'}
+
+Running CallMine-Focus
+Reading input file
+Normalize features
+Generate feature combinations
+Rank outliers with feature combinations
+Run Isolation Forest / gen2Out and get Scores (every pair of features) 1 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 2 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 3 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 4 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 5 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 6 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 7 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 8 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 9 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 10 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 11 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 12 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 13 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 14 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 15 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 16 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 17 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 18 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 19 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 20 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 21 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 22 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 23 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 24 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 25 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 26 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 27 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 28 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 29 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 30 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 31 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 32 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 33 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 34 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 35 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 36 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 37 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 38 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 39 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 40 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 41 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 42 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 43 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 44 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 45 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 46 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 47 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 48 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 49 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 50 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 51 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 52 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 53 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 54 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 55 / 55Run Isolation Forest / gen2Out and get Scores (all features)
+Get top outliers
+#scores: 200
+#df_features: 200
+outliers: [161, 43, 168, 192, 64, 0, 18, 70, 28, 88]
+Generating Bipartite Graph
+	-> Standardising Outlier Weights
+	-> Constructing Graph
+	-> Constructing Plot Table
+Graph Generated Successfully
+
+Iteration LookOut
+N_val =  10  Budget =  5
+Running LookOut Algorithm
+	-> Choosing best plots
+	-> Choosen Plots are [94m[27, 3, 20, 39, 12]
+[0;0mfrequencies: {168: [40, 3], 43: [38, 27], 192: [36, 27], 161: [36, 27], 0: [32, 3], 64: [36, 27], 70: [30, 3], 28: [30, 20], 18: [31, 39], 88: [31, 39]}
+LookOut Complete
+Saving Plots
+	-> Total Plots Generated = 55
+	-> Total Plots Chosen = 5
+	-> Coverage = 0.799 / 0.799
+27 weighted_out_degree weighted_in_degree 
+3 out_degree weighted_in_degree 
+20 core weighted_in_degree 
+39 weighted_in_degree out_median_measure 
+12 in_degree weighted_in_degree 
+Finished
+Callmine ended.
+========================================
+Running setup: c1_d3
+Running callmine with the following setup:
+{'path_features': PosixPath('/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/configs/config_features_1.csv'), 'detection_option': 1, 'num_outliers': 10, 'budget': 5, 'dimensionality': 3, 'output_path': '/Users/gabriel.sergio/dev/MBA/data_science_final_work/callmine/outputs'}
+
+Running CallMine-Focus
+Reading input file
+Normalize features
+Generate feature combinations
+Rank outliers with feature combinations
+Run Isolation Forest / gen2Out and get Scores (every pair of features) 1 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 2 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 3 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 4 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 5 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 6 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 7 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 8 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 9 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 10 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 11 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 12 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 13 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 14 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 15 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 16 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 17 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 18 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 19 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 20 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 21 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 22 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 23 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 24 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 25 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 26 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 27 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 28 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 29 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 30 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 31 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 32 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 33 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 34 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 35 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 36 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 37 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 38 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 39 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 40 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 41 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 42 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 43 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 44 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 45 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 46 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 47 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 48 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 49 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 50 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 51 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 52 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 53 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 54 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 55 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 56 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 57 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 58 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 59 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 60 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 61 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 62 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 63 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 64 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 65 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 66 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 67 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 68 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 69 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 70 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 71 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 72 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 73 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 74 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 75 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 76 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 77 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 78 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 79 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 80 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 81 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 82 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 83 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 84 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 85 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 86 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 87 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 88 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 89 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 90 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 91 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 92 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 93 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 94 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 95 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 96 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 97 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 98 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 99 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 100 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 101 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 102 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 103 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 104 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 105 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 106 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 107 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 108 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 109 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 110 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 111 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 112 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 113 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 114 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 115 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 116 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 117 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 118 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 119 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 120 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 121 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 122 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 123 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 124 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 125 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 126 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 127 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 128 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 129 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 130 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 131 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 132 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 133 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 134 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 135 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 136 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 137 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 138 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 139 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 140 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 141 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 142 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 143 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 144 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 145 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 146 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 147 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 148 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 149 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 150 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 151 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 152 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 153 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 154 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 155 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 156 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 157 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 158 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 159 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 160 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 161 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 162 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 163 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 164 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 165 / 165Run Isolation Forest / gen2Out and get Scores (all features)
+Get top outliers
+#scores: 200
+#df_features: 200
+outliers: [161, 43, 168, 192, 64, 0, 18, 70, 28, 88]
+Generating Bipartite Graph
+	-> Standardising Outlier Weights
+	-> Constructing Graph
+	-> Constructing Plot Table
+Graph Generated Successfully
+
+Iteration LookOut
+N_val =  10  Budget =  5
+Running LookOut Algorithm
+	-> Choosing best plots
+	-> Choosen Plots are [94m[81, 134, 28, 110, 126]
+[0;0mfrequencies: {168: [40, 28], 43: [38, 110], 0: [32, 28], 28: [30, 81], 192: [36, 110], 64: [37, 126], 161: [38, 81], 70: [30, 28], 18: [31, 134], 88: [31, 134]}
+LookOut Complete
+Saving Plots
+	-> Total Plots Generated = 165
+	-> Total Plots Chosen = 5
+	-> Coverage = 0.757 / 0.758
+81 core weighted_out_degree weighted_in_degree 
+134 weighted_in_degree in_median_iat out_median_measure 
+28 out_degree weighted_in_degree out_call_count 
+110 weighted_out_degree weighted_in_degree in_call_count 
+126 weighted_out_degree in_median_measure out_median_measure 
+Finished
+Callmine ended.
+========================================
+Running setup: c2_d2
+Running callmine with the following setup:
+{'path_features': PosixPath('/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/configs/config_features_2.csv'), 'detection_option': 1, 'num_outliers': 10, 'budget': 5, 'dimensionality': 2, 'output_path': '/Users/gabriel.sergio/dev/MBA/data_science_final_work/callmine/outputs'}
+
+Running CallMine-Focus
+Reading input file
+Normalize features
+Generate feature combinations
+Rank outliers with feature combinations
+Run Isolation Forest / gen2Out and get Scores (every pair of features) 1 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 2 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 3 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 4 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 5 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 6 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 7 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 8 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 9 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 10 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 11 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 12 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 13 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 14 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 15 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 16 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 17 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 18 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 19 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 20 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 21 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 22 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 23 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 24 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 25 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 26 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 27 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 28 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 29 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 30 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 31 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 32 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 33 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 34 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 35 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 36 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 37 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 38 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 39 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 40 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 41 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 42 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 43 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 44 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 45 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 46 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 47 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 48 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 49 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 50 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 51 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 52 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 53 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 54 / 55Run Isolation Forest / gen2Out and get Scores (every pair of features) 55 / 55Run Isolation Forest / gen2Out and get Scores (all features)
+Get top outliers
+#scores: 200
+#df_features: 200
+outliers: [72, 192, 161, 18, 88, 43, 64, 9, 168, 106]
+Generating Bipartite Graph
+	-> Standardising Outlier Weights
+	-> Constructing Graph
+	-> Constructing Plot Table
+Graph Generated Successfully
+
+Iteration LookOut
+N_val =  10  Budget =  5
+Running LookOut Algorithm
+	-> Choosing best plots
+	-> Choosen Plots are [94m[27, 44, 50, 34, 51]
+[0;0mfrequencies: {168: [33, 27], 43: [31, 27], 192: [39, 51], 161: [32, 27], 64: [32, 27], 9: [30, 50], 72: [40, 34], 18: [30, 34], 88: [30, 34], 106: [33, 51]}
+LookOut Complete
+Saving Plots
+	-> Total Plots Generated = 55
+	-> Total Plots Chosen = 5
+	-> Coverage = 0.854 / 0.859
+27 weighted_out_degree weighted_in_degree 
+44 in_median_iat out_median_measure 
+50 in_median_measure out_call_count 
+34 weighted_in_degree in_median_iat 
+51 in_median_measure out_median_measure 
+Finished
+Callmine ended.
+========================================
+Running setup: c2_d3
+Running callmine with the following setup:
+{'path_features': PosixPath('/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/configs/config_features_2.csv'), 'detection_option': 1, 'num_outliers': 10, 'budget': 5, 'dimensionality': 3, 'output_path': '/Users/gabriel.sergio/dev/MBA/data_science_final_work/callmine/outputs'}
+
+Running CallMine-Focus
+Reading input file
+Normalize features
+Generate feature combinations
+Rank outliers with feature combinations
+Run Isolation Forest / gen2Out and get Scores (every pair of features) 1 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 2 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 3 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 4 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 5 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 6 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 7 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 8 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 9 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 10 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 11 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 12 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 13 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 14 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 15 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 16 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 17 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 18 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 19 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 20 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 21 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 22 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 23 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 24 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 25 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 26 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 27 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 28 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 29 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 30 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 31 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 32 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 33 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 34 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 35 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 36 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 37 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 38 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 39 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 40 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 41 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 42 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 43 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 44 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 45 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 46 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 47 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 48 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 49 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 50 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 51 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 52 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 53 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 54 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 55 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 56 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 57 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 58 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 59 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 60 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 61 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 62 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 63 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 64 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 65 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 66 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 67 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 68 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 69 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 70 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 71 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 72 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 73 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 74 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 75 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 76 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 77 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 78 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 79 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 80 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 81 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 82 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 83 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 84 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 85 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 86 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 87 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 88 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 89 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 90 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 91 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 92 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 93 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 94 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 95 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 96 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 97 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 98 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 99 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 100 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 101 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 102 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 103 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 104 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 105 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 106 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 107 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 108 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 109 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 110 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 111 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 112 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 113 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 114 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 115 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 116 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 117 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 118 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 119 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 120 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 121 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 122 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 123 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 124 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 125 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 126 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 127 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 128 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 129 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 130 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 131 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 132 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 133 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 134 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 135 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 136 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 137 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 138 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 139 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 140 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 141 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 142 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 143 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 144 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 145 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 146 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 147 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 148 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 149 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 150 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 151 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 152 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 153 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 154 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 155 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 156 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 157 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 158 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 159 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 160 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 161 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 162 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 163 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 164 / 165Run Isolation Forest / gen2Out and get Scores (every pair of features) 165 / 165Run Isolation Forest / gen2Out and get Scores (all features)
+Get top outliers
+#scores: 200
+#df_features: 200
+outliers: [72, 192, 161, 18, 88, 43, 64, 9, 168, 106]
+Generating Bipartite Graph
+	-> Standardising Outlier Weights
+	-> Constructing Graph
+	-> Constructing Plot Table
+Graph Generated Successfully
+
+Iteration LookOut
+N_val =  10  Budget =  5
+Running LookOut Algorithm
+	-> Choosing best plots
+	-> Choosen Plots are [94m[81, 116, 141, 110, 132]
+[0;0mfrequencies: {168: [31, 81], 43: [30, 81], 192: [36, 141], 64: [32, 81], 161: [33, 81], 9: [31, 110], 72: [40, 132], 18: [32, 116], 88: [31, 116], 106: [32, 141]}
+LookOut Complete
+Saving Plots
+	-> Total Plots Generated = 165
+	-> Total Plots Chosen = 5
+	-> Coverage = 0.797 / 0.808
+81 core weighted_out_degree weighted_in_degree 
+116 weighted_out_degree in_median_iat in_median_measure 
+141 weighted_in_degree in_median_measure out_median_measure 
+110 weighted_out_degree weighted_in_degree in_call_count 
+132 weighted_in_degree in_median_iat out_median_iat 
+Finished
+Callmine ended.
+========================================
+Running gen2out scores for setup config_1...
+Running gen2out scores for setup config_2...
+Running gen2out scores for setup config_3...
+Running gen2out scores for setup config_4...
+
+========================================
+Running metrics for config_1 scores
+========================================
+Calculating metrics...
+AUC-ROC: 0.6801
+Average Precision: 0.0769
+Max F1: 0.1744
+Best Threshold: 0.5747
+Precision@10: 0.0000
+Precision@50: 0.0000
+Precision@100: 0.0300
+Precision@200: 0.0250
+Precision@300: 0.0267
+Precision@400: 0.0275
+Precision@500: 0.0260
+Scores profile:
+          count      mean       std  ...       50%       75%       max
+class                                ...                              
+1       14266.0  0.574634  0.002792  ...  0.575170  0.575922  0.576152
+2      251088.0  0.569810  0.010516  ...  0.573657  0.575517  0.576152
+
+[2 rows x 8 columns]
+----------------------------------------
+Scores profile (excluding UNKNOWN):
+          count      mean       std  ...       50%       75%       max
+class                                ...                              
+1       14266.0  0.574634  0.002792  ...  0.575170  0.575922  0.576152
+2      251088.0  0.569810  0.010516  ...  0.573657  0.575517  0.576152
+
+[2 rows x 8 columns]
+----------------------------------------
+Ilicita score quantiles:
+0.50    0.575170
+0.75    0.575922
+0.90    0.576076
+0.95    0.576151
+0.99    0.576152
+Name: score, dtype: float64
+----------------------------------------
+Top 1000 score class distribution:
+2    0.961
+1    0.039
+Name: class, dtype: float64
+----------------------------------------
+max_ilicita: 0.5761517390691799, min_licita: 0.18471609675420975
+----------------------------------------
+Inverting scores:
+AUC inverted: 0.31993168017939433
+AP inverted: 0.0363600317803894
+----------------------------------------
+Negative scores:
+AUC from neg scores: 0.31993168017939433
+AP from neg scores: 0.0363600317803894
+----------------------------------------
+Metrics calculated.
+========================================
+Running metrics for config_2 scores
+========================================
+Calculating metrics...
+AUC-ROC: 0.6610
+Average Precision: 0.0801
+Max F1: 0.1716
+Best Threshold: 0.5766
+Precision@10: 0.0000
+Precision@50: 0.0000
+Precision@100: 0.0000
+Precision@200: 0.0050
+Precision@300: 0.0067
+Precision@400: 0.0075
+Precision@500: 0.0080
+Scores profile:
+          count      mean       std  ...       50%       75%       max
+class                                ...                              
+1       14266.0  0.576095  0.003496  ...  0.576703  0.577000  0.577207
+2      251088.0  0.572971  0.009150  ...  0.576227  0.576779  0.577207
+
+[2 rows x 8 columns]
+----------------------------------------
+Scores profile (excluding UNKNOWN):
+          count      mean       std  ...       50%       75%       max
+class                                ...                              
+1       14266.0  0.576095  0.003496  ...  0.576703  0.577000  0.577207
+2      251088.0  0.572971  0.009150  ...  0.576227  0.576779  0.577207
+
+[2 rows x 8 columns]
+----------------------------------------
+Ilicita score quantiles:
+0.50    0.576703
+0.75    0.577000
+0.90    0.577022
+0.95    0.577081
+0.99    0.577087
+Name: score, dtype: float64
+----------------------------------------
+Top 1000 score class distribution:
+2    0.989
+1    0.011
+Name: class, dtype: float64
+----------------------------------------
+max_ilicita: 0.5772073866875769, min_licita: 0.23581325732207037
+----------------------------------------
+Inverting scores:
+AUC inverted: 0.3390018340727907
+AP inverted: 0.03896537602732825
+----------------------------------------
+Negative scores:
+AUC from neg scores: 0.3390018340727907
+AP from neg scores: 0.03896537602732825
+----------------------------------------
+Metrics calculated.
+========================================
+Running metrics for config_3 scores
+========================================
+Calculating metrics...
+AUC-ROC: 0.6801
+Average Precision: 0.0769
+Max F1: 0.1744
+Best Threshold: 0.5747
+Precision@10: 0.0000
+Precision@50: 0.0000
+Precision@100: 0.0300
+Precision@200: 0.0250
+Precision@300: 0.0267
+Precision@400: 0.0275
+Precision@500: 0.0260
+Scores profile:
+          count      mean       std  ...       50%       75%       max
+class                                ...                              
+1       14266.0  0.574634  0.002792  ...  0.575170  0.575922  0.576152
+2      251088.0  0.569810  0.010516  ...  0.573657  0.575517  0.576152
+
+[2 rows x 8 columns]
+----------------------------------------
+Scores profile (excluding UNKNOWN):
+          count      mean       std  ...       50%       75%       max
+class                                ...                              
+1       14266.0  0.574634  0.002792  ...  0.575170  0.575922  0.576152
+2      251088.0  0.569810  0.010516  ...  0.573657  0.575517  0.576152
+
+[2 rows x 8 columns]
+----------------------------------------
+Ilicita score quantiles:
+0.50    0.575170
+0.75    0.575922
+0.90    0.576076
+0.95    0.576151
+0.99    0.576152
+Name: score, dtype: float64
+----------------------------------------
+Top 1000 score class distribution:
+2    0.961
+1    0.039
+Name: class, dtype: float64
+----------------------------------------
+max_ilicita: 0.5761517390691799, min_licita: 0.18471609675420975
+----------------------------------------
+Inverting scores:
+AUC inverted: 0.31993168017939433
+AP inverted: 0.0363600317803894
+----------------------------------------
+Negative scores:
+AUC from neg scores: 0.31993168017939433
+AP from neg scores: 0.0363600317803894
+----------------------------------------
+Metrics calculated.
+========================================
+Running metrics for config_4 scores
+========================================
+Calculating metrics...
+AUC-ROC: 0.6615
+Average Precision: 0.0802
+Max F1: 0.1716
+Best Threshold: 0.5748
+Precision@10: 0.0000
+Precision@50: 0.0000
+Precision@100: 0.0000
+Precision@200: 0.0050
+Precision@300: 0.0067
+Precision@400: 0.0075
+Precision@500: 0.0080
+Scores profile:
+          count      mean       std  ...       50%       75%       max
+class                                ...                              
+1       14266.0  0.574295  0.003511  ...  0.574907  0.575205  0.575412
+2      251088.0  0.571159  0.009188  ...  0.574428  0.574982  0.575412
+
+[2 rows x 8 columns]
+----------------------------------------
+Scores profile (excluding UNKNOWN):
+          count      mean       std  ...       50%       75%       max
+class                                ...                              
+1       14266.0  0.574295  0.003511  ...  0.574907  0.575205  0.575412
+2      251088.0  0.571159  0.009188  ...  0.574428  0.574982  0.575412
+
+[2 rows x 8 columns]
+----------------------------------------
+Ilicita score quantiles:
+0.50    0.574907
+0.75    0.575205
+0.90    0.575227
+0.95    0.575285
+0.99    0.575291
+Name: score, dtype: float64
+----------------------------------------
+Top 1000 score class distribution:
+2    0.989
+1    0.011
+Name: class, dtype: float64
+----------------------------------------
+max_ilicita: 0.5754124514687845, min_licita: 0.23361584470013763
+----------------------------------------
+Inverting scores:
+AUC inverted: 0.3385480458859392
+AP inverted: 0.038940755605796386
+----------------------------------------
+Negative scores:
+AUC from neg scores: 0.3385480458859392
+AP from neg scores: 0.038940755605796386
+----------------------------------------
+Metrics calculated.

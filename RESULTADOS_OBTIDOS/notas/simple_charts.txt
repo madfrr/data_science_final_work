@@ -1,0 +1,12 @@
+
+Starting download of files to '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/raw'...
+
+✓ Folder '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/raw' already exists and is not empty. Skipping download.
+
+✓ Folder '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/data_selected_columns' already exists and is not empty. Skipping download.
+
+Running validations on data in /Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/data_selected_columns...
+
+✓ Folder '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/configs' already exists and is not empty. Skipping download.
+
+Boxplots and Histograms saved in: /Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/figures

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import os
-
+from config import Config
 CLASSE_ILICITA = 1
 CLASSE_LICITA = 2
 CLASSE_UNKNOWN = 3
@@ -14,7 +14,8 @@ class Metrics():
         self.scores = scores_sorted
         self.address_to_class = address_to_class
         self.df_scores = self._define_df_scores()
-        self.y_true, self.y_scores = self._prepare_for_sklearn(exclude_unknown=True)
+
+        self.y_true, self.y_scores = self._prepare_for_sklearn(exclude_unknown=Config.remove_unknown_from_config)
         self.figures_path = figures_path / 'metrics'
         self.setup_name=setup_name
         os.makedirs(self.figures_path, exist_ok=True)
@@ -30,8 +31,9 @@ class Metrics():
                     "score": score,
                     "class": label
                 })
-
-        return pd.DataFrame(rows)
+        df_scores = pd.DataFrame(rows)
+        print(df_scores["class"].value_counts())
+        return df_scores
 
     def _prepare_for_sklearn(self, exclude_unknown=False):
         self.df_bin = self.df_scores[self.df_scores["class"].isin([CLASSE_ILICITA, CLASSE_LICITA])] if exclude_unknown else self.df_scores

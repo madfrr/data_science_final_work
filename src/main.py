@@ -1,6 +1,7 @@
 from src.extract import Extract
 from src.validations import Validations
 from src.metrics import Metrics
+from src.metrics_a import MetricsA
 from src.algorithms import gen2out_scores_from_setups, run_callmine_setups
 from src.extract_selected_columns import Standardization
 from src.analysis import SimpleCharts
@@ -57,6 +58,26 @@ def run_metrics(setup_name, scores_sorted, address_to_class):
     metrics.plot_all_graphs()
     print("Metrics calculated.")
 
+def run_metrics_a(setup_name, scores_sorted, address_to_class):
+    print("Calculating metrics...")
+    metrics = MetricsA(
+        scores_sorted=scores_sorted, 
+        address_to_class=address_to_class, 
+        figures_path=Config.figures_path, 
+        setup_name=setup_name
+    )
+
+    # 1. Primeiro: análise de distribuição de scores (valida inversão)
+    metrics.scores_profile()
+
+    # 2. Depois: métricas numéricas
+    metrics.print_metrics()
+
+    # 3. Por último: gráficos
+    # metrics.plot_all_graphs()
+
+    print("Metrics calculated.")
+
 def validacao_weighted_degrees():
     df = pd.read_csv(Config.path_config)
     df = df[['node_ID', 'weighted_out_degree', 'weighted_in_degree', 'class']]
@@ -83,21 +104,22 @@ def main(config: Config):
     
     Validations(data_path=Config.data_path, skip=True).run()
     
-    run_transformation()
+    # run_transformation()
 
     os.makedirs(Config.figures_path, exist_ok=True)
     
-    SimpleCharts(config_features_path=Config.path_config, figures_path=Config.figures_path).run()
+    # SimpleCharts(config_features_path=Config.path_config, figures_path=Config.figures_path).run()
     
-    # validacao_weighted_degrees()
+    # # validacao_weighted_degrees()
 
-    run_callmine_setups(Config.CallMine.setups)
+    # run_callmine_setups(Config.CallMine.setups)
     
-    scores_sorted = gen2out_scores_from_setups(read_if_cached=False, is_to_save=False, inverted=True)
+    scores_sorted = gen2out_scores_from_setups(read_if_cached=False, is_to_save=False)
     address_to_class = get_address_class_lookup()
+
     print()
     for setup, scores in scores_sorted.items():
         print('='*40)
         print(f"Running metrics for {setup} scores")
         print('='*40)
-        run_metrics(setup, scores, address_to_class)
+        run_metrics_a(setup, scores, address_to_class)

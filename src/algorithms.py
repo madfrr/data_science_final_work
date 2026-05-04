@@ -61,7 +61,7 @@ def gen2out_setup_scores(scores_path: Path, path_features:Path, read_if_cached=F
     Posso transformar isso daqui em uma classe para testar diferentes chaves em diferentes algoritmos de detecção de anomalia
     '''
     scores = gen2out_scores(scores_path=scores_path, path_features=path_features, read_if_cached=read_if_cached)
-    scores = sorted(scores, key=lambda x: x[1], reverse=False)
+    
     if inverted:
         scores = [(node_id, 1- score) for node_id, score in scores] #invertendo valores de score
 
@@ -84,5 +84,5 @@ def gen2out_scores_from_setups(configs=Config.path_configs, read_if_cached=False
             is_to_save=is_to_save,
             inverted=inverted
         )
-        scores[name] = score
+        scores[name] = score    
     return scores

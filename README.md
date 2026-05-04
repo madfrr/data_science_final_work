@@ -72,3 +72,24 @@ CRISP:
 Testar com:
 Python 3.10.19
 Python 3.14.3
+
+TODO:
+- Preciso subir a versão do python desse projeto para 3.14, para conseguir usar as novas libs.
+    - Como não tenho teste unitário e teste de integração, talvez vale eu olhar o callmine e o tgraph pra ver se já tem exemplos dummy, rodar 
+
+- Preciso decidir se vou querer ou não editar o callmine, gen2out, lookout, tgraph....
+
+A ideia é:
+1. Ou fazer uma seleção automática de atributos, sendo que essa seleção pode ser variável. Dai vai acabar sendo uma framework de explainable AI.
+2. Ou pensar em formas/novas heurísticas para alterar o gen2out e deixar ele focado em um escopo diferente
+
+Eu prefiro a primeira ideia! Como eu devo fazer isso:
+- Primeiro eu posso fazer uma poc:
+    - Tentar rodar dnovo o meu algoritmo, gerando as métricas do TCC. Pegar a config do tcc com maior valor
+    - Pegar 2~3 algoritmos supervisionados, gerar o shap_values (parametrizado para printar o gráfico ou não). Fazer isso com uma versão mais atualizada do python.
+    - Com o shap_values, escolher as features que se sairam melhor. Pode ser manualmente. Fazer algumas permutações legais;
+    - Rodar dnovo o meu algoritmo, só que marretando as novas features. Dependendo do qto melhorar, vale eu aumentar a versão do python, atualizar o call_mine para a nova versão, e fazer tudo de forma automatica --> O usuário seleciona o algoritmo, marretando os parametros, gerar as features automaticamente e isso ser inputado tbm de forma automatica
+
+
+Débitos técnicos:
+- Revisar o arquivo de config.py

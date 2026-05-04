@@ -69,3 +69,6 @@ CRISP:
 5. Avaliação;
 6. Deployment.
 
+Testar com:
+Python 3.10.19
+Python 3.14.3

@@ -1,0 +1,254 @@
+
+Starting download of files to '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/raw'...
+
+✓ Folder '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/raw' already exists and is not empty. Skipping download.
+
+✓ Folder '/Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/data_selected_columns' already exists and is not empty. Skipping download.
+
+⚠ Skipping validations for /Users/gabriel.sergio/dev/MBA/data_science_final_work/src/data/data_selected_columns as per configuration.
+Running gen2out scores for setup config_1...
+Running gen2out scores for setup config_2...
+
+========================================
+Running metrics for config_1 scores
+========================================
+Calculating metrics...
+Class distribution:
+2    251088
+1     14266
+Name: class, dtype: int64
+
+============================================================
+Top 5 scores:
+[('14i2fxdy19gAfeXx2j6FTCuSAPxEEgyXVp', 0.5761517390691799), ('1BokBG41LaiqbEDYacEyxTx79T27xQmBk7', 0.5761517390691799), ('19GHUdmVJP9FYzvFtwNK6rt9YmNKcQFjAd', 0.5761517390691799), ('1ELZcjjqjGvowEU4Lv9JJ7tM8TREjTPQGZ', 0.5761517390691799), ('19uDEJXrJT6xhke5P2Tx1vws6jqcRhBbC3', 0.5761517390691799)]
+
+Bottom 5 scores:
+[('1CGz4Fxap6mB5DoShNwhLyi8PNvBKP3ZZh', 0.2948709523337567), ('1GX28yLjVWux7ws4UQ9FB4MnLH4UKTPK2z', 0.2887712106237502), ('13vHWR3iLsHeYwT42RnuKYNBoVPrKKZgRv', 0.25414961884854115), ('12cgpFdJViXbwHbhrA3TuW1EGnL25Zqc3P', 0.21824402656672093), ('1N52wHoVR79PMDishab2XmRHsbekCdGquK', 0.18471609675420975)]
+
+                              address     score  class
+0  14i2fxdy19gAfeXx2j6FTCuSAPxEEgyXVp  0.576152      2
+1  1BokBG41LaiqbEDYacEyxTx79T27xQmBk7  0.576152      2
+2  19GHUdmVJP9FYzvFtwNK6rt9YmNKcQFjAd  0.576152      2
+3  1ELZcjjqjGvowEU4Lv9JJ7tM8TREjTPQGZ  0.576152      2
+4  19uDEJXrJT6xhke5P2Tx1vws6jqcRhBbC3  0.576152      2
+
+
+============================================================
+Metrics initialized for: config_1
+Total addresses: 265354
+Exclude unknown: True
+Scores INVERTED for ranking (higher = more anomalous)
+============================================================
+
+
+============================================================
+SCORE DISTRIBUTION ANALYSIS
+============================================================
+
+1. Scores profile (all classes):
+          count      mean       std  ...       50%       75%       max
+class                                ...                              
+1       14266.0  0.574634  0.002792  ...  0.575170  0.575922  0.576152
+2      251088.0  0.569810  0.010516  ...  0.573657  0.575517  0.576152
+
+[2 rows x 8 columns]
+------------------------------------------------------------
+
+2. Scores profile (excluding UNKNOWN):
+          count      mean       std  ...       50%       75%       max
+class                                ...                              
+1       14266.0  0.574634  0.002792  ...  0.575170  0.575922  0.576152
+2      251088.0  0.569810  0.010516  ...  0.573657  0.575517  0.576152
+
+[2 rows x 8 columns]
+------------------------------------------------------------
+
+3. Ilícita score quantiles:
+0.50    0.575170
+0.75    0.575922
+0.90    0.576076
+0.95    0.576151
+0.99    0.576152
+Name: score, dtype: float64
+------------------------------------------------------------
+
+4. Top 100 score class distribution:
+2    0.98
+1    0.02
+Name: class, dtype: float64
+   Precision@100: 0.0200
+
+4. Top 500 score class distribution:
+2    0.976
+1    0.024
+Name: class, dtype: float64
+   Precision@500: 0.0240
+
+4. Top 1000 score class distribution:
+2    0.961
+1    0.039
+Name: class, dtype: float64
+   Precision@1000: 0.0390
+------------------------------------------------------------
+
+5. Score ranges (AFTER inversion):
+   Max ILÍCITA:  0.576152
+   Mean ILÍCITA: 0.574634
+   Mean LÍCITA:  0.569810
+   Min LÍCITA:   0.184716
+   ✓ Separation: GOOD
+------------------------------------------------------------
+
+============================================================
+
+
+============================================================
+METRICS SUMMARY: config_1
+============================================================
+
+Classification Metrics:
+  AUC-ROC:            0.6801
+  Average Precision:  0.0769
+  Max F1:             0.1744
+  Best Threshold:     0.5747
+
+Ranking Metrics (Precision@K):
+  Precision@10         0.0000
+  Precision@50         0.0000
+  Precision@100        0.0300
+  Precision@200        0.0250
+  Precision@300        0.0267
+  Precision@400        0.0275
+  Precision@500        0.0260
+  Precision@1000       0.0260
+
+Recall@K:
+  Recall@100           0.0002
+  Recall@500           0.0009
+  Recall@1000          0.0018
+  Recall@5000          0.0101
+
+============================================================
+
+Metrics calculated.
+========================================
+Running metrics for config_2 scores
+========================================
+Calculating metrics...
+Class distribution:
+2    251088
+1     14266
+Name: class, dtype: int64
+
+============================================================
+Top 5 scores:
+[('1Kf1PfQ5SLmXXgPr7vgW1NiKLcC59p59GH', 0.5805568762406831), ('31okXmjGateb5SJeYrrPjApxvHN9pvoUAZ', 0.5805568762406831), ('1HXSthFY3Y1UcrEtxKpryTFQ9skSFbUtUK', 0.5805568762406831), ('1BfZrif7tirh5Qius4r5Td4JCPvKERUGSj', 0.5805568762406831), ('1CMtRjqUXH1vwipBeoimmM8JHhKPZxNJef', 0.5805568762406831)]
+
+Bottom 5 scores:
+[('1CGz4Fxap6mB5DoShNwhLyi8PNvBKP3ZZh', 0.34430391346851774), ('1GX28yLjVWux7ws4UQ9FB4MnLH4UKTPK2z', 0.3343863305373941), ('12cgpFdJViXbwHbhrA3TuW1EGnL25Zqc3P', 0.287600336775253), ('13vHWR3iLsHeYwT42RnuKYNBoVPrKKZgRv', 0.28743854979721395), ('1N52wHoVR79PMDishab2XmRHsbekCdGquK', 0.23992185834931679)]
+
+                              address     score  class
+0  1Kf1PfQ5SLmXXgPr7vgW1NiKLcC59p59GH  0.580557      2
+1  31okXmjGateb5SJeYrrPjApxvHN9pvoUAZ  0.580557      2
+2  1HXSthFY3Y1UcrEtxKpryTFQ9skSFbUtUK  0.580557      2
+3  1BfZrif7tirh5Qius4r5Td4JCPvKERUGSj  0.580557      2
+4  1CMtRjqUXH1vwipBeoimmM8JHhKPZxNJef  0.580557      2
+
+
+============================================================
+Metrics initialized for: config_2
+Total addresses: 265354
+Exclude unknown: True
+Scores INVERTED for ranking (higher = more anomalous)
+============================================================
+
+
+============================================================
+SCORE DISTRIBUTION ANALYSIS
+============================================================
+
+1. Scores profile (all classes):
+          count      mean       std  ...       50%       75%       max
+class                                ...                              
+1       14266.0  0.579452  0.003468  ...  0.580053  0.580352  0.580557
+2      251088.0  0.576354  0.009079  ...  0.579584  0.580132  0.580557
+
+[2 rows x 8 columns]
+------------------------------------------------------------
+
+2. Scores profile (excluding UNKNOWN):
+          count      mean       std  ...       50%       75%       max
+class                                ...                              
+1       14266.0  0.579452  0.003468  ...  0.580053  0.580352  0.580557
+2      251088.0  0.576354  0.009079  ...  0.579584  0.580132  0.580557
+
+[2 rows x 8 columns]
+------------------------------------------------------------
+
+3. Ilícita score quantiles:
+0.50    0.580053
+0.75    0.580352
+0.90    0.580373
+0.95    0.580431
+0.99    0.580437
+Name: score, dtype: float64
+------------------------------------------------------------
+
+4. Top 100 score class distribution:
+2    1.0
+Name: class, dtype: float64
+   Precision@100: 0.0000
+
+4. Top 500 score class distribution:
+2    0.99
+1    0.01
+Name: class, dtype: float64
+   Precision@500: 0.0100
+
+4. Top 1000 score class distribution:
+2    0.989
+1    0.011
+Name: class, dtype: float64
+   Precision@1000: 0.0110
+------------------------------------------------------------
+
+5. Score ranges (AFTER inversion):
+   Max ILÍCITA:  0.580557
+   Mean ILÍCITA: 0.579452
+   Mean LÍCITA:  0.576354
+   Min LÍCITA:   0.239922
+   ✓ Separation: GOOD
+------------------------------------------------------------
+
+============================================================
+
+
+============================================================
+METRICS SUMMARY: config_2
+============================================================
+
+Classification Metrics:
+  AUC-ROC:            0.6606
+  Average Precision:  0.0800
+  Max F1:             0.1716
+  Best Threshold:     0.5799
+
+Ranking Metrics (Precision@K):
+  Precision@10         0.0000
+  Precision@50         0.0000
+  Precision@100        0.0000
+  Precision@200        0.0050
+  Precision@300        0.0067
+  Precision@400        0.0075
+  Precision@500        0.0080
+  Precision@1000       0.0090
+
+Recall@K:
+  Recall@100           0.0000
+  Recall@500           0.0003
+  Recall@1000          0.0006
+  Recall@5000          0.0062
+
+============================================================
+
+Metrics calculated.

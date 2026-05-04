@@ -1,0 +1,83 @@
+============================================================
+METRICS SUMMARY: config_1
+============================================================
+Classification Metrics:
+  AUC-ROC:            0.3199
+  Average Precision:  0.0364
+  Max F1:             0.1077
+  Best Threshold:     0.4239
+
+Ranking Metrics (Precision@K):
+  Precision@10         0.0000
+  Precision@100        0.0000
+  Precision@500        0.0020
+  Precision@1000       0.0030
+
+Recall@K:
+  Recall@100           0.0000
+  Recall@500           0.0001
+  Recall@1000          0.0002
+  Recall@5000          0.0008
+
+============================================================
+METRICS SUMMARY: config_2
+============================================================
+Classification Metrics:
+  AUC-ROC:            0.3385
+  Average Precision:  0.0389
+  Max F1:             0.1055
+  Best Threshold:     0.4245
+
+Ranking Metrics (Precision@K):
+  Precision@10         0.0000
+  Precision@100        0.0000
+  Precision@500        0.0060
+  Precision@1000       0.0030
+
+Recall@K:
+  Recall@100           0.0000
+  Recall@500           0.0002
+  Recall@1000          0.0002
+  Recall@5000          0.0023
+
+============================================================
+METRICS SUMMARY: config_1 - scores invertidos
+============================================================
+Classification Metrics:
+  AUC-ROC:            0.6801
+  Average Precision:  0.0769
+  Max F1:             0.1744
+  Best Threshold:     0.5747
+
+Ranking Metrics (Precision@K):
+  Precision@10         0.0000
+  Precision@100        0.0300
+  Precision@500        0.0260
+  Precision@1000       0.0260
+
+Recall@K:
+  Recall@100           0.0002
+  Recall@500           0.0009
+  Recall@1000          0.0018
+  Recall@5000          0.0101
+  
+============================================================
+METRICS SUMMARY: config_2 - scores invertidos
+============================================================
+Classification Metrics:
+  AUC-ROC:            0.6606
+  Average Precision:  0.0800
+  Max F1:             0.1716
+  Best Threshold:     0.5799
+
+Ranking Metrics (Precision@K):
+  Precision@10         0.0000
+  Precision@100        0.0000
+  Precision@500        0.0080
+  Precision@1000       0.0090
+
+Recall@K:
+  Recall@100           0.0000
+  Recall@500           0.0003
+  Recall@1000          0.0006
+  Recall@5000          0.0062

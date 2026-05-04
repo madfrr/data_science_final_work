@@ -16,29 +16,7 @@ FraudGuess: Spotting and explaining new types of fraud in million-scale financia
 Posso tentar adaptar para o meu caso onde eu tenho endereço de origem, endereço de destino, ai posso pegar qlquer característica da transaction (nro de blocos, valor...) e o time step (que tbm posso modelar com o nro de blocos)
 
 
- TODO:
- - ler artigos:
-    - elliptic ++ --> Continuar depois
-    - FraudGuess: Spotting and explaining new types of fraud in million-scale financial data
-- [Done] baixar datasets
-
-- Fazer um summario com todos os dados, para entender as tabelas
-- Fazer os pipeline de dados para conseguir pegar um percentual dos dados com base 
-- Subir os datasets no google drive e dar o gitignore
-
-- Criar uma etapa de transformação de dados para criar (endereço, endereço, medida e timestep)
-- usar o call-mine da cazzolato
-- Entender os resultados
-----> Até domingo. Depois decidir o que falta fazer. Se eu ter algum resultado, ou conseguir reaproveitar os dados da mineração pra aplicar algum algoritmo de machine learning, já da pra fazer o TCC em cima
-
-- verificar pontos onde podem ter algum problema
-- no ruim, ler o cs224
-
 Pesquisar:
-
-Google Scholar: "CallMine" Elliptic / "CallMine" bitcoin / "CallMine" blockchain
-GitHub code search: callmine elliptic / callmine bitcoin / callmine aml
-ArXiv full-text: CallMine + transaction graph
 
 🔹 CallMine
 
@@ -64,7 +42,7 @@ Por quê: avaliação sem probabilidade.
 ## Snippets
 conda activate myenv
 
-git -c commit.gpgsign=false commit -m 'metricas base'
+git -c commit.gpgsign=false commit -m 'resultados_compilados'
 
 main
 ExtractFromDrive
@@ -72,11 +50,22 @@ SelectColumns
 Validations
 -- Tratamento de dados
 -- análise exploratória tem que ser aqui
-CreateConfigs
-run_call_mine
+
+CreateConfigs -> AGREGAR COM RUN_CALL_MINE PARA GERAR DATASET DE FEATURE
+run_call_mine -> AGREGAR COM CREATECONFIGS PRA GERAR DATASET DE FEATURE
+
 run_gen2out
 -- run_outros modelos/algoritmos de anomalia
 Metrics
 
 config.py
 env
+
+CRISP:
+1. Entendimento do Negócio (Definição do Problema);
+2. Entendimento dos Dados;  ← análise exploratória
+3. Preparação dos Dados;  ← data cleasing
+4. Treinamento (Modelagem);
+5. Avaliação;
+6. Deployment.
+

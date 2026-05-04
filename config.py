@@ -33,7 +33,7 @@ class Config:
         # "config_3": path_config_3,
         # "config_4": path_config_4
     }
-    remove_unknown_from_config = True
+    remove_unknown_from_config = False
     class Classes:
         ILLICIT = 1
         LICIT = 2

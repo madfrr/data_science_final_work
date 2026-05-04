@@ -68,7 +68,6 @@ AP from neg scores: 0.03636020915154781
 Metrics calculated.
 
 
-
 ========================================
 Running metrics for config_2 scores
 ========================================
